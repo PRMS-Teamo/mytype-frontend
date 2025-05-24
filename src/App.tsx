@@ -1,7 +1,8 @@
-const App = ()=>{
-  return(
-    <h1 className="text-3xl font-bold text-blue-500">Hi</h1>
-  )
-}
+import './index.css';
 
+const App = () => {
+  return (
+    <div className="text-xl font-bold text-main ">Hi</div>
+  );
+};
 export default App;
