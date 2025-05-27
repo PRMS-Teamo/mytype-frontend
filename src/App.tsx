@@ -1,8 +1,11 @@
-import './index.css';
+import "./index.css";
+import { RouterProvider } from "react-router-dom";
+import router from "./Router";
 
 const App = () => {
   return (
-    <div className="text-xl font-bold text-main ">Hi</div>
+    <RouterProvider router={router} />
+    // <div className="text-xl font-bold text-main ">Hi</div>
   );
 };
 export default App;
