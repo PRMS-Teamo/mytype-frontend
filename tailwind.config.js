@@ -5,6 +5,7 @@ module.exports = {
       colors: {
         main: "#5932EA",
         region: "#E5E7EB",
+        purple:"#9B51E0",
       },
       textColor: {
         main: "#5932EA",
@@ -15,6 +16,8 @@ module.exports = {
       backgroundColor: {
         main: "#5932EA",
         white: "#FFFFFF",
+        purple:"#9B51E0",
+        purple10:"#8363EF",
         gray: "#F3F4F6",
         "gray-hover": "#E5E7EB",
       },
@@ -37,6 +40,16 @@ module.exports = {
       "8xl": "128px",
       "9xl": "144px",
     },
+    keyframes: {
+      fadeIn: {
+        '0%': { opacity: '0', transform: 'translateY(20px)' },
+        '100%': { opacity: '1', transform: 'translateY(0)' },
+      },
+    },
+    animation: {
+      fadeIn: 'fadeIn 0.5s ease-out forwards',
+    },
+  
   },
   plugins: [],
 };
