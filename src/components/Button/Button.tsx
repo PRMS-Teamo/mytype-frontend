@@ -9,8 +9,8 @@ interface ButtonProps {
 
 const Button = ({ children, variant, onClick, className = "" }: ButtonProps) => {
 	const variants = {
-		primary: "bg-purple w-20 h-16 text-white rounded-[20px]",
-		square: "bg-purple w-20 h-16 text-white rounded-[12px]",
+		primary: "bg-main w-20 h-16 text-white rounded-[20px]",
+		square: "bg-main w-20 h-16 text-white rounded-[12px]",
 		default: "bg-white w-96 h-20 text-[1.75rem] text-main rounded-[2.5rem] font-bold outline-none hover:outline hover:outline-[7px] hover:outline-main",
 	};
 
