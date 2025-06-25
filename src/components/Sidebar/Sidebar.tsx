@@ -1,7 +1,7 @@
 import { MdHome, MdForum, MdPerson, MdGroups } from "react-icons/md";
 import SidebarElement from "./SidebarElement";
 import {useEffect, useState} from "react";
-import logoUrl from "../../assets/icons/logo.svg";
+import Logo from "../../assets/icons/logo.svg?react";
 import {useLocation, useNavigate} from "react-router-dom";
 import{ URL} from "../../constants/url/url.ts"
 function Sidebar() {
@@ -25,21 +25,20 @@ const location =useLocation()
     <div className="w-64 h-screen bg-white">
       <div className="p-6">
         <div className="flex items-center gap-3 mb-8">
-          <img src={logoUrl} alt="프로그래머스 로고" className="w-7 h-7" />
-          <h1 className="text-xl font-bold text-dark">프로그래머스</h1>
+     <Logo onClick={()=>nav(URL.HOME)}/>
         </div>
         <nav className="space-y-2">
           <SidebarElement
             icon={<MdHome />}
             text="대시보드"
             isSelected={selectedMenu === "대시보드"}
-            onClick={() => setSelectedMenu("대시보드")}
+            onClick={() => {setSelectedMenu("대시보드"); nav(URL.HOME)}}
           />
           <SidebarElement
             icon={<MdForum />}
             text="커뮤니티"
             isSelected={selectedMenu === "커뮤니티"}
-            onClick={() => setSelectedMenu("커뮤니티")}
+            onClick={() => setSelectedMenu("커뮤니티" )}
           />
           <SidebarElement
             icon={<MdPerson />}
