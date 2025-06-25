@@ -5,22 +5,14 @@ import DropDown from "../../components/DropDown";
 import {DROPDOWN_OPTIONS} from "../../constants/dropdownOptions/dropdownOptions.ts";
 import Profile from "../../components/Profile";
 import TechStack from "../../components/TechStack";
-import Button from "../../components/Button/Button.tsx";
 
 const MyPage=()=>{
 	const [name,setName]=useState("");
 	const [beginner, setBeginner] = useState("");
 	const [proceed,setProceed]=useState("");
 	return(
-		<div className="m-12">
-			<div className="relative w-full">
-				<div className="absolute right-0 top-0">
-					<Button  variant="primary" onClick={()=>console.log("저장") }>저장</Button>
-				</div>
-				<div className="flex justify-center">
-					<Profile />
-				</div>
-			</div>
+		<>
+			<Profile />
 		<div className="flex flex-row gap-12  mt-6 justify-center">
 		<div className="flex flex-col gap-3">
 			<Label>이름</Label>
@@ -73,7 +65,7 @@ const MyPage=()=>{
 				<TechStack  />
 			</div>
 			</div>
-		</div>
+		</>
 	)
 }
 

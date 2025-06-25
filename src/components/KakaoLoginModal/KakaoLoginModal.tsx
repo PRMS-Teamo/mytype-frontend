@@ -1,6 +1,6 @@
 import useKakaoLogin from "../../hooks/useKakaoLogin";
 import { useModalStore } from "../../store/modalStore";
-import logo from "../../assets/images/logo.png";
+import Logo from "../../assets/icons/logo.svg?react";
 import logintalk from "../../assets/images/logintalk.png";
 import kakao_login_medium_wide from "../../assets/images/kakao_login_medium_wide.png";
 
@@ -24,7 +24,7 @@ const KakaoLoginModal = () => {
         {/* 내부 콘텐츠 */}
         <div className="p-6 flex flex-col items-center gap-y-4">
           {/* 로고 */}
-          <img src={logo} alt="Teamo Logo" className="w-[260px] h-[90px]" />
+    <Logo className="w-[260px] h-[90px]" />
           {/* 설명 말풍선 */}
           <img
             src={logintalk}
