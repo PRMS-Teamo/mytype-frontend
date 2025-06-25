@@ -6,12 +6,16 @@ module.exports = {
         main: "#5932EA",
         region: "#E5E7EB",
         purple:"#9B51E0",
+        gray10:"#5D5D5D",
+        gray20:"#AAA",
+        black: "#181D18",
       },
       textColor: {
         main: "#5932EA",
         white: "#FFFFFF",
         gray: "#6B7280",
         dark: "#374151",
+
       },
       backgroundColor: {
         main: "#5932EA",
@@ -26,6 +30,7 @@ module.exports = {
       },
     },
     fontSize: {
+      xxx:"10px",
       xs: "12px",
       sm: "14px",
       base: "16px",
