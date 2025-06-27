@@ -1,6 +1,7 @@
 export const URL = {
-	HOME: "/home",
-	MY_PAGE:"/mypage",
-	COMMUNITY:"/community",
-	MADE_PEOPLE:"/madepeople",
-}
+  HOME: "/home",
+  MY_PAGE: "/mypage",
+  FIND_TEAMMATE: "/findteammate",
+  FIND_TEAM: "/findteam",
+  MADE_PEOPLE: "/madepeople",
+};
