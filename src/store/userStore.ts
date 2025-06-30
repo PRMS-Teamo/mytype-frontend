@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-interface User {
+export interface User {
   id: string;
-  name: string;
+  nickname: string;
   email?: string;
   region?: string;
   github?: string;
-  beginner?: boolean | null;
+  beginner?: boolean ;
   proceedMethod?: string;
   position?: string;
   hasProfile: boolean;
