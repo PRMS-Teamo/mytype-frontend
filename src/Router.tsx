@@ -7,9 +7,8 @@ import TeamList from "./pages/Team/TeamList";
 import TeamDetail from "./pages/Team/TeamDetail";
 import TeammateList from "./pages/Teammate/TeammateList";
 import TeammateDetail from "./pages/Teammate/TeammateDetail";
-
-
 import MyPage from "./pages/MyPage";
+import Search from "./pages/Search/Search";
 
 const router = createBrowserRouter([
   {
@@ -17,18 +16,21 @@ const router = createBrowserRouter([
     element: <Intro />,
   },
   {
-    element: <Layout />, 
+    element: <Layout />,
     children: [
       {
         path: "home",
         element: <Home />,
       },
       {
+        path: "search",
+        element: <Search />,
+      },
+      {
         path: "mypage",
         element: <MyPage />,
       },
-      {path:"post",element:<Post/>
-      },
+      { path: "post", element: <Post /> },
       {
         path: "team",
         children: [
@@ -45,10 +47,10 @@ const router = createBrowserRouter([
           { path: ":id", element: <TeammateDetail /> },
           // { path: "write", element: <TeammateWrite /> },
         ],
-       },
-      {path:"post",
-      }
-    ]}
+      },
+      { path: "post" },
+    ],
+  },
 ]);
 
 export default router;
