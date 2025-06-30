@@ -6,10 +6,8 @@ import Post from "./pages/Post/Post";
 import TeamList from "./pages/Team/TeamList";
 import TeamDetail from "./pages/Team/TeamDetail";
 import TeammateList from "./pages/Teammate/TeammateList";
-
-
-
 import MyPage from "./pages/MyPage";
+import Search from "./pages/Search/Search";
 
 const router = createBrowserRouter([
   {
@@ -17,22 +15,25 @@ const router = createBrowserRouter([
     element: <Intro />,
   },
   {
-    element: <Layout />, 
+    element: <Layout />,
     children: [
       {
         path: "home",
         element: <Home />,
       },
       {
+        path: "search",
+        element: <Search />,
+      },
+      {
         path: "mypage",
-        element: <MyPage/>,
+        element: <MyPage />,     
       },
       {
         path: "findteam",
         children: [
           { index: true, element: <TeamList /> },
           { path: ":id", element: <TeamDetail /> },
-
           // { path: "write", element: <TeamWrite /> },
         ],
       },
@@ -43,10 +44,10 @@ const router = createBrowserRouter([
           { path: ":id", element: <Post /> },
           // { path: "write", element: <TeammateWrite /> },
         ],
-       },
-      {path:"post",
-      }
-    ]}
+      },
+      { path: "post" },
+    ],
+  },
 ]);
 
 export default router;
