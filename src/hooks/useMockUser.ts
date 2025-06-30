@@ -1,17 +1,7 @@
 import axios from 'axios';
 import { useUserStore } from '../store/userStore';
+import type {User} from '../store/userStore';
 
-const booleanToString = (value: boolean | null | undefined): string => {
-	if (value === true) return 'O';
-	if (value === false) return 'X';
-	return '';
-};
-
-const stringToBoolean = (value: string): boolean | null => {
-	if (value === 'O') return true;
-	if (value === 'X') return false;
-	return null;
-};
 
 export const useMockUser = () => {
 	const setUser = useUserStore((s) => s.setUser);
@@ -41,19 +31,19 @@ export const useMockUser = () => {
 		try {
 			const res = await axios.get('/api/userInfo');
 			return res.data;
+			
 		} catch (err) {
 			console.error('유저 정보 조회 실패', err);
 			return null;
 		}
 	};
 
-	const saveUser = async () => {
+	const saveUser = async (user:User) => {
 		try {
-			const user = useUserStore.getState().user;
-			if (!user) return null;
-
 			const res = await axios.put('/api/userInfo', user);
-			setUser({...res.data});
+			setUser(res.data);
+			console.log(res.data);
+
 			return res.data;
 		} catch (err) {
 			console.error('프로필 저장 실패', err);
@@ -65,7 +55,6 @@ export const useMockUser = () => {
 		logout,
 		fetchUserInfo,
 		saveUser,
-		booleanToString,
-		stringToBoolean,
+
 	};
 };

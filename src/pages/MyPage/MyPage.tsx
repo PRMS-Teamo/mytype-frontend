@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import InputText from "../../components/InputText";
 import Label from "../../components/Label";
 import DropDown from "../../components/DropDown";
@@ -9,55 +9,22 @@ import { useUserStore } from "../../store/userStore.ts";
 import { useMockUser } from "../../hooks/useMockUser";
 
 const MyPage = () => {
-	const { user } = useUserStore();
-	const { fetchUserInfo, booleanToString } = useMockUser();
-
-	const [profile, setProfile] = useState({
-		name: "",
-		region: "",
-		github: "",
-		beginner: "",
-		proceed: "",
-		position: "",
-	});
-
-	const resetProfile = () => {
-		setProfile({
-			name: "",
-			region: "",
-			github: "",
-			beginner: "",
-			proceed: "",
-			position: "",
-		});
-	};
+	const { user, setUser } = useUserStore();
+	const { fetchUserInfo } = useMockUser();
 
 	useEffect(() => {
-		if (!user) {
-			resetProfile();
-			return;
-		}
-
+		if (!user) return;
 
 		const loadUserInfo = async () => {
 			const userData = await fetchUserInfo();
-			if (!userData) {
-				resetProfile();
-				return;
+			if (userData) {
+				setUser(userData);
 			}
-
-			setProfile({
-				name: userData.nickname,
-				region: userData.region,
-				github: userData.github,
-				beginner: booleanToString(userData.beginner),
-				proceed: userData.proceedMethod,
-				position: userData.position,
-			});
 		};
 
 		loadUserInfo();
-	}, [user]);
+	}, [user?.id]);
+
 	return (
 		<>
 			<Profile />
@@ -67,8 +34,11 @@ const MyPage = () => {
 					<InputText
 						placeholder="이름 입력"
 						inputSize="small"
-						value={profile.name}
-						onChange={(e) => setProfile((prev) => ({ ...prev, name: e.target.value }))}
+						value={user?.nickname ?? ''}
+						onChange={(e) => {
+							if (!user) return;
+							setUser({ ...user, nickname: e.target.value });
+						}}
 					/>
 				</div>
 				<div className="flex flex-col gap-3">
@@ -76,8 +46,11 @@ const MyPage = () => {
 					<InputText
 						placeholder="지역 입력"
 						inputSize="small"
-						value={profile.region}
-						onChange={(e) => setProfile((prev) => ({ ...prev, region: e.target.value }))}
+						value={user?.region ?? ''}
+						onChange={(e) => {
+							if (!user) return;
+							setUser({ ...user, region: e.target.value });
+						}}
 					/>
 				</div>
 				<div className="flex flex-col gap-3">
@@ -85,8 +58,11 @@ const MyPage = () => {
 					<InputText
 						placeholder="깃허브(아이디) 입력"
 						inputSize="small"
-						value={profile.github}
-						onChange={(e) => setProfile((prev) => ({ ...prev, github: e.target.value }))}
+						value={user?.github ?? ''}
+						onChange={(e) => {
+							if (!user) return;
+							setUser({ ...user, github: e.target.value });
+						}}
 					/>
 				</div>
 			</div>
@@ -96,8 +72,21 @@ const MyPage = () => {
 					<Label>새싹 여부</Label>
 					<DropDown
 						options={DROPDOWN_OPTIONS.BEGINNER}
-						value={profile.beginner}
-						onChange={(value) => setProfile((prev) => ({ ...prev, beginner: value }))}
+						value={
+							user?.beginner === true
+								? 'O'
+								: user?.beginner === false
+									? 'X'
+									: ''
+						}
+						onChange={(value) => {
+							if (!user) return;
+							setUser({
+								...user,
+								beginner:
+									value === 'O' ? true : value === 'X' ? false : undefined,
+							});
+						}}
 						placeholder="새싹 여부"
 					/>
 				</div>
@@ -105,8 +94,11 @@ const MyPage = () => {
 					<Label>진행방식</Label>
 					<DropDown
 						options={DROPDOWN_OPTIONS.PROCEED}
-						value={profile.proceed}
-						onChange={(value) => setProfile((prev) => ({ ...prev, proceed: value }))}
+						value={user?.proceedMethod ?? ''}
+						onChange={(value) => {
+							if (!user) return;
+							setUser({ ...user, proceedMethod: value });
+						}}
 						placeholder="진행방식"
 					/>
 				</div>
@@ -114,8 +106,11 @@ const MyPage = () => {
 					<Label>포지션</Label>
 					<DropDown
 						options={DROPDOWN_OPTIONS.POSITION}
-						value={profile.position}
-						onChange={(value) => setProfile((prev) => ({ ...prev, position: value }))}
+						value={user?.position ?? ''}
+						onChange={(value) => {
+							if (!user) return;
+							setUser({ ...user, position: value });
+						}}
 						placeholder="포지션"
 					/>
 				</div>

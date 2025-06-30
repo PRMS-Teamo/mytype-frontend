@@ -45,7 +45,7 @@ const Header = () => {
         </div>
         {showProfileSave ? (
           <div className="">
-            <Button  variant="primary" onClick={()=>saveUser()}>저장</Button>
+            <Button  variant="primary" onClick={()=>user && saveUser(user)}>저장</Button>
           </div>
         ):null}
         <button onClick={handleAuth} className="text-base text-[#3E3E3E]">

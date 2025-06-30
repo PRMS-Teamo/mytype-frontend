@@ -22,9 +22,7 @@ function Home() {
       </div>
       <div> 팀 구해요</div>
       <Edit onClick={handleTeammatePostClick} />
-    // nav('/post');
-    setTeamPost(true)
-  }
+
     </div>
   );
 }

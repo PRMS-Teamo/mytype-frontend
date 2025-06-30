@@ -28,14 +28,15 @@
 		}),
 
 		http.put('/api/userInfo', async ({ request }) => {
-			const updated = await request.json();
+			const updated = await request.json() as typeof userMock.existUser;
+
 			if (currentUserType === 'exist') {
-				Object.assign(userMock.existUser, updated);
+				userMock.existUser = { ...updated };
 				return HttpResponse.json(userMock.existUser);
 			} else if (currentUserType === 'new') {
-				Object.assign(userMock.newUser, updated);
+				userMock.newUser = { ...updated };
 				return HttpResponse.json(userMock.newUser);
 			}
+
 			return HttpResponse.json({ message: '로그인 정보 없음' }, { status: 401 });
-		}),
-	];
+		}),]
