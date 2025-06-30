@@ -2,6 +2,7 @@ import Sidebar from "../Sidebar";
 import Header from "../Header";
 import KakaoLoginModal from "../KakaoLoginModal";
 import { Outlet } from "react-router-dom";
+import ToggleModal from "../ChatModal/ToggleModal";
 
 function Layout() {
   return (
@@ -12,6 +13,7 @@ function Layout() {
         <main className="flex-1 overflow-auto px-6 py-4">
           <Outlet />
         </main>
+        <ToggleModal />
       </div>
       <KakaoLoginModal />
     </div>
