@@ -1,7 +1,13 @@
+import {useNavigate} from "react-router-dom";
+
 export default function TeammateList () {
+  const nave=useNavigate();
+  const handlePostClick = () => {
+    nave("/findteammate/1")
+  }
   return (
     <>
-      <h1>TeammateList Component</h1>
+      <div onClick={handlePostClick}>TeammateList Component</div>
     </>
   );
 }

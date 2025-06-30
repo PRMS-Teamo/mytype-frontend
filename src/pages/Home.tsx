@@ -6,11 +6,11 @@ function Home() {
   const [teamPost, setTeamPost] = useState<boolean>(false);
   const [teammatePost, setTeammatePost] = useState<boolean>(false);
   const handleTeamPostClick = () => {
-    nav('/post');
+    // nav('/post');
     setTeamPost(true)
   }
   const handleTeammatePostClick = () => {
-    nav('/post');
+    // nav('/post');
     setTeammatePost(true)
   }
   return <div>
