@@ -1,14 +1,18 @@
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import { useModalStore } from "../../store/modalStore";
 import { IoSearch } from "react-icons/io5";
 import Button from "../Button/Button.tsx";
+import {useMockUser} from "../../hooks/useMockUser.ts";
+import {useEffect} from "react";
+
 
 const Header = () => {
+  const nav =useNavigate()
   const location = useLocation();
-  const { user, clearUser } = useUserStore();
+  const { user} = useUserStore();
   const { openModal } = useModalStore();
-
+  const {login,logout,saveUser}=useMockUser()
   const showSearch = ["/home", "/team", "/teammate"].includes(
     location.pathname
   );
@@ -16,12 +20,18 @@ const Header = () => {
 
   const handleAuth = () => {
     if (user) {
-      clearUser();
+      logout()
     } else {
       openModal();
     }
   };
 
+
+  useEffect(() => {
+    if (user && !user.hasProfile) {
+      nav("/mypage");
+    }
+  }, [user]);
   return (
     <header className="w-full flex justify-end items-center px-8 pt-4 bg-white mt-2 ">
       <div className="flex items-center gap-x-8 mr-6">
@@ -35,13 +45,14 @@ const Header = () => {
         </div>
         {showProfileSave ? (
           <div className="">
-            <Button  variant="primary" onClick={()=>console.log("저장") }>저장</Button>
+            <Button  variant="primary" onClick={()=>saveUser()}>저장</Button>
           </div>
         ):null}
         <button onClick={handleAuth} className="text-base text-[#3E3E3E]">
           {user ? "로그아웃" : "로그인"}
         </button>
-
+        <button onClick={() => login('exist')} className="mr-4">기존 유저로 로그인</button>
+        <button onClick={() => login('new')} className="mr-4">새로운 유저로 로그인</button>
       </div>
     </header>
   );

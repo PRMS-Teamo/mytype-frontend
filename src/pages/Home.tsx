@@ -13,15 +13,18 @@ function Home() {
     nav("/post");
     setTeammatePost(true);
   };
+  
   return (
     <div>
       <div>
-        {" "}
         팀원 구해요
         <Edit onClick={handleTeamPostClick} />
       </div>
       <div> 팀 구해요</div>
       <Edit onClick={handleTeammatePostClick} />
+    // nav('/post');
+    setTeamPost(true)
+  }
     </div>
   );
 }

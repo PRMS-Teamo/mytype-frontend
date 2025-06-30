@@ -6,7 +6,6 @@ import Post from "./pages/Post/Post";
 import TeamList from "./pages/Team/TeamList";
 import TeamDetail from "./pages/Team/TeamDetail";
 import TeammateList from "./pages/Teammate/TeammateList";
-import TeammateDetail from "./pages/Teammate/TeammateDetail";
 import MyPage from "./pages/MyPage";
 import Search from "./pages/Search/Search";
 
@@ -28,23 +27,21 @@ const router = createBrowserRouter([
       },
       {
         path: "mypage",
-        element: <MyPage />,
+        element: <MyPage />,     
       },
-      { path: "post", element: <Post /> },
       {
-        path: "team",
+        path: "findteam",
         children: [
           { index: true, element: <TeamList /> },
           { path: ":id", element: <TeamDetail /> },
-
           // { path: "write", element: <TeamWrite /> },
         ],
       },
       {
-        path: "teammate",
+        path: "findteammate",
         children: [
           { index: true, element: <TeammateList /> },
-          { path: ":id", element: <TeammateDetail /> },
+          { path: ":id", element: <Post /> },
           // { path: "write", element: <TeammateWrite /> },
         ],
       },
