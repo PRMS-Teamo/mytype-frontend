@@ -17,7 +17,7 @@ const Header = () => {
     location.pathname
   );
   const showProfileSave =["/mypage"].includes(location.pathname);
-
+const noneHeader =["/post"].includes(location.pathname);
   const handleAuth = () => {
     if (user) {
       logout()
@@ -27,11 +27,14 @@ const Header = () => {
   };
 
 
+
   useEffect(() => {
     if (user && !user.hasProfile) {
       nav("/mypage");
     }
   }, [user]);
+  if( noneHeader) return null;
+
   return (
     <header className="w-full flex justify-end items-center px-8 pt-4 bg-white mt-2 ">
       <div className="flex items-center gap-x-8 mr-6">
@@ -43,11 +46,12 @@ const Header = () => {
             </div>
           ) : null}
         </div>
-        {showProfileSave ? (
+        {showProfileSave && (
           <div className="">
             <Button  variant="primary" onClick={()=>user && saveUser(user)}>저장</Button>
           </div>
-        ):null}
+        )}
+
         <button onClick={handleAuth} className="text-base text-[#3E3E3E]">
           {user ? "로그아웃" : "로그인"}
         </button>

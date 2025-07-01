@@ -29,7 +29,7 @@ const MyPage = () => {
 		<>
 			<Profile />
 			<div className="flex flex-row gap-12 mt-6 justify-center">
-				<div className="flex flex-col gap-3">
+				<div className="flex flex-col gap-5">
 					<Label>이름</Label>
 					<InputText
 						placeholder="이름 입력"

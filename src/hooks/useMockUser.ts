@@ -31,7 +31,6 @@ export const useMockUser = () => {
 		try {
 			const res = await axios.get('/api/userInfo');
 			return res.data;
-			
 		} catch (err) {
 			console.error('유저 정보 조회 실패', err);
 			return null;

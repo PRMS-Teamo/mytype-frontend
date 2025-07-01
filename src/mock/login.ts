@@ -17,6 +17,8 @@
 			}
 		}),
 
+
+
 		http.get('/api/userInfo', () => {
 			if (currentUserType === 'exist') {
 				return HttpResponse.json(userMock.existUser);

@@ -4,4 +4,5 @@ export const PLACEHOLDER = {
   CONTENT: "내용을 입력하세요.",
   SEARCH: "검색",
   REGION: "지역을 입력하세요.",
+  DEADLINE:" 마감일을 입력하세요.",
 };
