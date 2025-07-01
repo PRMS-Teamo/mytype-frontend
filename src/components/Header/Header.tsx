@@ -26,6 +26,37 @@ const Header = () => {
     }
   };
 
+  function kakaoLogin() {
+    const kakaoLoginUrl =`${import.meta.env.VITE_BACKEND_URL}/auth/kakao`
+    const popup = window.open(kakaoLoginUrl, "Teamo 카카오 로그인", 'width=500,height=600,menubar=no,toolbar=no,location=no,status=no')
+    if (!popup) {
+      alert("팝업 차단을 확인해주세요.")
+      return
+    }
+  }
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      // 보안상의 이유로 origin 체크 필요
+      if (event.origin !== import.meta.env.VITE_BACKEND_URL) {
+        console.warn("보안경고", event.data, event.origin)
+      };
+      console.log(event.data)
+      // {
+      //   "kakaoId": "12345678",
+      //   "username": "유저네임",
+      //   "displayName": "닉네임",
+      //   "tokens": {
+      //   "accessToken": "access_token_example",
+      //     "refreshToken": "refresh_token_example"
+      // },
+      //   "status": "DONE" | "NEW"
+      // }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
 
   useEffect(() => {
     if (user && !user.hasProfile) {
@@ -51,7 +82,7 @@ const Header = () => {
         <button onClick={handleAuth} className="text-base text-[#3E3E3E]">
           {user ? "로그아웃" : "로그인"}
         </button>
-        <button onClick={() => login('exist')} className="mr-4">기존 유저로 로그인</button>
+        <button onClick={() => kakaoLogin()} className="mr-4">기존 유저로 로그인</button>
         <button onClick={() => login('new')} className="mr-4">새로운 유저로 로그인</button>
       </div>
     </header>
