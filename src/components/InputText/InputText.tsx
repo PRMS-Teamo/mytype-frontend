@@ -2,21 +2,21 @@ import React from "react";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
-  inputSize?: "small" | "medium" | "large";
+  inputSize?:"tiny"| "small" | "medium" | "large";
 }
 
 const inputSizes = {
-  base: " text-lg textColor-black leading-5",
-  small: "w-60 h-16",
-  medium: "w-[800px] h-16",
-  large: "w-[800px] h-96",
+  base: "textColor-black leading-5",
+  tiny: "p-5 w-64 h-10 text-base",
+  small: "w-60 h-16 text-lg",
+  medium: "h-16 text-lg",
+  large: " h-96 text-lg",
 };
 
 const InputText = React.forwardRef<HTMLInputElement, Props>(
   ({ placeholder, inputSize = "medium", onChange, ...props }, ref) => {
     const sizeClass = inputSizes[inputSize];
     const baseClass = inputSizes.base;
-
     return (
       <input
         ref={ref}

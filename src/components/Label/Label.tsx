@@ -6,7 +6,7 @@ interface LabelProps {
 
 const Label = ({ children }:  LabelProps) => {
 	return(
-		<div className="leading-5 text-sm font-medium text-gray10">{children}</div>
+		<div className="leading-5 text-base font-medium text-gray10">{children}</div>
 	)
 }
 
