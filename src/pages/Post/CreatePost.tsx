@@ -10,6 +10,7 @@ import TextArea from "../../components/TextArea";
 import TechStack from "../../components/TechStack";
 
 const CreatePost = () => {
+
 	return(
 		<div className="border border-gray-300 rounded-lg mt-6 mb-10 py-2 px-8 h-auto">
 			<div className="flex flex-col gap-5">
@@ -18,6 +19,7 @@ const CreatePost = () => {
 				<Button variant="primary" onClick={()=> console.log("저장")
 				}>작성하기</Button>
 			</div>
+
 				<div className="flex flex-col gap-2 w-full">
 					<Label>{POST_CREATE.TITLE_LABEL}</Label>
 					<InputText placeholder={PLACEHOLDER.TITLE} inputSize="medium" />
@@ -28,7 +30,7 @@ const CreatePost = () => {
 				</div>
 				<div className="flex flex-col gap-2 w-full">
 					<Label>{POST_CREATE.TECH_STACK_LABEL}</Label>
-					<TechStack/>
+					<TechStack techStackSize="full"/>
 				</div>
 			</div>
 

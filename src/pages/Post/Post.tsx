@@ -6,7 +6,7 @@ const Post=()=>{
 	return(
 		<div className="border border-gray-300 rounded-lg ">
 		<div className="m-12">
-	<Content/>
+			<Content/>
 			<ProjectType/>
 		</div>
 		</div>
