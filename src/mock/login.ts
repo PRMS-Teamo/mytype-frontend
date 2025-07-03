@@ -1,6 +1,6 @@
 
 	import { http, HttpResponse } from 'msw';
-	import { userMock } from './data/userMock.tsx'
+	import { userMock } from './data/userMock.ts'
 
 	let currentUserType: 'exist' | 'new' | null = null;
 	export const userHandlers = [
