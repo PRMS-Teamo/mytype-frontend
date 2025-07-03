@@ -119,7 +119,7 @@ const MyPage = () => {
 			<div className="flex flex-row gap-12 justify-center mt-3">
 				<div className="flex flex-col gap-3">
 					<Label>기술 스택</Label>
-					<TechStack />
+					<TechStack techStackSize="half" />
 				</div>
 			</div>
 		</>
