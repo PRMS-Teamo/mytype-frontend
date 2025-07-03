@@ -21,7 +21,7 @@ const DropDown = ({ options, value, onChange, placeholder }: DropDownProps) => {
 	};
 
 	return (
-		<div className="relative w-60">
+		<div className="relative ">
 			<div
 				className="flex items-center justify-between w-full h-16 px-4 py-2 text-lg bg-white border border-gray-300 rounded-xl cursor-pointer"
 				onClick={onToggleShowDropDown}

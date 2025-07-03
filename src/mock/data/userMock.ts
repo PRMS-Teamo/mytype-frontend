@@ -7,7 +7,7 @@ export const userMock = {
 		github:"data-github",
 		beginner: true,
 		proceedMethod:"오프라인",
-		position: "프론트엔드",
+		position: "웹 프론트엔드",
 		hasProfile:true,
 	},
 	newUser:{

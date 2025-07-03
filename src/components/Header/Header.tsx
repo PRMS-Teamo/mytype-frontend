@@ -1,10 +1,11 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import { useModalStore } from "../../store/modalStore";
-import { IoSearch } from "react-icons/io5";
+
 import Button from "../Button/Button.tsx";
 import {useMockUser} from "../../hooks/useMockUser.ts";
 import {useEffect} from "react";
+import SearchBar from "../SearchBar";
 
 
 const Header = () => {
@@ -69,12 +70,9 @@ const noneHeader =["/post"].includes(location.pathname);
   return (
     <header className="w-full flex justify-end items-center px-8 pt-4 bg-white mt-2 ">
       <div className="flex items-center gap-x-8 mr-6">
-        <div className="w-[220px] h-[42px]">
+        <div className="">
           {showSearch ? (
-            <div className="flex items-center w-full h-full rounded-full bg-[#F4F7FE] px-4 text-[#8F9BBA] text-sm">
-              <IoSearch className="text-[#2B3674] text-sm mr-1 ml-1" />
-              <span className="text-[#9CA3AF] ml-2">검색</span>
-            </div>
+            <SearchBar />
           ) : null}
         </div>
         {showProfileSave && (
@@ -86,8 +84,8 @@ const noneHeader =["/post"].includes(location.pathname);
         <button onClick={handleAuth} className="text-base text-[#3E3E3E]">
           {user ? "로그아웃" : "로그인"}
         </button>
-        <button onClick={() => kakaoLogin()} className="mr-4">기존 유저로 로그인</button>
-        <button onClick={() => login('new')} className="mr-4">새로운 유저로 로그인</button>
+        <button onClick={() => login("exist")} className="mr-4">기존 유저로 로그인</button>
+        <button onClick={() => kakaoLogin()} className="mr-4">새로운 유저로 로그인</button>
       </div>
     </header>
   );
