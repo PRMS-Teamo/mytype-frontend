@@ -1,13 +1,14 @@
 import Example from "../../assets/icons/image23.png";
-import Camera from "../../assets/icons/Camera.svg?react";
+import Refresh from "../../assets/icons/refresh.svg?react";
 
 const Profile = () => {
 	return (
 		<div className="flex justify-center">
-			<div className="relative w-64 h-64">
+			<div className="relative w-64 h-64 ">
 				<img src={Example} alt="example" className="rounded-full w-full h-full object-cover border" />
-				<div className="absolute bottom-3 right-7 flex items-center cursor-pointer p-1 rounded-full bg-[#F1F1F1]">
-					<Camera />
+				<div className="absolute -bottom-1  -right-1 flex items-center cursor-pointer p-1">
+					<Refresh/>
+					<span className="text-gray20 text-sm">변경</span>
 				</div>
 			</div>
 		</div>
