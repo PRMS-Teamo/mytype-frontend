@@ -28,8 +28,8 @@ const MyPage = () => {
 	return (
 		<>
 			<Profile />
-			<div className="flex flex-row gap-12 mt-6 justify-center">
-				<div className="flex flex-col gap-5">
+			<div className="flex flex-row sm:flex-row gap-12 mt-6 justify-center">
+				<div className="flex flex-col  w gap-5">
 					<Label>이름</Label>
 					<InputText
 						placeholder="이름 입력"
@@ -117,9 +117,9 @@ const MyPage = () => {
 			</div>
 
 			<div className="flex flex-row gap-12 justify-center mt-3">
-				<div className="flex flex-col gap-3">
+				<div className="flex w-full flex-col gap-3">
 					<Label>기술 스택</Label>
-					<TechStack techStackSize="half" />
+					<TechStack  />
 				</div>
 			</div>
 		</>
