@@ -1,16 +1,29 @@
-import {techStackMock} from "../../../mock/data/techStackMock.ts";
-const TechStackLabel = () => {
+import type { TechStackType } from "../../../model/TeckStack.ts";
+
+type Props = {
+	stacks: TechStackType[];
+	selected: TechStackType[];
+	onToggle: (stack: TechStackType) => void;
+};
+
+const TechStackLabel = ({ stacks, selected, onToggle }: Props) => {
 	return (
-		<div className="grid grid-cols-8 gap-2">
-			{techStackMock.techStack.map((stack) => (
-				<div
-					key={stack.id}
-					className="w-full h-10 flex items-center justify-center rounded-full border border-main"
-				>
-					{stack.name}
-				</div>
-			))}
+		<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-2">
+			{stacks.map((stack) => {
+				const isActive = selected.some((v) => v.id === stack.id);
+				return (
+					<div
+						key={stack.id}
+						onClick={() => onToggle(stack)}
+						className={`w-full h-10 flex items-center justify-center rounded-full border text-sm cursor-pointer transition
+              ${isActive ? "bg-main text-white border-main" : "bg-white text-black border-main"}`}
+					>
+						{stack.name}
+					</div>
+				);
+			})}
 		</div>
 	);
 };
+
 export default TechStackLabel;
