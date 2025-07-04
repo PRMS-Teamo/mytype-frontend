@@ -7,6 +7,7 @@ import Profile from "../../components/Profile";
 import TechStack from "../../components/TechStack";
 import { useUserStore } from "../../store/userStore.ts";
 import { useMockUser } from "../../hooks/useMockUser";
+import Introduction from "../../components/Introduction";
 
 const MyPage = () => {
 	const { user, setUser } = useUserStore();
@@ -27,9 +28,9 @@ const MyPage = () => {
 
 	return (
 		<>
-			<Profile />
-			<div className="flex flex-row sm:flex-row gap-12 mt-6 justify-center">
-				<div className="flex flex-col  w gap-5">
+			<Profile />?
+			<div className="flex flex-row w-full gap-12 mt-6 justify-center">
+				<div className="flex flex-col w-1/3  gap-2">
 					<Label>이름</Label>
 					<InputText
 						placeholder="이름 입력"
@@ -41,7 +42,7 @@ const MyPage = () => {
 						}}
 					/>
 				</div>
-				<div className="flex flex-col gap-3">
+				<div className="flex flex-col w-1/3 gap-2">
 					<Label>지역</Label>
 					<InputText
 						placeholder="지역 입력"
@@ -53,7 +54,7 @@ const MyPage = () => {
 						}}
 					/>
 				</div>
-				<div className="flex flex-col gap-3">
+				<div className="flex flex-col w-1/3 gap-2">
 					<Label>깃허브</Label>
 					<InputText
 						placeholder="깃허브(아이디) 입력"
@@ -67,8 +68,8 @@ const MyPage = () => {
 				</div>
 			</div>
 
-			<div className="flex flex-row gap-12 mt-3 justify-center">
-				<div className="flex flex-col gap-3">
+			<div className="flex flex-row gap-12 mt-5 justify-center">
+				<div className="flex flex-col w-1/3 gap-2">
 					<Label>새싹 여부</Label>
 					<DropDown
 						options={DROPDOWN_OPTIONS.BEGINNER}
@@ -90,7 +91,7 @@ const MyPage = () => {
 						placeholder="새싹 여부"
 					/>
 				</div>
-				<div className="flex flex-col gap-3">
+				<div className="flex flex-col w-1/3 gap-2">
 					<Label>진행방식</Label>
 					<DropDown
 						options={DROPDOWN_OPTIONS.PROCEED}
@@ -102,7 +103,7 @@ const MyPage = () => {
 						placeholder="진행방식"
 					/>
 				</div>
-				<div className="flex flex-col gap-3">
+				<div className="flex flex-col w-1/3 gap-2">
 					<Label>포지션</Label>
 					<DropDown
 						options={DROPDOWN_OPTIONS.POSITION}
@@ -116,10 +117,17 @@ const MyPage = () => {
 				</div>
 			</div>
 
-			<div className="flex flex-row gap-12 justify-center mt-3">
-				<div className="flex w-full flex-col gap-3">
+			<div className="flex flex-row gap-12 justify-center mt-5">
+				<div className="flex w-full flex-col gap-2">
 					<Label>기술 스택</Label>
 					<TechStack  />
+				</div>
+			</div>
+			<div className="flex flex-row gap-12 justify-center mt-5">
+				<div className="flex w-full flex-col gap-3">
+					<Label>자기소개</Label>
+			<Introduction />
+
 				</div>
 			</div>
 		</>
