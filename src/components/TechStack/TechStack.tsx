@@ -1,11 +1,12 @@
 import SearchBar from "../SearchBar";
 import SelectTechStack from "./SelectTechStack";
 import TechStackLabel from "./TechStackLabel";
-
 import {useSelectTechStack} from "../../hooks/useSelectTechStack.ts";
 
 const TechStack = () => {
 	const { selected,  search, setSearch, select, remove,filteredSearch } = useSelectTechStack();
+	console.log("Tech Stack", selected);
+
 	return (
 		<div className="w-full flex flex-col gap-4 p-4 border border-gray-300 rounded-xl">
 			<SearchBar value={search} onChange={setSearch} />
@@ -13,7 +14,6 @@ const TechStack = () => {
 			<TechStackLabel
 				stacks={filteredSearch}
 				selected={selected}
-
 				onToggle={select}
 			/>
 		</div>

@@ -42,7 +42,6 @@ export const useMockUser = () => {
 			const res = await axios.put('/api/userInfo', user);
 			setUser(res.data);
 			console.log(res.data);
-
 			return res.data;
 		} catch (err) {
 			console.error('프로필 저장 실패', err);
