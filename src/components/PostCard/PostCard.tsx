@@ -1,6 +1,6 @@
 import PostCardLayout from "./PostCardLayout";
 import type { Post } from "../../model/Post";
-import { userMock } from "../../mock/data/userMock"; // userMock 직접 import
+import { userMock } from "../../mock/data/userMock"; 
 
 interface TeamPostCardProps {
   type: "team";
@@ -9,7 +9,7 @@ interface TeamPostCardProps {
 
 interface TeammatePostCardProps {
   type: "teammate";
-  post: typeof userMock.existUser; // ← 여기만 변경!
+  post: typeof userMock.existUser;
 }
 
 type PostCardProps = TeamPostCardProps | TeammatePostCardProps;
@@ -27,7 +27,6 @@ export default function PostCard({ type, post }: PostCardProps) {
     );
   }
 
-  // teammate
   return (
     <PostCardLayout
       date={new Date(post.updatedAt).toISOString().slice(0, 10)}
