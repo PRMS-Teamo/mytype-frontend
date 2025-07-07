@@ -35,7 +35,6 @@ const DropDown = ({ options, value, onChange, placeholder }: DropDownProps) => {
 					}`}
 				/>
 			</div>
-
 			{showDropDown && (
 				<ul className="absolute z-10 w-full mt-2 bg-white border border-gray-300 rounded-xl lg">
 					{options.map((option) => (

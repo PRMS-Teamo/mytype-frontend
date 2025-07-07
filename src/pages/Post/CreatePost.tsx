@@ -1,6 +1,4 @@
-// import Label from "../../components/Label";
-// import InputText from "../../components/InputText";
-// import TechStack from "../../components/TechStack";
+
 import {POST_CREATE} from "../../constants/post/post.ts"
 import Button from "../../components/Button/Button.tsx";
 import Label from "../../components/Label";
