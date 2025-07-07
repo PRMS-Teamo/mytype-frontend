@@ -8,7 +8,10 @@ export const userMock = {
 		beginner: true,
 		proceedMethod:"오프라인",
 		position: "웹 프론트엔드",
+		introduction:"안녕하세요, 홍길동입니다. 웹 프론트엔드 개발을 하고 있습니다.",
+		techStack: ["HTML", "JavaScript", "Ruby"],
 		hasProfile:true,
+		public:true,
 	},
 	newUser:{
 		id: 2,
@@ -20,5 +23,6 @@ export const userMock = {
 		proceedMethod:"",
 		position: "",
 		hasProfile:false,
+		public:false,
 	}
 }

@@ -8,6 +8,9 @@ import TechStack from "../../components/TechStack";
 import { useUserStore } from "../../store/userStore.ts";
 import { useMockUser } from "../../hooks/useMockUser";
 import Introduction from "../../components/Introduction";
+import Information from "../../assets/icons/information.svg?react"
+import {MYPAGE} from "../../constants/mypage/mypage.ts";
+import Button from "../../components/Button";
 
 const MyPage = () => {
 	const { user, setUser } = useUserStore();
@@ -15,7 +18,7 @@ const MyPage = () => {
 
 	useEffect(() => {
 		if (!user) return;
-
+		if (user.hasProfile) return;
 		const loadUserInfo = async () => {
 			const userData = await fetchUserInfo();
 			if (userData) {
@@ -28,7 +31,7 @@ const MyPage = () => {
 
 	return (
 		<>
-			<Profile />?
+			<Profile />
 			<div className="flex flex-row w-full gap-12 mt-6 justify-center">
 				<div className="flex flex-col w-1/3  gap-2">
 					<Label>이름</Label>
@@ -120,14 +123,34 @@ const MyPage = () => {
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-2">
 					<Label>기술 스택</Label>
-					<TechStack  />
+					<TechStack />
 				</div>
 			</div>
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-3">
 					<Label>자기소개</Label>
-			<Introduction />
-
+					<Introduction value={user?.introduction ?? ''} onChange={(value) => {
+						if(!user) return; setUser({...user,introduction: value});
+					}} />
+				</div>
+			</div>
+			<div className="flex flex-row gap-12 items-center  justify-center mt-5">
+				<div className="flex w-full  gap-1">
+					<Information />
+					{MYPAGE.PUBLIC_OPTIONS}
+				</div>
+			</div>
+			<div className="flex flex-row gap-12 items-center  justify-center mt-5">
+				<div className="flex w-full  gap-2">
+				<Button variant="primary" onClick={()=>{
+					if(!user) return;
+					setUser({ ...user, public: true });
+				}}>공개</Button>
+					<Button variant="primaryGray" onClick={()=>{
+						if(!user) return;
+						console.log(user);
+						setUser({ ...user, public: false });
+					}}>비공개</Button>
 				</div>
 			</div>
 		</>

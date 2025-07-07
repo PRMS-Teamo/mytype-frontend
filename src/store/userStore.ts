@@ -9,7 +9,10 @@ export interface User {
   beginner?: boolean ;
   proceedMethod?: string;
   position?: string;
+  techStack: string[]
+  introduction?: string;
   hasProfile: boolean;
+  public:boolean;
 }
 
 interface UserStore {
