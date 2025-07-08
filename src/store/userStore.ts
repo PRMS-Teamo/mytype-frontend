@@ -13,6 +13,7 @@ export interface User {
   introduction?: string;
   hasProfile: boolean;
   public:boolean;
+  updatedAt?: string;
 }
 
 interface UserStore {
