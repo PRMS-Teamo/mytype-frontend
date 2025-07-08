@@ -21,6 +21,7 @@ export default function Label({ type, children }: LabelProps) {
       case "포지션 일치":
         return "bg-positionMatch";
       case "기술 일치":
+        return "bg-main"
       case "기술 부분 일치":
         return "bg-skillMatch";
       case "해당 없음":
