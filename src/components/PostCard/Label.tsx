@@ -14,18 +14,23 @@ interface LabelProps {
 
 export default function Label({ type, children }: LabelProps) {
   const baseStyle =
-    "min-w-[75px] h-[26px] px-3 flex items-center justify-center rounded-full text-white text-xs";
+    "min-w-[75px] h-[26px] px-3 flex items-center justify-center  border rounded-full text-white text-xs";
 
-  const bgColor =
-    type === "포지션 일치"
-      ? "bg-positionMatch"
-      : type === "기술 일치" || type === "기술 부분 일치"
-      ? "bg-skillMatch"
-      : type === "해당 없음"
-      ? "bg-noMatch"
-      : type === "로그인 후 일치 여부 확인가능"
-      ? "bg-needLogin"
-      : "bg-gray-200";
+  const bgColor = (() => {
+    switch (type) {
+      case "포지션 일치":
+        return "bg-positionMatch";
+      case "기술 일치":
+      case "기술 부분 일치":
+        return "bg-skillMatch";
+      case "해당 없음":
+        return "bg-noMatch";
+      case "로그인 후 일치 여부 확인가능":
+        return "bg-needLogin";
+      default:
+        return "bg-gray-200";
+    }
+  })();
 
   return <div className={`${baseStyle} ${bgColor}`}>{children}</div>;
 }

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
-import Label from "../Label";
+import Label from "./Label.tsx";
+import type {LabelType} from "./Label.tsx";
 
 interface PostCardLayoutProps {
   date: string;
   isOnline: boolean;
   content: string;
-  labels: string[]; 
+  labels: LabelType[];
   techStack: string[];
 }
 
@@ -22,7 +23,6 @@ export default function PostCardLayout({
   const visibleStacks = techStack.slice(0, maxVisible);
   const overflowStacks = techStack.slice(maxVisible);
 
-  
   return (
     <div className="w-[350px] h-[370px] rounded-[20px] bg-white border border-gray-200 flex flex-col p-4">
       <div className="flex justify-between mx-4 mt-3 text-sm text-gray-600">
@@ -41,6 +41,7 @@ export default function PostCardLayout({
           </Label>
           
         ))}
+
       </div>
 
       <div className="mt-6 mx-4 flex gap-2 flex-wrap text-xs relative">

@@ -1,4 +1,3 @@
-// components/CalendarModal/CalendarModal.tsx
 import 'react-calendar/dist/Calendar.css';
 import Calendar from 'react-calendar';
 import { useState, useCallback, useEffect } from 'react';
