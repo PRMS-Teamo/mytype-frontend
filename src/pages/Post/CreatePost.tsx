@@ -6,6 +6,10 @@ import InputText from "../../components/InputText";
 import {PLACEHOLDER} from "../../constants/placeholder/placeholders.ts";
 import TextArea from "../../components/TextArea";
 import TechStack from "../../components/TechStack";
+import PositionBtn from "../../components/PositionBtn";
+import {formatNumber} from "../../util/formatNumber.ts";
+import Calendar from "../../components/Calendar/Calendar.tsx";
+import ProceedMethod from "../../components/ProceedMethod";
 
 const CreatePost = () => {
 
@@ -26,10 +30,37 @@ const CreatePost = () => {
 					<Label>{POST_CREATE.CONTENT_LABEL}</Label>
 						<TextArea/>
 				</div>
+				<div>
+					<Label>{POST_CREATE.RECRUITMENT_FIELD_LABEL}</Label>
+					<PositionBtn/>
+				</div>
+				<div className="flex flex-col gap-2">
+					<Label>{POST_CREATE.RECRUITMENT_COUNT_LABEL}</Label>
+					<div className="inline-flex"><InputText placeholder="인원" inputSize="small" type="text" onInput={(e)=>{
+						e.currentTarget.value =formatNumber(e.currentTarget.value)
+					}}/>
+					</div>
+				</div>
 				<div className="flex flex-col gap-2 w-full">
 					<Label>{POST_CREATE.TECH_STACK_LABEL}</Label>
 					<TechStack />
 				</div>
+				<div className="flex gap-5 w-full mb-5 ">
+					<div className="flex  flex-col  gap-2" >
+						<Label>{POST_CREATE.PROCEED_METHOD_LABEL}</Label>
+						<ProceedMethod/>
+					</div>
+					<div className="flex flex-col gap-2" >
+						<Label>{POST_CREATE.REGION_LABEL}</Label>
+						<InputText placeholder='지역' inputSize="tiny" />
+					</div>
+					<div className="flex flex-col gap-2" >
+						<Label>{POST_CREATE.DEADLINE_LABEL}</Label>
+						<Calendar/>
+					</div>
+
+				</div>
+
 			</div>
 
 		</div>
