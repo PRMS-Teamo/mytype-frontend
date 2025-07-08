@@ -27,4 +27,6 @@ export const POST_CREATE={
 	FRONTEND_COUNT_LABEL: '프론트엔드 인원',
 	BACKEND_COUNT_LABEL: '백엔드 인원',
 	DEADLINE_LABEL:"마감기한",
+	RECRUITMENT_FIELD_LABEL: '모집 분야',
+	RECRUITMENT_COUNT_LABEL: '모집 인원',
 }

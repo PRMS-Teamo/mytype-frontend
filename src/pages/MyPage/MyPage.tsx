@@ -37,7 +37,7 @@ const MyPage = () => {
 					<Label>이름</Label>
 					<InputText
 						placeholder="이름 입력"
-						inputSize="small"
+						inputSize="medium"
 						value={user?.nickname ?? ''}
 						onChange={(e) => {
 							if (!user) return;
@@ -49,7 +49,7 @@ const MyPage = () => {
 					<Label>지역</Label>
 					<InputText
 						placeholder="지역 입력"
-						inputSize="small"
+						inputSize="medium"
 						value={user?.region ?? ''}
 						onChange={(e) => {
 							if (!user) return;
@@ -61,7 +61,7 @@ const MyPage = () => {
 					<Label>깃허브</Label>
 					<InputText
 						placeholder="깃허브(아이디) 입력"
-						inputSize="small"
+						inputSize="medium"
 						value={user?.github ?? ''}
 						onChange={(e) => {
 							if (!user) return;
@@ -109,7 +109,7 @@ const MyPage = () => {
 				<div className="flex flex-col w-1/3 gap-2">
 					<Label>포지션</Label>
 					<DropDown
-						options={DROPDOWN_OPTIONS.POSITION}
+						options={DROPDOWN_OPTIONS.POSITION.map((option) => option.label)}
 						value={user?.position ?? ''}
 						onChange={(value) => {
 							if (!user) return;
