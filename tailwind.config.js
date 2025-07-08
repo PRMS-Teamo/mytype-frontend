@@ -11,7 +11,6 @@ module.exports = {
         gray20: "#AAA",
         gray30: "#E6E6E6",
         black: "#181D18",
-        positionMatch: "#5932EA",
         skillMatch: "#DEBFEE",
         noMatch: "#C3C3C3",
         needLogin: "#FF6464",
