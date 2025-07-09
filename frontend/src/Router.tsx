@@ -9,6 +9,7 @@ import TeammateList from "./pages/Teammate/TeammateList";
 import MyPage from "./pages/MyPage";
 import Search from "./pages/Search/Search";
 import CreatePost from "./pages/Post/CreatePost.tsx";
+import Makers from "./pages/Maker";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "mypage",
-        element: <MyPage />,     
+        element: <MyPage />,
       },
       {
         path: "findteam",
@@ -46,7 +47,8 @@ const router = createBrowserRouter([
           // { path: "write", element: <TeammateWrite /> },
         ],
       },
-      { path: "post" ,element:<CreatePost/>},
+      { path: "post", element: <CreatePost /> },
+      { path: "madepeople", element: <Makers /> },
     ],
   },
 ]);
