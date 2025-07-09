@@ -19,9 +19,9 @@ export default function Label({ type, children }: LabelProps) {
   const bgColor = (() => {
     switch (type) {
       case "포지션 일치":
-        return "bg-positionMatch";
+        return "bg-main";
       case "기술 일치":
-        return "bg-main"
+        return "bg-skillMatch"
       case "기술 부분 일치":
         return "bg-skillMatch";
       case "해당 없음":
