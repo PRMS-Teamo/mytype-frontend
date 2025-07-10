@@ -141,14 +141,18 @@ const MyPage = () => {
 					}} />
 				</div>
 			</div>
-			<div className="flex flex-row gap-12 items-center  justify-center mt-5">
-				<div className="flex w-full  gap-1">
+			<div className="flex flex-row gap-12 items-center  mt-5">
+				<div className="flex w-full gap-2 align-middle items-center ">
 					<Information />
 					{MYPAGE.PUBLIC_OPTIONS}
+					{user?.public? (
+						<span className="text-main font-bold text-lg">공개 중</span>
+					) :
+						<span className="font-bold text-lg text-gray">비공개 중</span>}
 				</div>
 			</div>
 			<div className="flex flex-row gap-12 items-center  justify-center mt-5">
-				<div className="flex w-full  gap-2">
+				<div className="flex w-full gap-2">
 				<Button variant="primary" onClick={()=>{
 					if(!user) return;
 					setUser({ ...user, public: true });
