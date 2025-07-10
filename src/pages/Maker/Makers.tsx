@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from "react";
-import "aos/dist/aos.css";
-import AOS from "aos";
+import React, { useEffect, useState } from 'react'
+import 'aos/dist/aos.css'
+import AOS from 'aos'
 
 const makers = [
   {
-    name: "한지웅",
-    github: "https://github.com/scorchedrice",
-    avatar: "https://github.com/scorchedrice.png",
-    role: "BACK",
+    name: '한지웅',
+    github: 'https://github.com/scorchedrice',
+    avatar: 'https://github.com/scorchedrice.png',
+    role: 'BACK',
   },
   {
-    name: "김종민",
-    github: "https://github.com/raco1001",
-    avatar: "https://github.com/raco1001.png",
-    role: "BACK",
+    name: '김종현',
+    github: 'https://github.com/raco1001',
+    avatar: 'https://github.com/raco1001.png',
+    role: 'BACK',
   },
   {
-    name: "김희영",
-    github: "https://github.com/heeyoung123",
-    avatar: "https://github.com/heeyoung123.png",
-    role: "FRONT",
+    name: '김희영',
+    github: 'https://github.com/heeyoung123',
+    avatar: 'https://github.com/heeyoung123.png',
+    role: 'FRONT',
   },
   {
-    name: "신혜민",
-    github: "https://github.com/nyem1n",
-    avatar: "https://github.com/nyem1n.png",
-    role: "FRONT",
+    name: '신혜민',
+    github: 'https://github.com/nyem1n',
+    avatar: 'https://github.com/nyem1n.png',
+    role: 'FRONT',
   },
   {
-    name: "조민우",
-    github: "https://github.com/mauercho",
-    avatar: "https://github.com/mauercho.png",
-    role: "FRONT",
+    name: '조민우',
+    github: 'https://github.com/mauercho',
+    avatar: 'https://github.com/mauercho.png',
+    role: 'FRONT',
   },
-];
+]
 
 const roleIcon = {
   FRONT: (
@@ -58,18 +58,18 @@ const roleIcon = {
       <path d="M6 17v2m12-2v2" strokeWidth="2" />
     </svg>
   ),
-};
+}
 
 const AnimatedText = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
   useEffect(() => {
-    setShow(true);
+    setShow(true)
     const interval = setInterval(() => {
-      setShow(false);
-      setTimeout(() => setShow(true), 200);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+      setShow(false)
+      setTimeout(() => setShow(true), 200)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
   return (
     <div className="flex justify-center mb-12">
       <span
@@ -77,16 +77,16 @@ const AnimatedText = () => {
           bg-gradient-to-r from-main via-blue-400 to-main text-transparent bg-clip-text
           drop-shadow-lg
           transition-all duration-700
-          ${show ? "animate-slide-in" : "opacity-0 translate-y-8"}
+          ${show ? 'animate-slide-in' : 'opacity-0 translate-y-8'}
         `}
         style={{
-          WebkitTextStroke: "2px #fff",
+          WebkitTextStroke: '2px #fff',
           textShadow: `
             0 0 16px #7B5CFA,
             0 0 32px #5932EA,
             2px 2px 0 #fff
           `,
-          letterSpacing: "0.2em",
+          letterSpacing: '0.2em',
         }}
       >
         만든 사람들
@@ -113,19 +113,19 @@ const AnimatedText = () => {
         `}
       </style>
     </div>
-  );
-};
+  )
+}
 
 const Makers = () => {
   useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-  }, []);
+    AOS.init({ duration: 800, once: true })
+  }, [])
 
   return (
     <div
       className="h-full w-full flex flex-col justify-center items-center overflow-hidden"
       style={{
-        background: "linear-gradient(120deg, #fff 0%, #fff 65%, #f3f0fd 100%)",
+        background: 'linear-gradient(120deg, #fff 0%, #fff 65%, #f3f0fd 100%)',
       }}
     >
       {/* 그라데이션 애니메이션 keyframes */}
@@ -146,7 +146,7 @@ const Makers = () => {
             data-aos="fade-up"
             data-aos-delay={i * 100}
             className="backdrop-blur-lg bg-white/80 border border-white/40 shadow-xl rounded-3xl flex flex-col items-center p-8 transition-transform hover:scale-105 hover:shadow-2xl"
-            style={{ boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.15)" }}
+            style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)' }}
           >
             <img
               src={maker.avatar}
@@ -156,12 +156,12 @@ const Makers = () => {
             <div className="mb-2">
               <span
                 className={`px-4 py-1 rounded-full font-bold shadow-sm text-sm flex items-center ${
-                  maker.role === "FRONT"
-                    ? "bg-gradient-to-r from-blue-400 to-blue-600 text-white"
-                    : "bg-gradient-to-r from-green-400 to-green-600 text-white"
+                  maker.role === 'FRONT'
+                    ? 'bg-gradient-to-r from-blue-400 to-blue-600 text-white'
+                    : 'bg-gradient-to-r from-green-400 to-green-600 text-white'
                 }`}
               >
-                {roleIcon[maker.role as "FRONT" | "BACK"]} {maker.role}
+                {roleIcon[maker.role as 'FRONT' | 'BACK']} {maker.role}
               </span>
             </div>
             <div className="text-2xl font-extrabold mb-1 bg-gradient-to-r from-main to-blue-400 text-transparent bg-clip-text drop-shadow">
@@ -188,7 +188,7 @@ const Makers = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Makers;
+export default Makers
