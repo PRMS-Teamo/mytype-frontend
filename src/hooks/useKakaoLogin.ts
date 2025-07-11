@@ -1,50 +1,54 @@
-import { useCallback } from 'react';
-import { useModalStore } from '../store/modalStore';
-import { useUserStore } from '../store/userStore';
+import {useUserStore} from "../store/userStore.ts";
+import {useEffect} from "react";
+import {useModalStore} from "../store/modalStore.ts";
 
-interface KakaoProfile {
-  id: number;
-  kakao_account: {
-    profile: {
-      nickname: string;
-    };
-  };
-}
-
-const useKakaoLogin = () => {
-  const closeModal = useModalStore((s) => s.closeModal);
+export default function useKakaoLogin() {
   const setUser = useUserStore((s) => s.setUser);
-
-  const login = useCallback(() => {
-    if (!window.Kakao || !window.Kakao.Auth) {
-      console.error('Kakao SDK가 초기화되지 않았습니다.');
-      return;
+  const logout = useUserStore((s) => s.clearUser);
+  const { closeModal } = useModalStore();
+  function login(platform: string) {
+    const loginUrl = `${import.meta.env.VITE_BACKEND_URL}/auth/${platform}`;
+    const popup = window.open(
+      loginUrl,
+      "Teamo 로그인",
+      'width=500,height=600,menubar=no,toolbar=no,location=no,status=no'
+    )
+    if (!popup) {
+      alert("팝업 차단을 확인해주세요.")
+      return
+    }
+  }
+  useEffect(() => {
+    function handleMessage(e: MessageEvent) {
+      if (e.origin !== import.meta.env.VITE_BACKEND_URL) {
+        console.warn("origin 다름", e.origin);
+      };
+      console.log('received Data', e.data);
+      const receivedData = e.data;
+      console.log('received Data', receivedData);
+      const userData = {
+        id: receivedData.userId,
+        nickname: receivedData.nickname,
+        address: receivedData.address,
+        github: receivedData.github_url, //BE: 추후 수정
+        beginner: receivedData.beginner, //BE: 항목 생성
+        proceedMethod: receivedData.proceedMethod, // BE: 항목 생성
+        position: receivedData.position_id,
+        techStack: receivedData.user_stacks,
+        introduction: receivedData.introduction, // BE: 항목 생성
+        public: receivedData.public, // BE: 항목 생성
+      }
+      localStorage.setItem('accessToken', receivedData.accessToken);
+      setUser(userData);
+      closeModal();
     }
 
-    window.Kakao.Auth.login({
-      success: () => {
-        window.Kakao.API.request({
-          url: '/v2/user/me',
-          success: (res: KakaoProfile) => {
-            const userInfo = {
-              id: String(res.id),
-              nickname: res.kakao_account.profile.nickname,
-            };
-            setUser(userInfo);
-            closeModal();
-          },
-          fail: (err: unknown) => {
-            console.error('유저 정보 요청 실패', err);
-          },
-        });
-      },
-      fail: (err: unknown) => {
-        console.error('카카오 로그인 실패', err);
-      },
-    });
-  }, [closeModal, setUser]);
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [setUser])
 
-  return { login };
-};
-
-export default useKakaoLogin;
+  return {
+    login,
+    logout,
+  }
+}

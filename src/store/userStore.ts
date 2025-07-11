@@ -3,17 +3,14 @@ import { persist } from 'zustand/middleware';
 export interface User {
   userId: string;
   nickname: string;
-  email?: string;
-  region?: string;
+  address?: string;
   github?: string;
   beginner?: boolean ;
   proceedMethod?: string;
   position?: string;
-  techStack: string[];
+  techStack?: string[];
   introduction?: string;
-  hasProfile: boolean;
-  public:boolean;
-  updatedAt?: string;
+  public?:boolean;
 }
 
 interface UserStore {
@@ -30,7 +27,11 @@ export const useUserStore = create(
       user: null,
       isLoggedIn: false,
       setUser: (user) => set({ user, isLoggedIn: true }),
-      clearUser: () => set({ user: null, isLoggedIn: false }),
+      clearUser: () => {
+        set({ user: null, isLoggedIn: false })
+        localStorage.removeItem('refreshToken'); // 토큰 지우는 로직 추가
+        localStorage.removeItem('accessToken');
+      },
     }),
     {
       name: 'user-storage',
