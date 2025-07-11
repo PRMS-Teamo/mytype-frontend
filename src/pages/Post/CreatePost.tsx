@@ -10,8 +10,11 @@ import Label from "../../components/Label";
 import { POST_CREATE } from "../../constants/post/post";
 import { PLACEHOLDER } from "../../constants/placeholder/placeholders";
 import { formatNumber } from "../../util/formatNumber";
-import type { PositionType } from "../../model/Post.ts";
-import { useState } from "react";
+import type { PositionType, Post } from "../../model/Post.ts";
+import {useEffect, useState} from "react";
+import {useMockPost} from "../../hooks/useMockPost.ts";
+import {useUserStore} from "../../store/userStore.ts";
+
 
 type PositionDetail = {
 	count: number;
@@ -19,41 +22,95 @@ type PositionDetail = {
 };
 
 const CreatePost = () => {
-	const { createPost, setCreatePost } = usePostStore();
-
+	const { createPost, setCreatePost ,myPost } = usePostStore();
+	const {user} = useUserStore();
 	const [position, setPosition] = useState<PositionType | null>(null);
 	const [positionDetails, setPositionDetails] = useState<Partial<Record<PositionType, PositionDetail>>>({});
-
+	const isEditMode = myPost !== null;
+	const { add,edit} = useMockPost();
+	useEffect(() => {
+		if (myPost?.positionCount) {
+			setPositionDetails(myPost.positionCount);
+			setCreatePost({
+				positionCount: myPost.positionCount,
+				techStack: myPost.techStack,
+			});
+		}
+	}, [myPost]);
 	const handleSubmit = () => {
-		const finalPost = {
+		if (!user) {
+			alert("로그인 후 이용해주세요.");
+			return;
+		}
+		const allTechStacks = Object.values(positionDetails)
+			.flatMap((detail) => detail.techStack)
+			.filter((item, index, self) => self.indexOf(item) === index);
+		const finalPost: Post = {
 			...createPost,
+			techStack: allTechStacks,
 			positionCount: positionDetails,
+			userId: user.userId,
+			nickname: user.nickname,
 		};
-		console.log("게시글 데이터:", finalPost);
+		setCreatePost({
+			userId: user.userId,
+			nickname: user.nickname,
+		});
+		add(finalPost);
+	};
+
+
+	const handleUpdate = () => {
+		if (!user || !myPost) {
+			alert("로그인 또는 게시글 정보를 확인해주세요.");
+			return;
+		}
+
+		const allTechStacks = Object.values(positionDetails)
+			.flatMap((detail) => detail.techStack)
+			.filter((item, index, self) => self.indexOf(item) === index);
+
+		const updatedPost: Post = {
+			...createPost,
+			id: myPost.id,
+			techStack: allTechStacks,
+			positionCount: positionDetails,
+			userId: user.userId,
+			nickname: user.nickname,
+		};
+		console.log("🛠 최종 수정 요청 post 객체:", updatedPost);
+		edit(updatedPost);
 	};
 
 	const handleCountChange = (value: string) => {
 		if (!position) return;
 		const count = parseInt(value.replace(/,/g, ""), 10) || 0;
-
-		setPositionDetails((prev) => ({
-			...prev,
-			[position]: {
-				...(prev[position] || { count: 0, techStack: [] }),
-				count,
-			},
-		}));
+		setPositionDetails((prev) => {
+			const updated = {
+				...prev,
+				[position]: {
+					...(prev[position] || { count: 0, techStack: [] }),
+					count,
+				},
+			};
+			setCreatePost({ positionCount: updated });
+			return updated;
+		});
 	};
 
-	const handleTechStackChange = (updated: string[]) => {
+	const handleTechStackChange = (updatedTechStacks: string[]) => {
 		if (!position) return;
-		setPositionDetails((prev) => ({
-			...prev,
-			[position]: {
-				...(prev[position] || { count: 0, techStack: [] }),
-				techStack: updated,
-			},
-		}));
+		setPositionDetails((prev) => {
+			const updated = {
+				...prev,
+				[position]: {
+					...(prev[position] || { count: 0, techStack: [] }),
+					techStack: updatedTechStacks,
+				},
+			};
+			setCreatePost({ positionCount: updated });
+			return updated;
+		});
 	};
 
 	const currentCount = position ? positionDetails[position]?.count?.toString() ?? "0" : "0";
@@ -64,8 +121,8 @@ const CreatePost = () => {
 			<div className="flex flex-col gap-5">
 				<div className="flex justify-between items-center">
 					<div className="text-black font-bold text-2xl">게시글 작성</div>
-					<Button variant="primary" onClick={handleSubmit}>
-						작성하기
+					<Button variant="primary" onClick={isEditMode? handleUpdate : handleSubmit}>
+						{isEditMode ? "수정하기" : "작성하기"}
 					</Button>
 				</div>
 

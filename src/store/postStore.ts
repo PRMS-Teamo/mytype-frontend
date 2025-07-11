@@ -1,19 +1,21 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { PositionType, PositionDetail, CreatePost, Post } from "../model/Post";
+import type { PositionType, PositionDetail, Post } from "../model/Post";
 
 interface PostState {
-  newPost: Post[];
-  createPost: CreatePost;
-  setCreatePost: (updated: Partial<CreatePost>) => void;
+  myPost: Post | null;
+  createPost: Post;
+  setCreatePost: (updated: Partial<Post>) => void;
+  setMyPost: (post: Post) => void;
   updatePositionDetail: (position: PositionType, detail: PositionDetail) => void;
-  addPost: (post: Post) => void;
-  deletePost: (id: number) => void;
+  clearMyPost: () => void;
 }
 
-const defaultCreatePost: CreatePost = {
-  author: "",
-  filter:"",
+const defaultCreatePost: Post = {
+  id:"",
+  userId: "",
+  nickname: "",
+  filter: "팀원 구해요",
   title: "",
   content: "",
   createdAt: new Date().toISOString(),
@@ -27,13 +29,13 @@ const defaultCreatePost: CreatePost = {
 export const usePostStore = create<PostState>()(
   persist(
     (set) => ({
-      newPost: [],
+      myPost: null,
       createPost: defaultCreatePost,
       setCreatePost: (updated) =>
         set((state) => ({
           createPost: { ...state.createPost, ...updated },
         })),
-
+      setMyPost: (post) => set(() => ({ myPost: post })),
       updatePositionDetail: (position, detail) =>
         set((state) => ({
           createPost: {
@@ -44,19 +46,14 @@ export const usePostStore = create<PostState>()(
             },
           },
         })),
-
-      addPost: (post) =>
-        set((state) => ({
-          newPost: [...state.newPost, post],
-        })),
-
-      deletePost: (id) =>
-        set((state) => ({
-          newPost: state.newPost.filter((post) => post.id !== id),
-        })),
+      clearMyPost: () => set(() => ({ myPost: null })),
     }),
     {
       name: "post-storage",
+      partialize: (state) => ({
+        createPost: state.createPost,
+        myPost: state.myPost, // ✅ 추가
+      }),
     }
   )
 );

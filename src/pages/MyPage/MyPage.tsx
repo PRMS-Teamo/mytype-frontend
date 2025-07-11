@@ -27,7 +27,7 @@ const MyPage = () => {
 		};
 
 		loadUserInfo();
-	}, [user?.id]);
+	}, [user?.userId]);
 
 	const handleTechStackChange = (updatedTechStack: string[]) => {
 		if (!user) return;
