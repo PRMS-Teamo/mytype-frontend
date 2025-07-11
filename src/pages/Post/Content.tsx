@@ -1,14 +1,14 @@
-import {formatDate} from "../../util/formatDate.ts";
+import { formatDate } from "../../util/formatDate";
+import type { Post } from "../../model/Post";
 
-const Post=()=>{
-	const date=new Date()
-	return(
-			<div>
-				<div className="text-main text-[0.9375rem]">{formatDate(date)}</div>
-				<div className="text-2xl font-bold text-black mt-4">제목</div>
-				<div className="text-[0.9375rem] text-gray mt-7">내용이 어쩌구 저쩌구 저쩌구 내용이 어쩌구 저쩌구 저쩌구 내용이 어쩌구 저쩌구 저쩌구  내용이 어쩌구 저쩌구 저쩌구 내용이 어쩌구 저쩌구 저쩌구 내용이 어쩌구 저쩌구 저쩌구 내용이 어쩌구 저쩌구 저쩌구 내용이 어쩌구 저쩌구 저쩌구  </div>
-			</div>
+const Content = ({ post }: { post: Post }) => {
+	return (
+		<>
+			<div className="text-main text-[0.9375rem]">{formatDate(new Date(post.createdAt))}</div>
+			<div className="text-2xl font-bold text-black mt-4">{post.title}</div>
+			<div className="text-[0.9375rem] text-gray mt-7">{post.content}</div>
+		</>
+	);
+};
 
-	)
-}
-export default Post;
+export default Content;

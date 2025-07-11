@@ -1,6 +1,6 @@
 export const userMock = {
   existUser: {
-    id: '1',
+    userId: '1',
     nickname: "홍길동",
     email: "1@naver.com",
     region: "강남구",
@@ -12,10 +12,10 @@ export const userMock = {
     public: true,
     updatedAt: "2025-07-03T10:00:00Z",
     introduction: "함께 성장할 수 있는 백엔드 팀을 찾고 있어요!",
-    techStack: ["React", "TypeScript", "Node.js"],
+    techStack: ["HTML", "TypeScript", "CSS"],
   },
   newUser: {
-    id: '2',
+    userId: '2',
     nickname: "",
     email: "",
     region: "",
@@ -31,7 +31,7 @@ export const userMock = {
   },
   list: [
     {
-      id: '1',
+      userId: '1',
       nickname: "홍길동",
       email: "1@naver.com",
       region: "강남구",
@@ -46,7 +46,7 @@ export const userMock = {
       techStack: ["React", "TypeScript", "Node.js"],
     },
     {
-      id: '2',
+      userId: '2',
       nickname: "이수현",
       email: "soo@naver.com",
       region: "종로구",
@@ -61,7 +61,7 @@ export const userMock = {
       techStack: ["NestJS", "PostgreSQL", "TypeScript"],
     },
     {
-      id: '3',
+      userId: '3',
       nickname: "정민재",
       email: "mj@naver.com",
       region: "서초구",
@@ -76,7 +76,7 @@ export const userMock = {
       techStack: ["Figma", "Illustrator"],
     },
     {
-      id: '4',
+      userId: '4',
       nickname: "박지은",
       email: "je@naver.com",
       region: "송파구",

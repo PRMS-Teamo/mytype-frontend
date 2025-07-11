@@ -10,7 +10,7 @@ function Layout() {
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-auto">
         <Header />
-        <main className="flex-1 overflow-auto px-32 py-4">
+        <main className="flex-1 overflow-auto px-32 py-8">
           <Outlet />
         </main>
         <ToggleModal />

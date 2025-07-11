@@ -17,19 +17,17 @@ export type PositionDetail = {
   techStack: string[];
 };
 
-export interface CreatePost {
+export interface Post {
+  id:string;
+  userId: string;
+  nickname: string;
   filter:string;
   title: string;
   content: string;
-  author: string;
   createdAt: string
   region: string;
   proceedMethod: string;
   deadline: string;
   positionCount: Partial<Record<PositionType, PositionDetail>>;
   techStack: string[];
-}
-
-export interface Post extends CreatePost {
-  id: number;
 }

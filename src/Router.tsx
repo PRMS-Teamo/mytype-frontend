@@ -47,7 +47,9 @@ const router = createBrowserRouter([
           // { path: "write", element: <TeammateWrite /> },
         ],
       },
-      { path: 'post', element: <CreatePost /> },
+      {
+        path: 'post', element: <CreatePost />,
+      },
       { path: 'madepeople', element: <Makers /> },
     ],
   },
