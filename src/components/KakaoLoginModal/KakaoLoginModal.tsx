@@ -33,7 +33,7 @@ const KakaoLoginModal = () => {
           />
 
           {/* 카카오 로그인 버튼 */}
-          <button onClick={login} className="w-full flex justify-center mt-6">
+          <button onClick={() => login("kakao")} className="w-full flex justify-center mt-6">
             <img
               src={kakao_login_medium_wide}
               alt="카카오 로그인"
