@@ -14,16 +14,18 @@ export default function TeamList() {
   );
 
   return (
-    <div className="w-full max-w-[1150px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 p-6">
-      {sortedPosts.map((post) => (
-        <div
-          key={post.id}
-          onClick={() => handleClick(post.id)}
-          className="cursor-pointer"
-        >
-          <PostCard type="team" post={post} />
-        </div>
-      ))}
+    <div className="overflow-x-auto">
+      <div className="w-[1140px] grid grid-cols-3 gap-6 p-10 mt-8">
+        {sortedPosts.map((post) => (
+          <div
+            key={post.id}
+            onClick={() => handleClick(post.id)}
+            className="cursor-pointer"
+          >
+            <PostCard type="team" post={post} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -73,7 +73,7 @@ export const postMock: Post[] = [
     filter: "팀원 구해요",
     title: "웹소켓 기반 채팅 서비스에 관심 있는 분?",
     content: "실시간 서비스에 관심 있으면 부담 없이 지원해주세요!",
-    author: "최윤아",
+    author: "홍길동",
     createdAt: new Date("2025-07-03T09:15:00Z").toISOString(),
     region: "대전",
     proceedMethod: "온/오프라인 병행",
