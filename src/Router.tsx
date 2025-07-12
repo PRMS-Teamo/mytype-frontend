@@ -2,10 +2,10 @@ import { createBrowserRouter } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
 import Intro from './pages/Intro'
 import Home from './pages/Home'
-import Post from './pages/Post/Post'
 import TeamList from './pages/Team/TeamList'
 import TeamDetail from './pages/Team/TeamDetail'
 import TeammateList from './pages/Teammate/TeammateList'
+import TeammateDetail from './pages/Teammate/TeammateDetail'
 import MyPage from './pages/MyPage'
 import Search from './pages/Search/Search'
 import CreatePost from './pages/Post/CreatePost.tsx'
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
         path: 'findteammate',
         children: [
           { index: true, element: <TeammateList /> },
-          { path: ':id', element: <Post /> },
+          { path: ':id', element: <TeammateDetail /> },
           // { path: "write", element: <TeammateWrite /> },
         ],
       },

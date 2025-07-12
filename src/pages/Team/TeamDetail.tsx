@@ -55,7 +55,8 @@ console.log("user데이터",user);
     <div className="border border-gray-300 rounded-lg h-full">
       <div className="m-12">
         <Content post={post} />
-        <ProjectType post={post} /> {isAuthor ? <Comments /> : <WriteComment />}
+        <ProjectType post={post} />
+        {isAuthor ? <Comments /> : <WriteComment />}
       </div>
     </div>
   );
