@@ -1,9 +1,10 @@
 import {useUserStore} from "../store/userStore.ts";
 import {useEffect} from "react";
 import {useModalStore} from "../store/modalStore.ts";
-
+import {useNavigate} from "react-router-dom";
 export default function useKakaoLogin() {
   const setUser = useUserStore((s) => s.setUser);
+  const nav=useNavigate();
   const logout = useUserStore((s) => s.clearUser);
   const { closeModal } = useModalStore();
   function login(platform: string) {
@@ -22,12 +23,20 @@ export default function useKakaoLogin() {
     function handleMessage(e: MessageEvent) {
       if (e.origin !== import.meta.env.VITE_BACKEND_URL) {
         console.warn("origin 다름", e.origin);
-      };
+      }
       console.log('received Data', e.data);
       const receivedData = e.data;
+
+      if (receivedData.status === "NEW") {
+        nav('/mypage');
+        console.log("신규 유저");
+        return;
+      } else if (receivedData.status === "EXISTING") {
+        console.log("기존 유저");
+      }
       console.log('received Data', receivedData);
       const userData = {
-        id: receivedData.userId,
+        userId: receivedData.userId,
         nickname: receivedData.nickname,
         address: receivedData.address,
         github: receivedData.github_url, //BE: 추후 수정

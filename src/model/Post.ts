@@ -18,6 +18,7 @@ export type PositionDetail = {
 };
 
 export interface Post {
+  postType: PostType;
   id:string;
   userId: string;
   nickname: string;

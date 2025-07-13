@@ -1,15 +1,19 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Layout from './components/Layout/Layout'
-import Intro from './pages/Intro'
-import Home from './pages/Home'
-import TeamList from './pages/Team/TeamList'
-import TeamDetail from './pages/Team/TeamDetail'
-import TeammateList from './pages/Teammate/TeammateList'
-import TeammateDetail from './pages/Teammate/TeammateDetail'
-import MyPage from './pages/MyPage'
-import Search from './pages/Search/Search'
-import CreatePost from './pages/Post/CreatePost.tsx'
-import Makers from './pages/Maker/Makers'
+import {lazy} from "react";
+
+
+const Layout = lazy(() => import('./components/Layout/Layout'))
+const Intro = lazy(() => import('./pages/Intro'))
+const Home = lazy(() => import('./pages/Home'))
+const Search = lazy(() => import('./pages/Search/Search'))
+const MyPage = lazy(() => import('./pages/MyPage'))
+const TeamList = lazy(() => import('./pages/Team/TeamList'))
+const TeamDetail = lazy(() => import('./pages/Team/TeamDetail'))
+const TeammateList = lazy(() => import('./pages/Teammate/TeammateList'))
+const TeammateDetail = lazy(() => import('./pages/Teammate/TeammateDetail'))
+const CreatePost = lazy(() => import('./pages/Post/CreatePost.tsx'))
+const Makers = lazy(() => import('./pages/Maker/Makers'))
+
 
 const router = createBrowserRouter([
   {
@@ -36,7 +40,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <TeamList /> },
           { path: ':id', element: <TeamDetail /> },
-          // { path: "write", element: <TeamWrite /> },
+
         ],
       },
       {
