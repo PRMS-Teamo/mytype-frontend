@@ -7,6 +7,7 @@ export interface User {
   github?: string;
   beginner?: boolean ;
   proceedMethod?: string;
+  updatedAt: string;
   position?: string;
   techStack?: string[];
   introduction?: string;

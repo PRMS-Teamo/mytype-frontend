@@ -44,6 +44,7 @@ export default function useKakaoLogin() {
         proceedMethod: receivedData.proceedMethod, // BE: 항목 생성
         position: receivedData.position_id,
         techStack: receivedData.user_stacks,
+        updatedAt: receivedData.updatedAt, //BE: 항목 생성
         introduction: receivedData.introduction, // BE: 항목 생성
         public: receivedData.public, // BE: 항목 생성
       }
