@@ -2,9 +2,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 type TechStack={
-	stackId:string,
-	stackName:string,
-	imageUrl:string,
+id:string,
+	name:string,
+	img:string,
 }
 const useTechStack = () => {
 	const [techStack, setTechStack] = useState<TechStack[]>([]);
