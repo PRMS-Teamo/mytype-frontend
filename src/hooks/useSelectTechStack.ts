@@ -14,7 +14,7 @@ export const useSelectTechStack = (initial: TechStackType[] = []) => {
 		);
 	};
 
-	const remove = (id: number) => {
+	const remove = (id: string) => {
 		setSelected((prev) => prev.filter((s) => s.id !== id));
 	};
 

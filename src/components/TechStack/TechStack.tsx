@@ -16,7 +16,7 @@ const TechStack = ({ value, onChange }: TechStackProps) => {
 	const filteredSearch = useMemo(() => {
 		if (!search.trim()) return techStack;
 		return techStack.filter((stack) =>
-			stack.stackName.toLowerCase().includes(search.toLowerCase())
+			stack.name.toLowerCase().includes(search.toLowerCase())
 		);
 	}, [search,techStack]);
 

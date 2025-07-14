@@ -1,5 +1,5 @@
 export type TechStackType = {
-	stackId: string;
-	stackName: string;
-	imageUrl: string;
+	id: string;
+	name: string;
+	img: string;
 };
