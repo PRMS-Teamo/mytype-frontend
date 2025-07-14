@@ -1,4 +1,3 @@
-
 import { formatDate } from "../../util/formatDate";
 import type {Post} from "../../model/Post";
 import Edit from "../../assets/icons/Edit.svg?react"
@@ -6,8 +5,9 @@ import Trash from "../../assets/icons/trash.svg?react"
 import {useUserStore} from "../../store/userStore.ts";
 import Button from "../../components/Button";
 
+
 const Content = ({ post }: { post: Post }) => {
-	const { user } = useUserStore();
+	const { user } = useUserStore()
 	//조건 수정 필요
 	const isAuthor = user?.userId && post?.userId&& user.userId === post.userId;
 	return (

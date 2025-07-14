@@ -49,11 +49,11 @@ const CreatePost = () => {
 			...createPost,
 			techStack: allTechStacks,
 			positionCount: positionDetails,
-			userId: user.userId,
+			userId: user.id,
 			nickname: user.nickname,
 		};
 		setCreatePost({
-			userId: user.userId,
+			userId: user.id,
 			nickname: user.nickname,
 		});
 		add(finalPost);
@@ -75,7 +75,7 @@ const CreatePost = () => {
 			id: myPost.id,
 			techStack: allTechStacks,
 			positionCount: positionDetails,
-			userId: user.userId,
+			userId: user.id,
 			nickname: user.nickname,
 		};
 		console.log("🛠 최종 수정 요청 post 객체:", updatedPost);

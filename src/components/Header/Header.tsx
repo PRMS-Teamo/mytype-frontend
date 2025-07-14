@@ -9,7 +9,7 @@ import useKakaoLogin from "../../hooks/useKakaoLogin.ts";
 import useProfile from "../../hooks/useProfile.ts";
 
 const Header = () => {
-  const nav =useNavigate()
+  // const nav =useNavigate()
   const location = useLocation();
   const [search, setSearch] = useState("");
   const { user} = useUserStore();
@@ -20,7 +20,7 @@ const Header = () => {
   );
   const showProfileSave =["/mypage"].includes(location.pathname);
   const { logout } = useKakaoLogin();
-  const noneHeader =["/post"].includes(location.pathname);
+  // const noneHeader =["/post"].includes(location.pathname);
   const handleAuth = () => {
     if (user) {
       logout()
