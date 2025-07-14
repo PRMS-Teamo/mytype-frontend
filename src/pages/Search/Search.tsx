@@ -1,17 +1,22 @@
-import InputText from "../../components/InputText";
 import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
-
-const dummyPosts = [
-  { title: "팀 못 구하신 분?", author: "저랑 팀해용" },
-  { title: "리액트 할 줄 아는 분 구합니다.", author: "이러쿵 저러쿵." },
-  { title: "백엔드 구해요", author: "이러쿵 저러쿵." },
-  { title: "팀 구해요", author: "이러쿵 저러쿵." },
-];
+import InputText from "../../components/InputText";
+import PostCard from "../../components/PostCard/PostCard";
+import { postMock } from "../../mock/data/postMock";
+import type { Post } from "../../model/Post";
 
 function Search() {
   const [search, setSearch] = useState("");
   const [tab, setTab] = useState("팀 구해요");
+
+
+  const filteredPosts: Post[] = postMock.filter((post) => {
+    const keyword = search.toLowerCase();
+    return (
+      post.title.toLowerCase().includes(keyword) ||
+      post.content.toLowerCase().includes(keyword)
+    );
+  });
 
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-[#fff] pt-12">
@@ -29,6 +34,7 @@ function Search() {
             />
           </div>
         </div>
+
         {/* 탭 버튼 */}
         <div className="flex gap-4 mb-8 justify-center">
           <button
@@ -52,17 +58,21 @@ function Search() {
             팀원 구해요
           </button>
         </div>
-        {/* 게시글 카드 리스트 */}
-        <div className="flex flex-col gap-4 items-center w-full">
-          {dummyPosts.map((post, idx) => (
-            <div
-              key={idx}
-              className="bg-white border border-gray-200 rounded-xl px-8 py-6 shadow-sm w-full max-w-[700px]"
-            >
-              <div className="font-bold text-lg mb-1">{post.title}</div>
-              <div className="text-gray-500 text-sm">{post.author}</div>
-            </div>
+
+        {/* PostCard 리스트 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full justify-center">
+          {filteredPosts.map((post) => (
+            <PostCard
+              key={post.id}
+              type="team"
+              post={post}
+            />
           ))}
+          {filteredPosts.length === 0 && (
+            <div className="text-gray-400 text-sm text-center col-span-full">
+              검색 결과가 없습니다.
+            </div>
+          )}
         </div>
       </div>
     </div>
