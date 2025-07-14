@@ -35,7 +35,7 @@ import type { Post as PostType } from "../../model/Post";
 
 const TeamDetail = () => {
   const { id } = useParams();
-   const { user } = useUserStore();
+  const { user } = useUserStore();
   const [post, setPost] = useState<PostType | null>(null);
   const isAuthor = user?.userId && post?.userId&& user.userId === post.userId;
 

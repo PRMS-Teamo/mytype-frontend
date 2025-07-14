@@ -6,34 +6,27 @@ import { DROPDOWN_OPTIONS } from "../../constants/dropdownOptions/dropdownOption
 import Profile from "../../components/Profile";
 import TechStack from "../../components/TechStack";
 import { useUserStore } from "../../store/userStore.ts";
-import { useMockUser } from "../../hooks/useMockUser";
 import Introduction from "../../components/Introduction";
 import Information from "../../assets/icons/information.svg?react"
 import {MYPAGE} from "../../constants/mypage/mypage.ts";
 import Button from "../../components/Button";
+import useProfile from "../../hooks/useProfile.ts";
+import usePosition from '../../hooks/usePositions.ts'
 
 const MyPage = () => {
 	const { user, setUser } = useUserStore();
-	const { fetchUserInfo } = useMockUser();
-
+	const {getUser}=useProfile()
+	const {positions}=usePosition()
 	useEffect(() => {
 		if (!user) return;
-		if (user.hasProfile) return;
-		const loadUserInfo = async () => {
-			const userData = await fetchUserInfo();
-			if (userData) {
-				setUser(userData);
-			}
-		};
-
-		loadUserInfo();
-	}, [user?.userId]);
+		getUser()
+	}, [user?.id]);
 
 	const handleTechStackChange = (updatedTechStack: string[]) => {
 		if (!user) return;
 		setUser({
 			...user,
-			techStack: updatedTechStack,
+		userStack: updatedTechStack,
 		});
 	};
 	return (
@@ -57,10 +50,10 @@ const MyPage = () => {
 					<InputText
 						placeholder="지역 입력"
 						inputSize="medium"
-						value={user?.region ?? ''}
+						value={user?.location ?? ''}
 						onChange={(e) => {
 							if (!user) return;
-							setUser({ ...user, region: e.target.value });
+							setUser({ ...user, location: e.target.value });
 						}}
 					/>
 				</div>
@@ -105,10 +98,10 @@ const MyPage = () => {
 					<Label>진행방식</Label>
 					<DropDown
 						options={DROPDOWN_OPTIONS.PROCEED}
-						value={user?.proceedMethod ?? ''}
+						value={user?.proceedType ?? ''}
 						onChange={(value) => {
 							if (!user) return;
-							setUser({ ...user, proceedMethod: value });
+							setUser({ ...user, proceedType: value });
 						}}
 						placeholder="진행방식"
 					/>
@@ -116,11 +109,16 @@ const MyPage = () => {
 				<div className="flex flex-col w-1/3 gap-2">
 					<Label>포지션</Label>
 					<DropDown
-						options={DROPDOWN_OPTIONS.POSITION.map((option) => option.label)}
-						value={user?.position ?? ''}
-						onChange={(value) => {
+						options={positions.map((p) => p.name)}
+						value={
+							positions.find((p) => p.id === user?.position)?.name || ''
+						}
+						onChange={(name) => {
 							if (!user) return;
-							setUser({ ...user, position: value });
+							const selected = positions.find((p) => p.name === name);
+							if (selected) {
+								setUser({ ...user, position: selected.id });
+							}
 						}}
 						placeholder="포지션"
 					/>
@@ -130,14 +128,14 @@ const MyPage = () => {
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-2">
 					<Label>기술 스택</Label>
-					<TechStack value={user?.techStack ?? []} onChange={handleTechStackChange} />
+					<TechStack value={user?.userStack ?? []} onChange={handleTechStackChange} />
 				</div>
 			</div>
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-3">
 					<Label>자기소개</Label>
-					<Introduction value={user?.introduction ?? ''} onChange={(value) => {
-						if(!user) return; setUser({...user,introduction: value});
+					<Introduction value={user?.description ?? ''} onChange={(value) => {
+						if(!user) return; setUser({...user,description: value});
 					}} />
 				</div>
 			</div>
@@ -145,7 +143,7 @@ const MyPage = () => {
 				<div className="flex w-full gap-2 align-middle items-center ">
 					<Information />
 					{MYPAGE.PUBLIC_OPTIONS}
-					{user?.public? (
+					{user?.isPublic? (
 						<span className="text-main font-bold text-lg">공개 중</span>
 					) :
 						<span className="font-bold text-lg text-gray">비공개 중</span>}
@@ -155,12 +153,12 @@ const MyPage = () => {
 				<div className="flex w-full gap-2">
 				<Button variant="primary" onClick={()=>{
 					if(!user) return;
-					setUser({ ...user, public: true });
+					setUser({ ...user, isPublic: true });
 				}}>공개</Button>
 					<Button variant="primaryGray" onClick={()=>{
 						if(!user) return;
 						console.log(user);
-						setUser({ ...user, public: false });
+						setUser({ ...user, isPublic: false });
 					}}>비공개</Button>
 				</div>
 			</div>
