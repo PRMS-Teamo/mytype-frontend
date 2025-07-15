@@ -1,4 +1,5 @@
-import { useLocation } from "react-router-dom";
+
+import {useLocation} from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import { useModalStore } from "../../store/modalStore";
 import Button from "../Button/Button.tsx";
@@ -29,9 +30,9 @@ const Header = () => {
       <div className="flex items-center gap-x-8 mr-6">
         {showSearch && <SearchInput />}
         {showProfileSave && (
-          <Button variant="primary" onClick={() => user && saveUser(user)}>
-            저장
-          </Button>
+          <div className="">
+            <Button  variant="primary" onClick={()=>user && saveUser()}>저장</Button>
+          </div>
         )}
         <button onClick={handleAuth} className="text-base text-[#3E3E3E]">
           {user ? "로그아웃" : "로그인"}

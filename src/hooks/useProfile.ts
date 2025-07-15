@@ -1,8 +1,8 @@
 import axios from "axios";
-import {  useUserStore } from "../store/userStore.ts";
+import { useUserStore} from "../store/userStore.ts";
 
 export default function useProfile() {
-  const { setUser } = useUserStore();
+  const { user,setUser } = useUserStore();
 
 
 
@@ -23,21 +23,41 @@ export default function useProfile() {
     }
   };
 
-  const saveUser =async () => {
-    try{
-      const accessToken =localStorage.getItem("accessToken");
-      const res =await axios.patch(
+  const saveUser = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      if (!user) {
+        console.log("user 없음");
+        return;
+      }
+
+      const payload = {
+        nickname: user.nickname,
+        github: user.github,
+        location: user.location,
+        positionId: user.position, // position이 ID로 저장된다고 가정
+        proceedType: user.proceedType,
+        beginner: user.beginner,
+        userStacks: user.userStack, // 배열 of ID로 가정
+        description: user.description,
+        isPublic: user.isPublic,
+      };
+
+      const res = await axios.patch(
         `${import.meta.env.VITE_BACKEND_URL}/users/me`,
+        payload,
         {
-          headers:{
+          headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
-      console.log("수정되엇습니다",res.data);
+
+      console.log("수정되었습니다", res.data);
       setUser(res.data);
-    }catch(e){
-      console.log("유저 수정 실패",e);
+    } catch (e) {
+      console.log("보낼 user 객체:", user);
+      console.log("유저 수정 실패", e);
     }
   }
   return {

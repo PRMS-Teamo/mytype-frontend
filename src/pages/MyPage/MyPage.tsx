@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import InputText from "../../components/InputText";
 import Label from "../../components/Label";
 import DropDown from "../../components/DropDown";
-import { DROPDOWN_OPTIONS } from "../../constants/dropdownOptions/dropdownOptions.ts";
 import Profile from "../../components/Profile";
 import TechStack from "../../components/TechStack";
 import { useUserStore } from "../../store/userStore.ts";
@@ -12,6 +11,8 @@ import {MYPAGE} from "../../constants/mypage/mypage.ts";
 import Button from "../../components/Button";
 import useProfile from "../../hooks/useProfile.ts";
 import usePosition from '../../hooks/usePositions.ts'
+import {PROCEED_TYPE} from "../../constants/proceedType/proceedType.ts";
+import {BEGINNER} from "../../constants/beginner/beginner.ts";
 
 const MyPage = () => {
 	const { user, setUser } = useUserStore();
@@ -21,7 +22,8 @@ const MyPage = () => {
 		if (!user) return;
 		getUser()
 	}, [user?.id]);
-
+	console.log("user?.userStack", user.userStack)
+	console.error(user);
 	const handleTechStackChange = (updatedTechStack: string[]) => {
 		if (!user) return;
 		setUser({
@@ -75,21 +77,14 @@ const MyPage = () => {
 				<div className="flex flex-col w-1/3 gap-2">
 					<Label>새싹 여부</Label>
 					<DropDown
-						options={DROPDOWN_OPTIONS.BEGINNER}
-						value={
-							user?.beginner === true
-								? 'O'
-								: user?.beginner === false
-									? 'X'
-									: ''
-						}
-						onChange={(value) => {
+						options={BEGINNER.map((p)=>p.label)}
+						value={BEGINNER.find((p)=>p.id===user?.beginner)?.label ?? ''}
+						onChange={(label) => {
 							if (!user) return;
-							setUser({
-								...user,
-								beginner:
-									value === 'O' ? true : value === 'X' ? false : undefined,
-							});
+						const selected =BEGINNER.find((p)=>p.label===label)
+							if(selected){
+							setUser({...user,beginner:selected.id});
+							}
 						}}
 						placeholder="새싹 여부"
 					/>
@@ -97,11 +92,14 @@ const MyPage = () => {
 				<div className="flex flex-col w-1/3 gap-2">
 					<Label>진행방식</Label>
 					<DropDown
-						options={DROPDOWN_OPTIONS.PROCEED}
-						value={user?.proceedType ?? ''}
-						onChange={(value) => {
+						options={PROCEED_TYPE.map((p)=>p.label)}
+						value={ PROCEED_TYPE.find((p) => p.id === user?.proceedType)?.label ?? ''}
+						onChange={(label) => {
 							if (!user) return;
-							setUser({ ...user, proceedType: value });
+							const selected=PROCEED_TYPE.find((p)=>p.label === label);
+							if(selected){
+								setUser({ ...user, proceedType: selected.id });
+							}
 						}}
 						placeholder="진행방식"
 					/>
@@ -109,7 +107,7 @@ const MyPage = () => {
 				<div className="flex flex-col w-1/3 gap-2">
 					<Label>포지션</Label>
 					<DropDown
-						options={positions.map((p) => p.name)}
+						options={[...new Set(positions.map((p) => p.name))]}
 						value={
 							positions.find((p) => p.id === user?.position)?.name || ''
 						}

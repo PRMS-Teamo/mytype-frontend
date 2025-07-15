@@ -1,7 +1,9 @@
 import {POSITION} from "../position/position.ts";
+import {PROCEED_TYPE} from "../proceedType/proceedType.ts";
+import {BEGINNER} from "../beginner/beginner.ts";
 
 export const DROPDOWN_OPTIONS = {
-	BEGINNER:["O","X"],
-	PROCEED:["온라인","오프라인",'상관없음'],
+	BEGINNER:Object.values(BEGINNER),
+	PROCEED:Object.values(PROCEED_TYPE),
 	POSITION:Object.values(POSITION),
 }
