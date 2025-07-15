@@ -9,7 +9,7 @@ import Button from "../../components/Button";
 const Content = ({ post }: { post: Post }) => {
 	const { user } = useUserStore()
 	//조건 수정 필요
-	const isAuthor = user?.userId && post?.userId&& user.userId === post.userId;
+	const isAuthor = user?.id && post?.userId&& user.id === post.userId;
 	return (
 		<>
 			<div className="flex justify-between">

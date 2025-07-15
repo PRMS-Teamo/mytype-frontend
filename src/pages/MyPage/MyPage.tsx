@@ -22,7 +22,8 @@ const MyPage = () => {
 		if (!user) return;
 		getUser()
 	}, [user?.id]);
-
+	console.log("user?.userStack", user.userStack)
+	console.error(user);
 	const handleTechStackChange = (updatedTechStack: string[]) => {
 		if (!user) return;
 		setUser({
