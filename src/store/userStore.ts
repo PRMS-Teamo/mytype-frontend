@@ -1,16 +1,23 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 export interface User {
-  userId: string;
-  nickname: string;
+  id: string;
+  nickname?: string;
+  profileImage?:string;
   address?: string;
   github?: string;
-  beginner?: boolean ;
-  proceedMethod?: string;
+  location?:string;
+  beginner?: boolean;
+  proceedType?: string;
+  createdAt?: string ;
+  updatedAt: string;
   position?: string;
-  techStack?: string[];
-  introduction?: string;
+  isPublic?:boolean;
+  userStack?: string[];
+  description?: string;
   public?:boolean;
+  isJoined?: boolean;
+  positionId?:string;
 }
 
 interface UserStore {

@@ -5,18 +5,17 @@ export const COMMON_POST={
 
 }
 
-
 export const POST_TEAM={
 ...COMMON_POST,
 	MEMBER_COUNT: '프로젝트 인원',
 
 }
 
-
 export const POST_TEAMMATE={
 	...COMMON_POST,
-	AUTHOR: '작성자',
+	NICKNAME: '작성자',
 	GITHUB_ID: '깃허브',
+	BEGINNER:'새싹여부',
 }
 export const POST_CREATE={
 	TITLE_LABEL: '제목',

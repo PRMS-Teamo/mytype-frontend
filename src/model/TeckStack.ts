@@ -1,5 +1,5 @@
 export type TechStackType = {
-	id: number;
+	id: string;
 	name: string;
-	icon: string;
+	img: string;
 };

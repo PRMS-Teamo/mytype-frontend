@@ -7,15 +7,15 @@ import useProfile from "../../hooks/useProfile.ts";
 import SearchInput from "../SearchInput/SearchInput.tsx";
 
 const Header = () => {
+  // const nav =useNavigate()
   const location = useLocation();
   const { user } = useUserStore();
   const { openModal } = useModalStore();
   const { saveUser } = useProfile();
   const { logout } = useKakaoLogin();
-
   const showSearch = ["/home", "/team", "/teammate"].includes(location.pathname);
   const showProfileSave = ["/mypage"].includes(location.pathname);
-
+  // const noneHeader =["/post"].includes(location.pathname);
   const handleAuth = () => {
     if (user) {
       logout();
