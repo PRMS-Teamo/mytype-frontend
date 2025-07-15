@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PostCard from "./PostCard";
 import { postMock } from "../../mock/data/postMock";
 import { userMock } from "../../mock/data/userMock";
@@ -10,23 +11,38 @@ interface PostCardSliderProps {
 
 export default function PostCardSlider({ type }: PostCardSliderProps) {
   const [page, setPage] = useState(0);
+  const navigate = useNavigate();
   const cardsPerPage = 3;
 
-  const teamCards =
-    postMock
-      .filter((post) => post.filter === "팀원 구해요")
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-      .map((post, idx) => (
-        <PostCard key={`team-${idx}`} post={post} type="team" />
-      ));
+  const teamCards = postMock
+    .filter((post) => post.filter === "팀원 구해요")
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .map((post, idx) => (
+      <PostCard
+        key={`team-${idx}`}
+        post={post}
+        type="team"
+        onClick={() => navigate(`/findteam/${post.id}`)}
+      />
+    ));
 
-  const teammateCards =
-    userMock.list
-      .filter((user) => user.hasProfile)
-      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-      .map((user, idx) => (
-        <PostCard key={`teammate-${idx}`} post={user} type="teammate" />
-      ));
+  const teammateCards = userMock.list
+    .filter((user) => user.hasProfile)
+    .sort(
+      (a, b) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+    )
+    .map((user, idx) => (
+      <PostCard
+        key={`teammate-${idx}`}
+        post={user}
+        type="teammate"
+        onClick={() => navigate(`/findteammate/${user.userId}`)}
+      />
+    ));
 
   const cards = type === "team" ? teamCards : teammateCards;
 
@@ -52,9 +68,7 @@ export default function PostCardSlider({ type }: PostCardSliderProps) {
         </button>
       )}
 
-      <div className="flex gap-4">
-        {currentCards}
-      </div>
+      <div className="flex gap-4">{currentCards}</div>
 
       {cards.length > cardsPerPage && (
         <button onClick={handleNext}>
