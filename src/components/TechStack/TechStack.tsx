@@ -25,7 +25,7 @@ const TechStack = ({ value, onChange }: TechStackProps) => {
 			<SearchBar value={search} onChange={setSearch} />
 			<SelectTechStack
 				selected={value}
-				onRemove={(name) => onChange(value.filter((v) => v !== name))}
+				onRemove={(id) => onChange(value.filter((v) => v !== id))}
 			/>
 			<TechStackLabel
 				stacks={filteredSearch}

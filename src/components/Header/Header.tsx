@@ -1,4 +1,4 @@
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import { useModalStore } from "../../store/modalStore";
 
@@ -38,7 +38,7 @@ const Header = () => {
         </div>
         {showProfileSave && (
           <div className="">
-            <Button  variant="primary" onClick={()=>user && saveUser(user)}>저장</Button>
+            <Button  variant="primary" onClick={()=>user && saveUser()}>저장</Button>
           </div>
         )}
 
