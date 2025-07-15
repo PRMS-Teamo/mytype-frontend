@@ -21,6 +21,7 @@ function Sidebar() {
       [URL.FIND_TEAM]: "팀 찾기",
       [URL.FIND_TEAMMATE]: "팀원 찾기",
       [URL.MY_PAGE]: "마이페이지",
+      [URL.MY_TEAM_INFO]: "내 팀 정보",
       [URL.MADE_PEOPLE]: "만든 사람들",
     };
     const matchedMenu = sidebarMenu[location.pathname];
@@ -69,6 +70,15 @@ function Sidebar() {
             onClick={() => {
               setSelectedMenu("마이페이지");
               nav(URL.MY_PAGE);
+            }}
+          />
+          <SidebarElement
+            icon={<MdAccountCircle />}
+            text="내 팀 정보"
+            isSelected={selectedMenu === "내 팀 정보"}
+            onClick={() => {
+              setSelectedMenu("내 팀 정보");
+              nav(URL.MY_TEAM_INFO);
             }}
           />
           <SidebarElement

@@ -4,4 +4,5 @@ export const URL = {
   FIND_TEAMMATE: "/findteammate",
   FIND_TEAM: "/findteam",
   MADE_PEOPLE: "/madepeople",
+  MY_TEAM_INFO: "/myteaminfo",
 };
