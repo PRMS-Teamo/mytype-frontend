@@ -17,7 +17,7 @@ export interface User {
   description?: string;
   public?:boolean;
   isJoined?: boolean;
-  positionId?:string;
+
 }
 
 interface UserStore {

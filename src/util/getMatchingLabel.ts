@@ -1,3 +1,10 @@
+type LabelType =
+  | "포지션 일치"
+  | "기술 일치"
+  | "기술 부분 일치"
+  | "해당 없음"
+  | "로그인 후 일치 여부 확인가능";
+
 export interface MatchProps {
   userPosition: string;
   userTechStack: string[];
@@ -12,10 +19,10 @@ export function getMatchingLabel({
   postPositions,
   postTechStack,
   isLoggedIn,
-}: MatchProps): string[] {
+}: MatchProps): LabelType[] {
   if (!isLoggedIn) return ["로그인 후 일치 여부 확인가능"];
 
-  const labels: string[] = [];
+  const labels: LabelType[] = [];
   const isPositionMatch = postPositions.includes(userPosition);
 
   if (isPositionMatch) {
