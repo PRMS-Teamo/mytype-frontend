@@ -20,11 +20,11 @@ const SelectTechStack = ({ selected, onRemove }: Props) => {
 		<div className="border border-gray-300 rounded-xl w-full min-h-16 flex flex-wrap items-center p-3 gap-2">
 			{selected.map((stack) => (
 				<div
-					key={stack.name}
+					key={stack.id}
 					className="px-4 h-10 gap-3 flex items-center justify-center rounded-full border text-sm bg-main text-white border-main"
 				>
 					{stack.name}
-					<Close onClick={() => onRemove(stack.name)} />
+					<Close onClick={() => onRemove(stack.id)} />
 				</div>
 			))}
 		</div>
