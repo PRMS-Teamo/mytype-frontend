@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import axios from "axios";
 export interface User {
   id: string;
   nickname?: string;
@@ -12,6 +13,7 @@ export interface User {
   createdAt?: string ;
   updatedAt: string;
   position?: string;
+  positionId?: string;
   isPublic?:boolean;
   userStack?: string[];
   description?: string;
@@ -34,8 +36,14 @@ export const useUserStore = create(
       user: null,
       isLoggedIn: false,
       setUser: (user) => set({ user, isLoggedIn: true }),
-      clearUser: () => {
+      clearUser: async () => {
         set({ user: null, isLoggedIn: false })
+        const accessToken = localStorage.getItem('accessToken');
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/logout/full`, {}, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          }
+        })
         localStorage.removeItem('refreshToken'); // 토큰 지우는 로직 추가
         localStorage.removeItem('accessToken');
       },
@@ -45,3 +53,5 @@ export const useUserStore = create(
     }
   )
 );
+
+export const useUserInfo = () => useUserStore((state) => state.user);

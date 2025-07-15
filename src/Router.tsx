@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import {lazy} from "react";
+import MyTeamInfo from "./pages/MyTeamInfo";
 
 
 const Layout = lazy(() => import('./components/Layout/Layout'))
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: 'mypage',
         element: <MyPage />,
+      },
+      {
+        path: 'myteaminfo',
+        element: <MyTeamInfo/>
       },
       {
         path: 'findteam',
