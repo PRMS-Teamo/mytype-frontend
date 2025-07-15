@@ -45,3 +45,5 @@ export const useUserStore = create(
     }
   )
 );
+
+export const useUserInfo = () => useUserStore((state) => state.user);

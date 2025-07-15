@@ -1,7 +1,10 @@
 import Label from "../../components/Label";
 import ListItem from "../../components/ListItem/ListItem.tsx";
+import useTeamInfo from "../../hooks/useTeamInfo.ts";
 
 const MyTeamInfo = () => {
+  const myTeamData = useTeamInfo();
+  console.log("my team data", myTeamData);
   const teamMateList = [
     "김희영",
     "신혜민",
