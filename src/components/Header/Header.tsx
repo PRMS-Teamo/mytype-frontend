@@ -1,11 +1,10 @@
 import { useLocation } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import { useModalStore } from "../../store/modalStore";
-
 import Button from "../Button/Button.tsx";
-import SearchBar from "../SearchBar";
 import useKakaoLogin from "../../hooks/useKakaoLogin.ts";
 import useProfile from "../../hooks/useProfile.ts";
+import SearchInput from "../SearchInput/SearchInput.tsx";
 
 const Header = () => {
   const location = useLocation();
@@ -28,7 +27,7 @@ const Header = () => {
   return (
     <header className="w-full flex justify-end items-center px-8 pt-4 bg-white mt-2">
       <div className="flex items-center gap-x-8 mr-6">
-        {showSearch && <SearchBar />}
+        {showSearch && <SearchInput />}
         {showProfileSave && (
           <Button variant="primary" onClick={() => user && saveUser(user)}>
             저장

@@ -6,7 +6,7 @@ export const postMock: Post[] = [
     userId: "1",
     nickname: "홍길동",
     filter: "팀원 구해요",
-    title: "진짜 열정 넘치는 프론트 구합니다",
+    title: "진짜 열정 넘치는 frontend 구합니다",
     content: "프로젝트는 거의 완성됐고, 유지보수와 리팩토링을 같이 해주실 분을 찾고 있어요!",
     createdAt: "2025-06-25",
     region: "서울",
