@@ -10,14 +10,11 @@ const ProjectType = ({ post }: { post: Post | User }) => {
 
 	return (
 		<div className="flex mt-12 gap-12 rounded-lg">
-			{/* 왼쪽 라벨 */}
 			<div className="gap-3 flex flex-col text-main font-bold min-w-[100px]">
 				{Object.entries(postInfo).map(([_, value]) => (
 					<div key={value}>{value}</div>
 				))}
 			</div>
-
-			{/* 오른쪽 값 */}
 			<div className="text-black gap-3 flex flex-col">
 				{isTeamPost ? (
 					<>
@@ -49,8 +46,8 @@ const ProjectType = ({ post }: { post: Post | User }) => {
 						<div>{post.proceedType || "진행방식 미지정"}</div>
 						<div>{"location" in post && post.location || "지역 미지정"}</div>
 						<div className="flex gap-2 flex-wrap">
-							{"userStack" in post && post.userStack?.length ? (
-								post.userStack.map((stack, index) => <span key={index}>{stack}</span>)
+							{"userStacks" in post && post.userStacks?.length ? (
+								post.userStacks.map((stack, index) => <span key={index}>{stack}</span>)
 							) : (
 								<span className="text-gray-400">기술 스택 없음</span>
 							)}

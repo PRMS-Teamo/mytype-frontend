@@ -20,14 +20,23 @@ const MyPage = () => {
 	const {positions}=usePosition()
 	useEffect(() => {
 		if (!user) return;
-		getUser()
-	}, [user?.id]);
+		if (!user?.id) {
+			getUser();
+		}
+	}, []);
 	const handleTechStackChange = (updatedTechStack: string[]) => {
 		if (!user) return;
 		setUser({
 			...user,
-		userStack: updatedTechStack,
+		userStacks: updatedTechStack,
 		});
+	};
+	const handlePositionChange = (name: string) => {
+		if (!user) return;
+		const selected = positions.find((p) => p.name === name);
+		if (selected) {
+			setUser({ ...user, positionId: selected.id });
+		}
 	};
 	return (
 		<>
@@ -105,17 +114,11 @@ const MyPage = () => {
 				<div className="flex flex-col w-1/3 gap-2">
 					<Label>포지션</Label>
 					<DropDown
-						options={[...new Set(positions.map((p) => p.name))]}
+						options={(positions.map((p) => p.name))}
 						value={
-							positions.find((p) => p.id === user?.position)?.name || ''
+							positions.find((p) => p.id === user?.positionId)?.name || ''
 						}
-						onChange={(name) => {
-							if (!user) return;
-							const selected = positions.find((p) => p.name === name);
-							if (selected) {
-								setUser({ ...user, position: selected.id });
-							}
-						}}
+						onChange={handlePositionChange}
 						placeholder="포지션"
 					/>
 				</div>
@@ -124,7 +127,7 @@ const MyPage = () => {
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-2">
 					<Label>기술 스택</Label>
-					<TechStack value={user?.userStack ?? []} onChange={handleTechStackChange} />
+					<TechStack value={user?.userStacks ?? []} onChange={handleTechStackChange} />
 				</div>
 			</div>
 			<div className="flex flex-row gap-12 justify-center mt-5">

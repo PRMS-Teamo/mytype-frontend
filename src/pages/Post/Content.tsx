@@ -33,7 +33,8 @@ const Content = ({ post }: { post: Post | User }) => {
 				{"title" in post ? post.title : `${post.nickname}`}
 			</div>
 			<div className="text-[0.9375rem] text-gray mt-7">
-				{"content" in post ? post.content : post.description}
+				{"content" in post ? post.content : user?.description}
+
 			</div>
 		</>
 	);

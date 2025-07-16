@@ -13,10 +13,9 @@ export interface User {
   proceedType?: string;
   createdAt?: string ;
   updatedAt: string;
-  position?: string;
   positionId?: string;
   isPublic?:boolean;
-  userStack?: string[];
+  userStacks?: string[];
   description?: string;
   public?:boolean;
   isJoined?: boolean;

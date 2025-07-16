@@ -35,10 +35,10 @@ export default function useProfile() {
         nickname: user.nickname,
         github: user.github,
         location: user.location,
-        positionId: user.position, // position이 ID로 저장된다고 가정
+        positionId: user.positionId,
         proceedType: user.proceedType,
         beginner: user.beginner,
-        userStacks: user.userStack, // 배열 of ID로 가정
+        userStacks: user.userStacks,
         description: user.description,
         isPublic: user.isPublic,
       };
@@ -52,7 +52,7 @@ export default function useProfile() {
           },
         }
       );
-
+      console.log("보낼 user 객체:", user);
       console.log("수정되었습니다", res.data);
       setUser(res.data);
     } catch (e) {
