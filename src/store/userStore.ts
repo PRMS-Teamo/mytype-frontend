@@ -4,7 +4,7 @@ import type { Stack } from "../types/api";
 import axios from "axios";
 export interface User {
   id: string;
-  nickname?: string;
+  nickname: string;
   profileImage?:string;
   address?: string;
   github?: string;

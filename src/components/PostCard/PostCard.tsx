@@ -28,10 +28,10 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
       ? []
       : user && isLoggedIn
         ? getMatchingLabel({
-            userPosition: user.position || "",
-            userTechStack: user.userStack|| [],
+            userPosition: user.positionId || "",
+            userTechStack: user.userStacks|| [],
             postPositions: Object.keys(post.positionCount || {}),
-            postTechStack: post.techStacks || [],
+            postTechStack: post.techStack || [],
             isLoggedIn,
           })
         : ["로그인 후 일치 여부 확인가능"];
@@ -49,8 +49,8 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
         labels={labels}
         techStack={
           type === "team"
-            ? post.techStacks
-            : (post as User).userStack || []
+            ? post.techStack
+            : (post as User).userStacks || []
         }
       />
     </div>
