@@ -7,9 +7,9 @@ type LabelType =
 
 export interface MatchProps {
   userPosition: string;
-  userTechStack: string[];
+  userTechStack: string[]; // stackId 배열
   postPositions: string[];
-  postTechStack: string[];
+  postTechStack: string[]; // stackId 배열
   isLoggedIn: boolean;
 }
 
@@ -28,8 +28,8 @@ export function getMatchingLabel({
   if (isPositionMatch) {
     labels.push("포지션 일치");
 
-    const matchCount = postTechStack.filter((tech) =>
-      userTechStack.includes(tech)
+    const matchCount = postTechStack.filter((techId) =>
+      userTechStack.includes(techId)
     ).length;
 
     if (matchCount === postTechStack.length && matchCount > 0) {

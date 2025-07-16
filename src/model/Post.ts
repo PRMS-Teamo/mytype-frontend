@@ -1,3 +1,5 @@
+import type { Stack } from "../types/api";
+
 export type PositionType =
   | "웹 프론트엔드"
   | "앱 프론트엔드"
@@ -8,21 +10,14 @@ export type PositionType =
   | "기획자"
   | "AI";
 
-export type PostType =
-  | "팀원 구해요"
-  | "팀 구해요"
-
 export type PositionDetail = {
   count: number;
   techStack: string[];
 };
-
 export interface Post {
-  postType: PostType;
   id:string;
   userId: string;
-  nickname: string;
-  filter:string;
+  nickname?: string;
   title: string;
   content: string;
   createdAt: string
@@ -30,5 +25,5 @@ export interface Post {
   proceedMethod: string;
   deadline: string;
   positionCount: Partial<Record<PositionType, PositionDetail>>;
-  techStack: string[];
+  techStacks: Stack[];
 }

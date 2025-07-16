@@ -15,14 +15,13 @@ const defaultCreatePost: Post = {
   id:"",
   userId: "",
   nickname: "",
-  filter: "팀원 구해요",
   title: "",
   content: "",
   createdAt: new Date().toISOString(),
   region: "",
   proceedMethod: "",
   deadline: "",
-  techStack: [],
+  techStacks: [],
   positionCount: {},
 };
 
