@@ -19,7 +19,7 @@ const defaultCreatePost: Post = {
   content: "",
   createdAt: new Date().toISOString(),
   region: "",
-  proceedMethod: "",
+  proceedType: "",
   deadline: "",
   techStacks: [],
   positionCount: {},

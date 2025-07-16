@@ -37,7 +37,7 @@ const TeamDetail = () => {
   const { id } = useParams();
   const { user } = useUserStore();
   const [post, setPost] = useState<PostType | null>(null);
-  const isAuthor = user?.userId && post?.userId&& user.userId === post.userId;
+  const isAuthor = user?.id && post?.userId&& user.id === post.userId;
 
   useEffect(() => {
     if (!id) return;

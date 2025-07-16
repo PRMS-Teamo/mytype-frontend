@@ -1,28 +1,40 @@
 import { formatDate } from "../../util/formatDate";
-import type {Post} from "../../model/Post";
-import Edit from "../../assets/icons/Edit.svg?react"
-import Trash from "../../assets/icons/trash.svg?react"
-import {useUserStore} from "../../store/userStore.ts";
+import type { Post } from "../../model/Post";
+import type { User } from "../../store/userStore";
+import Edit from "../../assets/icons/Edit.svg?react";
+import Trash from "../../assets/icons/trash.svg?react";
+import { useUserStore } from "../../store/userStore.ts";
 import Button from "../../components/Button";
 
+const Content = ({ post }: { post: Post | User }) => {
+	const { user } = useUserStore();
 
-const Content = ({ post }: { post: Post }) => {
-	const { user } = useUserStore()
-	//조건 수정 필요
-	const isAuthor = user?.id && post?.userId&& user.id === post.userId;
+	const isAuthor = user?.id && "userId" in post && user.id === post.userId;
+	const createdAt = "createdAt" in post ? post.createdAt : post.updatedAt;
+
 	return (
 		<>
 			<div className="flex justify-between">
-				<div className="text-main text-[0.9375rem]">{formatDate(new Date(post.createdAt))}</div>
+				<div className="text-main text-[0.9375rem]">
+					{formatDate(new Date(createdAt))}
+				</div>
 				{isAuthor ? (
 					<div className="flex gap-3">
-					<Edit />
-					<Trash />
-					</div>):(<Button variant="square" onClick={()=> console.log("채팅보내기")
-				}>채팅보내기</Button>)}
+						<Edit />
+						<Trash />
+					</div>
+				) : (
+					<Button variant="square" onClick={() => console.log("채팅보내기")}>
+						채팅보내기
+					</Button>
+				)}
 			</div>
-			<div className="text-2xl font-bold text-black mt-4">{post.title}</div>
-			<div className="text-[0.9375rem] text-gray mt-7">{post.content}</div>
+			<div className="text-2xl font-bold text-black mt-4">
+				{"title" in post ? post.title : `${post.nickname}`}
+			</div>
+			<div className="text-[0.9375rem] text-gray mt-7">
+				{"content" in post ? post.content : post.description}
+			</div>
 		</>
 	);
 };

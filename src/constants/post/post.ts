@@ -13,9 +13,9 @@ export const POST_TEAM={
 
 export const POST_TEAMMATE={
 	...COMMON_POST,
-	NICKNAME: '작성자',
 	GITHUB_ID: '깃허브',
 	BEGINNER:'새싹여부',
+	POSITION:'포지션',
 }
 export const POST_CREATE={
 	TITLE_LABEL: '제목',
