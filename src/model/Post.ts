@@ -22,7 +22,7 @@ export interface Post {
   content: string;
   createdAt: string
   region: string;
-  proceedMethod: string;
+  proceedType: string;
   deadline: string;
   positionCount: Partial<Record<PositionType, PositionDetail>>;
   techStacks: Stack[];

@@ -69,7 +69,7 @@ export default function useKakaoLogin() {
         console.log("기존유저");
       }
       const userData = {
-        id: user.userId,
+        id: user.id,
         nickname: user.nickname,
         github: user.github,
         profileImage: user.profileImage,
