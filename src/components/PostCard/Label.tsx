@@ -14,14 +14,13 @@ interface LabelProps {
 
 export default function Label({ type, children }: LabelProps) {
   const baseStyle =
-    "min-w-[75px] h-[26px] px-3 flex items-center justify-center  border rounded-full text-white text-xs";
+    "min-w-[75px] h-[26px] px-3 flex items-center justify-center border rounded-full text-white text-xs";
 
   const bgColor = (() => {
     switch (type) {
       case "포지션 일치":
         return "bg-main";
       case "기술 일치":
-        return "bg-skillMatch"
       case "기술 부분 일치":
         return "bg-skillMatch";
       case "해당 없음":

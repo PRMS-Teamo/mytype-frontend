@@ -2,8 +2,14 @@ import { useUserStore } from "../../store/userStore";
 import { getMatchingLabel } from "../../util/getMatchingLabel";
 import PostCardLayout from "./PostCardLayout";
 import type { Post } from "../../model/Post";
-import type { User } from "../../store/userStore";
 import type { LabelType } from "./Label";
+import type { Stack } from "../../types/api";
+interface UserWithStack {
+  id: string;
+  nickname: string;
+  position: string;
+  techStacks: Stack[]; 
+}
 
 interface TeamPostCardProps {
   type: "team";
@@ -19,28 +25,29 @@ interface TeammatePostCardProps {
 
 type PostCardProps = TeamPostCardProps | TeammatePostCardProps;
 
-interface UserWithCardInfo extends User {
+interface UserWithCardInfo extends UserWithStack {
   updatedAt: string;
   introduction?: string;
   proceedMethod: string;
-  techStack: string[];
 }
 
 export default function PostCard({ type, post, onClick }: PostCardProps) {
   const { user, isLoggedIn } = useUserStore();
 
   const labels: LabelType[] =
-    type === "teammate"
-      ? []
-      : user && isLoggedIn
-        ? getMatchingLabel({
-            userPosition: user.position || "",
-            userTechStack: user.techStack || [],
-            postPositions: Object.keys(post.positionCount || {}),
-            postTechStack: post.techStack || [],
-            isLoggedIn,
-          })
-        : ["로그인 후 일치 여부 확인가능"];
+  type === "teammate"
+    ? []
+    : user && isLoggedIn
+      ? getMatchingLabel({
+          userPosition: user.position || "",
+          userTechStack: (user.techStacks ?? []).map((s: Stack) => s.stackId),
+          postPositions: Object.keys(post.positionCount || {}),
+          postTechStack: (post.techStacks ?? []).map((s: Stack) => s.stackId),
+          isLoggedIn,
+        })
+      : ["로그인 후 일치 여부 확인가능"];
+
+const techStackImages = (post.techStacks ?? []).map((s: Stack) => s.imgUrl);
 
   return (
     <div onClick={onClick} className="cursor-pointer">
@@ -53,7 +60,7 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
         isOnline={type === "team" ? true : post.proceedMethod === "온라인"}
         content={type === "team" ? post.title : post.introduction || ""}
         labels={labels}
-        techStack={post.techStack}
+        techStack={techStackImages}
       />
     </div>
   );

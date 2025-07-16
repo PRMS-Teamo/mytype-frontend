@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { Stack } from "../types/api";
 import axios from "axios";
 export interface User {
   id: string;
@@ -19,7 +20,7 @@ export interface User {
   description?: string;
   public?:boolean;
   isJoined?: boolean;
-
+  techStacks: Stack[];
 }
 
 interface UserStore {
