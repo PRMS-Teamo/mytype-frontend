@@ -39,7 +39,7 @@ export default function useProfile() {
         positionId: user.positionId,
         proceedType: user.proceedType,
         beginner: user.beginner,
-        userStacks: user.userStacks,
+        userStacks: user.userStacks?.map((stack) => stack.id) ?? [],
         description: user.description,
         isPublic: user.isPublic,
       };
@@ -54,6 +54,7 @@ export default function useProfile() {
         }
       );
       // 저장 후 응답
+      console.log("payload값",payload);
 
       console.log("보낼 user 객체:", user);
       console.log("수정되었습니다", res.data);

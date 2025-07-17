@@ -29,7 +29,7 @@ const TeammateDetail=()=>{
     <div className="border border-gray-300 rounded-lg h-full">
       <div className="m-12">
         <Content post={teammate}/>
-        <ProjectType post={teammate} />
+        <ProjectType type="teammate" post={teammate} />
 
       </div>
     </div>
