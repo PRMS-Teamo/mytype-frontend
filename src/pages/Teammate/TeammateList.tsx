@@ -16,8 +16,8 @@ const TeammateList = () => {
 			{teammates.map((user) => {
 				const userWithCardInfo= {
 					...user,
-					proceedMethod: user.proceedType || "온라인",
-					techStack: user.userStack || [],
+					proceedMethod: user.proceedType,
+					techStack: user.userStacks || [],
 					introduction: user.description || "",
 					updatedAt: user.updatedAt,
 				};

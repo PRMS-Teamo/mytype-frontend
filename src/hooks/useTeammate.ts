@@ -33,7 +33,10 @@ const useTeammate=()=> {
 					Authorization: `Bearer ${accessToken}`,
 				},
 			});
+			console.log("getTeammateById 응답값",res.data);
+
 			return res.data as User;
+
 		} catch (error) {
 			console.error("팀원 개별 조회 실패", error);
 			throw error;

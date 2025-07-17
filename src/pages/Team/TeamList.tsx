@@ -21,18 +21,19 @@ export default function TeamList() {
           id: post.teamId,
           title: post.title,
           content: post.content,
+          location:post.location,
           createdAt: new Date().toISOString(), 
           userId: post.userId,
           nickname: "알 수 없음",
           postType: "team",
           region: "",
-          proceedMethod: "BOTH",
+          proceedType: "BOTH",
           deadline: "",
           positionCount: {},
           techStacks: post.teamStacks.map((stack) => ({
-            stackId: stack.stackId,
-            stackName: stack.stackName,
-            imgUrl: stack.imgUrl,
+            id: stack.stackId,
+            name: stack.stackName,
+            img: stack.imgUrl,
           })),
         }));
         setPosts(mapped);

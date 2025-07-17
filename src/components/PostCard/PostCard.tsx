@@ -5,19 +5,19 @@ import type { Post } from "../../model/Post";
 import type { User } from "../../store/userStore";
 import type { LabelType } from "./Label";
 
-interface TeamPostCardProps {
+export interface TeamPostCardProps {
   type: "team";
   post: Post;
   onClick?: () => void;
 }
 
-interface TeammatePostCardProps {
+export interface TeammatePostCardProps {
   type: "teammate";
   post: User;
   onClick?: () => void;
 }
 
-type PostCardProps = TeamPostCardProps | TeammatePostCardProps;
+export type PostCardProps = TeamPostCardProps | TeammatePostCardProps;
 
 
 export default function PostCard({ type, post, onClick }: PostCardProps) {
@@ -31,7 +31,7 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
             userPosition: user.positionId || "",
             userTechStack: user.userStacks|| [],
             postPositions: Object.keys(post.positionCount || {}),
-            postTechStack: post.techStack || [],
+            postTechStack: post.techStacks || [],
             isLoggedIn,
           })
         : ["로그인 후 일치 여부 확인가능"];
@@ -44,12 +44,12 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
             ? new Date(post.createdAt).toISOString().slice(0, 10)
             : new Date(post.updatedAt).toISOString().slice(0, 10)
         }
-        isOnline={type === "team" ? true : post.proceedType === "온라인"}
+        isOnline={type === "team" ? post.proceedType : post.proceedType}
         content={type === "team" ? post.title : post.description|| ""}
         labels={labels}
         techStack={
           type === "team"
-            ? post.techStack
+            ? post.techStacks
             : (post as User).userStacks || []
         }
       />
