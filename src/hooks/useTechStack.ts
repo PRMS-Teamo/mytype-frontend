@@ -15,7 +15,7 @@ const useTechStack = () => {
 			});
 			console.log("기술스택 응답", res.data);
 			const stackArray = res.data.stacks;
-			const parsed = stackArray.map((stc: { stackId: string; stackName: string; imageUrl:string }) => ({
+			const parsed = stackArray.map((stc: { stackId: string; stackName: string; imgUrl:string }) => ({
 				id: stc.stackId,
 				name: stc.stackName,
 				img:stc.imgUrl,
