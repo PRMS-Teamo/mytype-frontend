@@ -1,3 +1,5 @@
+import type {TechStackType} from "../model/TeckStack.ts";
+
 type LabelType =
   | "포지션 일치"
   | "기술 일치"
@@ -7,9 +9,9 @@ type LabelType =
 
 export interface MatchProps {
   userPosition: string;
-  userTechStack: string[]; // stackId 배열
+  userTechStack:TechStackType[]; // stackId 배열
   postPositions: string[];
-  postTechStack: string[]; // stackId 배열
+  postTechStack: TechStackType[]; // stackId 배열
   isLoggedIn: boolean;
 }
 

@@ -13,10 +13,12 @@ import useProfile from "../../hooks/useProfile.ts";
 import usePosition from '../../hooks/usePositions.ts'
 import {PROCEED_TYPE} from "../../constants/proceedType/proceedType.ts";
 import {BEGINNER} from "../../constants/beginner/beginner.ts";
+import useTechStack from "../../hooks/useTechStack.ts";
 
 const MyPage = () => {
 	const { user, setUser } = useUserStore();
 	const {getUser}=useProfile()
+	const { techStack } = useTechStack();
 	const {positions}=usePosition()
 	useEffect(() => {
 		if (!user) return;
@@ -24,11 +26,16 @@ const MyPage = () => {
 			getUser();
 		}
 	}, []);
-	const handleTechStackChange = (updatedTechStack: string[]) => {
+
+	const handleTechStackChange = (updatedIds: string[]) => {
 		if (!user) return;
+		const updatedTechStack = techStack.filter((stack) =>
+			updatedIds.includes(stack.id)
+		);
+
 		setUser({
 			...user,
-		userStacks: updatedTechStack,
+			userStacks: updatedTechStack,
 		});
 	};
 	const handlePositionChange = (name: string) => {
@@ -114,7 +121,7 @@ const MyPage = () => {
 				<div className="flex flex-col w-1/3 gap-2">
 					<Label>포지션</Label>
 					<DropDown
-						options={(positions.map((p) => p.name))}
+						options={[...new Set((positions.map((p) => p.name)))]}
 						value={
 							positions.find((p) => p.id === user?.positionId)?.name || ''
 						}
@@ -127,7 +134,7 @@ const MyPage = () => {
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-2">
 					<Label>기술 스택</Label>
-					<TechStack value={user?.userStacks ?? []} onChange={handleTechStackChange} />
+					<TechStack value={user?.userStacks?.map((stack) => stack.id) ?? []} onChange={handleTechStackChange} />
 				</div>
 			</div>
 			<div className="flex flex-row gap-12 justify-center mt-5">

@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import Label from "./Label.tsx";
 import type { LabelType } from "./Label.tsx";
+import type {TechStackType} from "../../model/TeckStack.ts";
 
 interface PostCardLayoutProps {
   date: string;
-  isOnline: boolean;
+  isOnline?: string;
   content: string;
   labels: LabelType[];
-  techStack: string[]; // 기술 스택 이미지 URL 배열
+  techStack: TechStackType[];
 }
 
 export default function PostCardLayout({
@@ -16,7 +17,7 @@ export default function PostCardLayout({
   isOnline,
   content,
   labels,
-  techStack,
+  techStack=[]
 }: PostCardLayoutProps) {
   const [showOverflow, setShowOverflow] = useState(false);
   const maxVisible = 5;

@@ -1,4 +1,5 @@
-import type { Stack } from "../types/api";
+// import type { Stack } from "../types/api";
+import type {TechStackType} from "./TeckStack.ts";
 
 export type PositionType =
   | "웹 프론트엔드"
@@ -12,11 +13,12 @@ export type PositionType =
 
 export type PositionDetail = {
   count: number;
-  techStack: string[];
+  techStacks:TechStackType[];
 };
 export interface Post {
   id:string;
   userId: string;
+  location:string;
   nickname?: string;
   title: string;
   content: string;
@@ -25,5 +27,5 @@ export interface Post {
   proceedType: string;
   deadline: string;
   positionCount: Partial<Record<PositionType, PositionDetail>>;
-  techStacks: Stack[];
+  techStacks: TechStackType[];
 }

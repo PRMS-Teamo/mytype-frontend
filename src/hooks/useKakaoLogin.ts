@@ -82,7 +82,7 @@ export default function useKakaoLogin() {
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
         beginner: user.beginner,
-        userStack: user.userStacks,
+        userStacks: user.userStacks,
       };
       console.log("userData", userData);
       localStorage.setItem("accessToken", tokens.accessToken);

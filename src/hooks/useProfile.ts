@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useUserStore} from "../store/userStore.ts";
+import useTeammate from "./useTeammate.ts";
 
 export default function useProfile() {
   const { user,setUser } = useUserStore();
 
-
+  const { getTeammates } = useTeammate();
 
   const getUser = async () => {
     try {
@@ -52,9 +53,14 @@ export default function useProfile() {
           },
         }
       );
+      // 저장 후 응답
+
       console.log("보낼 user 객체:", user);
       console.log("수정되었습니다", res.data);
       setUser(res.data);
+      await getTeammates();
+
+
     } catch (e) {
       console.log("보낼 user 객체:", user);
       console.log("유저 수정 실패", e);

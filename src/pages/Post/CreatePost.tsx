@@ -14,11 +14,12 @@ import type { PositionType, Post } from "../../model/Post.ts";
 import {useEffect, useState} from "react";
 import {useMockPost} from "../../hooks/useMockPost.ts";
 import {useUserStore} from "../../store/userStore.ts";
+import type {TechStackType} from "../../model/TeckStack.ts";
 
 
 type PositionDetail = {
 	count: number;
-	techStack: string[];
+	techStack: TechStackType[];
 };
 
 const CreatePost = () => {
@@ -33,7 +34,7 @@ const CreatePost = () => {
 			setPositionDetails(myPost.positionCount);
 			setCreatePost({
 				positionCount: myPost.positionCount,
-				techStack: myPost.techStack,
+				techStacks: myPost.techStacks,
 			});
 		}
 	}, [myPost]);
@@ -73,7 +74,7 @@ const CreatePost = () => {
 		const updatedPost: Post = {
 			...createPost,
 			id: myPost.id,
-			techStack: allTechStacks,
+			techStacks: allTechStacks,
 			positionCount: positionDetails,
 			userId: user.id,
 			nickname: user.nickname,

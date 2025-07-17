@@ -1,12 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Stack } from "../types/api";
+import type {TechStackType} from "../model/TeckStack.ts";
 import axios from "axios";
 export interface User {
   id: string;
   nickname: string;
   profileImage?:string;
-  address?: string;
   github?: string;
   location?:string;
   beginner?: boolean;
@@ -15,11 +14,9 @@ export interface User {
   updatedAt: string;
   positionId?: string;
   isPublic?:boolean;
-  userStacks?: string[];
+  userStacks?: TechStackType[];
   description?: string;
-  public?:boolean;
   isJoined?: boolean;
-  techStacks: Stack[];
 }
 
 interface UserStore {
