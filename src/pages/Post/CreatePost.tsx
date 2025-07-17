@@ -19,7 +19,7 @@ import type {TechStackType} from "../../model/TeckStack.ts";
 
 type PositionDetail = {
 	count: number;
-	techStack: TechStackType[];
+	techStack: TechStackType[]
 };
 
 const CreatePost = () => {

@@ -21,10 +21,9 @@ const MyPage = () => {
 	const { techStack } = useTechStack();
 	const {positions}=usePosition()
 	useEffect(() => {
-		if (!user) return;
-		if (!user?.id) {
+		if (!user)
 			getUser();
-		}
+
 	}, []);
 
 	const handleTechStackChange = (updatedIds: string[]) => {
@@ -35,7 +34,7 @@ const MyPage = () => {
 
 		setUser({
 			...user,
-			userStacks: updatedTechStack,
+			userStacks: updatedTechStack, // ✅ TechStackType[]으로 변환한 후 저장
 		});
 	};
 	const handlePositionChange = (name: string) => {
