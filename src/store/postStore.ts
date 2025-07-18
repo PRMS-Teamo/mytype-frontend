@@ -1,28 +1,27 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { PositionType, PositionDetail, Post } from "../model/Post";
+import type { PositionDetail, Post } from "../model/Post";
 
 interface PostState {
   myPost: Post | null;
   createPost: Post;
   setCreatePost: (updated: Partial<Post>) => void;
   setMyPost: (post: Post) => void;
-  updatePositionDetail: (position: PositionType, detail: PositionDetail) => void;
+  updatePositionDetail: (detail: PositionDetail) => void;
   clearMyPost: () => void;
 }
 
 const defaultCreatePost: Post = {
-  id:"",
+  teamId: "",
   userId: "",
-  nickname: "",
   title: "",
+  location:"",
   content: "",
-  createdAt: new Date().toISOString(),
-  region: "",
-  proceedType: "",
-  deadline: "",
-  techStacks: [],
-  positionCount: {},
+  isPublic: true,
+  recruitStatus: "OPEN",
+  proceedType: "ONLINE",
+  endDate: "",
+  positions: [],
 };
 
 export const usePostStore = create<PostState>()(
@@ -35,23 +34,27 @@ export const usePostStore = create<PostState>()(
           createPost: { ...state.createPost, ...updated },
         })),
       setMyPost: (post) => set(() => ({ myPost: post })),
-      updatePositionDetail: (position, detail) =>
-        set((state) => ({
-          createPost: {
-            ...state.createPost,
-            positionCount: {
-              ...state.createPost.positionCount,
-              [position]: detail,
+      updatePositionDetail: (detail) =>
+        set((state) => {
+          const updatedPositions = state.createPost.positions.filter(
+            (pos) => pos.position.id !== detail.position.id
+          );
+          updatedPositions.push(detail);
+
+          return {
+            createPost: {
+              ...state.createPost,
+              positions: updatedPositions,
             },
-          },
-        })),
+          };
+        }),
       clearMyPost: () => set(() => ({ myPost: null })),
     }),
     {
       name: "post-storage",
       partialize: (state) => ({
         createPost: state.createPost,
-        myPost: state.myPost, // ✅ 추가
+        myPost: state.myPost,
       }),
     }
   )

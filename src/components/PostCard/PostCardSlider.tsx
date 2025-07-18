@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PostCard from "./PostCard";
 import { postMock } from "../../mock/data/postMock";
-import { userMock } from "../../mock/data/userMock";
+import { useTeammateStore } from "../../store/teammateStore";
+import useTeammate from "../../hooks/useTeammate";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 interface PostCardSliderProps {
@@ -13,6 +14,15 @@ export default function PostCardSlider({ type }: PostCardSliderProps) {
   const [page, setPage] = useState(0);
   const navigate = useNavigate();
   const cardsPerPage = 3;
+
+  const { teammates } = useTeammateStore();
+  const { getTeammates } = useTeammate();
+
+  useEffect(() => {
+    if (type === "teammate") {
+      getTeammates();
+    }
+  }, [type]);
 
   const teamCards = postMock
     .filter((post) => post.filter === "팀원 구해요")
@@ -29,8 +39,7 @@ export default function PostCardSlider({ type }: PostCardSliderProps) {
       />
     ));
 
-  const teammateCards = userMock.list
-    .filter((user) => user.hasProfile)
+  const teammateCards = teammates
     .sort(
       (a, b) =>
         new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
@@ -40,7 +49,7 @@ export default function PostCardSlider({ type }: PostCardSliderProps) {
         key={`teammate-${idx}`}
         post={user}
         type="teammate"
-        onClick={() => navigate(`/findteammate/${user.userId}`)}
+        onClick={() => navigate(`/findteammate/${user.id}`)}
       />
     ));
 

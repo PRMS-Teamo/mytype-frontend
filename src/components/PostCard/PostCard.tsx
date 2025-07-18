@@ -52,6 +52,7 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
             ? post.techStacks
             : (post as User).userStacks || []
         }
+        type={type}
       />
     </div>
   );

@@ -17,6 +17,7 @@ export interface User {
   userStacks?: TechStackType[];
   description?: string;
   isJoined?: boolean;
+  positionName?: string;
 }
 
 interface UserStore {
