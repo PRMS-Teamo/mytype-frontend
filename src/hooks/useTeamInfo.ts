@@ -9,7 +9,7 @@ const useTeamInfo = () => {
   useEffect(() => {
     // userInfo가 로딩되지 않았다면 아무 것도 안 함
     if (userInfo === null) {
-      return null;
+      return;
     }
     if (!userInfo.isJoined) {
       return;

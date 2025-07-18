@@ -1,6 +1,7 @@
 import Edit from "../assets/icons/Edit.svg?react";
 import { useNavigate } from "react-router-dom";
 import PostCardSlider from "../components/PostCard/PostCardSlider";
+import Chart from "../components/Chart/Chart.tsx";
 function Home() {
   const nav = useNavigate();
 
@@ -9,6 +10,7 @@ function Home() {
   };
   return (
     <div className="flex flex-col gap-8 p-4">
+      <Chart/>
       <div className="flex items-center gap-2">
         <span className="text-[26px] font-semibold">팀원 구해요</span>
         <Edit onClick={handleTeamPostClick} />

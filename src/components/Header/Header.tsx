@@ -17,7 +17,6 @@ const Header = () => {
   const { logout } = useKakaoLogin();
   const showSearch = ["/home", "/team", "/teammate"].includes(location.pathname);
   const showProfileSave = ["/mypage"].includes(location.pathname);
-  // const noneHeader =["/post"].includes(location.pathname);
   const handleAuth = () => {
     if (user) {
       logout();
