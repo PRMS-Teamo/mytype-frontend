@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-type Position = {
+export type Position = {
 	id: string;
 	name: string;
 };

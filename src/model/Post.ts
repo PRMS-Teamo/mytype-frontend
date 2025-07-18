@@ -1,31 +1,22 @@
-// import type { Stack } from "../types/api";
+import type {Position} from "../hooks/usePositions";
 import type {TechStackType} from "./TeckStack.ts";
 
-export type PositionType =
-  | "웹 프론트엔드"
-  | "앱 프론트엔드"
-  | "백엔드"
-  | "디자이너"
-  | "데이터 분석"
-  | "풀스택"
-  | "기획자"
-  | "AI";
-
 export type PositionDetail = {
+  position:Position
   count: number;
-  techStacks:TechStackType[];
+  recruitStatus: "OPEN" | "CLOSE";
+  positionStacks: TechStackType[];
 };
+
 export interface Post {
-  id:string;
+  teamId: string;
   userId: string;
-  location:string;
-  nickname?: string;
   title: string;
   content: string;
-  createdAt: string
-  region: string;
+  isPublic: boolean;
+  location:string;
+  recruitStatus: "OPEN" | "CLOSE";
   proceedType: string;
-  deadline: string;
-  positionCount: Partial<Record<PositionType, PositionDetail>>;
-  techStacks: TechStackType[];
+  endDate: string;
+  positions: PositionDetail[];
 }
