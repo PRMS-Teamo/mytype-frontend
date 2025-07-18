@@ -10,56 +10,58 @@ import Label from "../../components/Label";
 import { POST_CREATE } from "../../constants/post/post";
 import { PLACEHOLDER } from "../../constants/placeholder/placeholders";
 import { formatNumber } from "../../util/formatNumber";
-import type { PositionType, Post } from "../../model/Post.ts";
-import {useEffect, useState} from "react";
-import {useMockPost} from "../../hooks/useMockPost.ts";
-import {useUserStore} from "../../store/userStore.ts";
-import type {TechStackType} from "../../model/TeckStack.ts";
-
-
-type PositionDetail = {
-	count: number;
-	techStack: TechStackType[]
-};
+import  type{ Position} from "../../hooks/usePositions";
+import type { TechStackType } from "../../model/TeckStack";
+import { useEffect, useState } from "react";
+import { useUserStore } from "../../store/userStore";
+import { TeamsApi } from "../../api/teamsApi";
+import type { Post, PositionDetail } from "../../model/Post";
+import useTechStack from "../../hooks/useTechStack.ts";
 
 const CreatePost = () => {
-	const { createPost, setCreatePost ,myPost } = usePostStore();
-	const {user} = useUserStore();
-	const [position, setPosition] = useState<PositionType | null>(null);
-	const [positionDetails, setPositionDetails] = useState<Partial<Record<PositionType, PositionDetail>>>({});
+	const { createPost, setCreatePost, myPost } = usePostStore();
+	const { user } = useUserStore();
+	const [position, setPosition] = useState<Position | null>(null);
+	const [positionDetails, setPositionDetails] = useState<PositionDetail[]>([]);
 	const isEditMode = myPost !== null;
-	const { add,edit} = useMockPost();
+
+	const { createTeam } = TeamsApi();
+	const { techStack } = useTechStack();
+
 	useEffect(() => {
-		if (myPost?.positionCount) {
-			setPositionDetails(myPost.positionCount);
+		if (myPost?.positions) {
+			setPositionDetails(myPost.positions);
 			setCreatePost({
-				positionCount: myPost.positionCount,
-				techStacks: myPost.techStacks,
+				title: myPost.title,
+				content: myPost.content,
+				proceedType: myPost.proceedType,
+				endDate: myPost.endDate ?? "",
+				positions: myPost.positions,
 			});
 		}
 	}, [myPost]);
+
 	const handleSubmit = () => {
 		if (!user) {
 			alert("로그인 후 이용해주세요.");
 			return;
 		}
-		const allTechStacks = Object.values(positionDetails)
-			.flatMap((detail) => detail.techStack)
-			.filter((item, index, self) => self.indexOf(item) === index);
-		const finalPost: Post = {
-			...createPost,
-			techStack: allTechStacks,
-			positionCount: positionDetails,
-			userId: user.id,
-			nickname: user.nickname,
-		};
-		setCreatePost({
-			userId: user.id,
-			nickname: user.nickname,
-		});
-		add(finalPost);
-	};
 
+		const finalPost: Post = {
+			teamId: createPost.teamId,
+			title: createPost.title,
+			content: createPost.content,
+			isPublic: true,
+			location: createPost.location,
+			recruitStatus: "OPEN",
+			proceedType: createPost.proceedType,
+			endDate: createPost.endDate,
+			userId: user.id,
+			positions: positionDetails,
+		};
+
+		createTeam(finalPost);
+	};
 
 	const handleUpdate = () => {
 		if (!user || !myPost) {
@@ -67,62 +69,57 @@ const CreatePost = () => {
 			return;
 		}
 
-		const allTechStacks = Object.values(positionDetails)
-			.flatMap((detail) => detail.techStack)
-			.filter((item, index, self) => self.indexOf(item) === index);
-
-		const updatedPost: Post = {
-			...createPost,
-			id: myPost.id,
-			techStacks: allTechStacks,
-			positionCount: positionDetails,
-			userId: user.id,
-			nickname: user.nickname,
-		};
-		console.log("🛠 최종 수정 요청 post 객체:", updatedPost);
-		edit(updatedPost);
+		// const updatedPost: Post = {
+		// 	...myPost,
+		// 	title: createPost.title,
+		// 	content: createPost.content,
+		// 	proceedType: createPost.proceedType,
+		// 	endDate: createPost.endDate,
+		// 	userId: user.id,
+		// 	positions: positionDetails,
+		// };
+		//
+		// editTeam(updatedPost);
 	};
 
 	const handleCountChange = (value: string) => {
 		if (!position) return;
+
 		const count = parseInt(value.replace(/,/g, ""), 10) || 0;
+
 		setPositionDetails((prev) => {
-			const updated = {
-				...prev,
-				[position]: {
-					...(prev[position] || { count: 0, techStack: [] }),
-					count,
-				},
-			};
-			setCreatePost({ positionCount: updated });
+			const updated = prev.map((p) =>
+				p.position.name === position.name ? { ...p, count } : p
+			);
+
+			setCreatePost({ positions: updated });
 			return updated;
 		});
 	};
 
-	const handleTechStackChange = (updatedTechStacks: string[]) => {
+	const handleTechStackChange = (stacks: TechStackType[]) => {
 		if (!position) return;
 		setPositionDetails((prev) => {
-			const updated = {
-				...prev,
-				[position]: {
-					...(prev[position] || { count: 0, techStack: [] }),
-					techStack: updatedTechStacks,
-				},
-			};
-			setCreatePost({ positionCount: updated });
+			const updated = prev.map((p) =>
+				p.position.id === position.id ? { ...p, positionStacks: stacks } : p
+			);
+			setCreatePost({ positions: updated });
 			return updated;
 		});
 	};
 
-	const currentCount = position ? positionDetails[position]?.count?.toString() ?? "0" : "0";
-	const currentTechStack = position ? positionDetails[position]?.techStack ?? [] : [];
+	const currentDetail = positionDetails.find(
+		(p) => p.position.id === position?.id
+	);
+	const currentCount = currentDetail?.count?.toString() ?? "0";
+	const currentTechStack = currentDetail?.positionStacks ?? [];
 
 	return (
 		<div className="border border-gray-300 rounded-lg mt-6 mb-10 py-2 px-8 h-auto">
 			<div className="flex flex-col gap-5">
 				<div className="flex justify-between items-center">
 					<div className="text-black font-bold text-2xl">게시글 작성</div>
-					<Button variant="primary" onClick={isEditMode? handleUpdate : handleSubmit}>
+					<Button variant="primary" onClick={isEditMode ? handleUpdate : handleSubmit}>
 						{isEditMode ? "수정하기" : "작성하기"}
 					</Button>
 				</div>
@@ -153,7 +150,7 @@ const CreatePost = () => {
 				{position && (
 					<>
 						<div className="flex flex-col gap-2">
-							<Label>{position} 모집 인원</Label>
+							<Label>{position.name} 모집 인원</Label>
 							<InputText
 								placeholder="인원"
 								inputSize="small"
@@ -167,11 +164,21 @@ const CreatePost = () => {
 						</div>
 
 						<div className="flex flex-col gap-2 w-full">
-							<Label>{position} 기술 스택</Label>
-							<TechStack value={currentTechStack} onChange={handleTechStackChange} />
+							<Label>{position.name} 기술 스택</Label>
+							<TechStack
+								value={currentTechStack.map((stack) => stack.id)}
+								onChange={(stackIds) => {
+									const selectedStacks = stackIds
+										.map((id) => techStack.find((s) => s.id === id))
+										.filter((s): s is TechStackType => !!s);
+
+									handleTechStackChange(selectedStacks);
+								}}
+							/>
 						</div>
 					</>
 				)}
+
 				<div className="flex gap-5 w-full mb-5">
 					<div className="flex flex-col gap-2">
 						<Label>{POST_CREATE.PROCEED_METHOD_LABEL}</Label>
@@ -185,15 +192,15 @@ const CreatePost = () => {
 						<InputText
 							placeholder="지역"
 							inputSize="tiny"
-							value={createPost.region}
-							onChange={(e) => setCreatePost({ region: e.target.value })}
+							value={createPost.location?? ""}
+							onChange={(e) => setCreatePost({ location: e.target.value })}
 						/>
 					</div>
 					<div className="flex flex-col gap-2">
 						<Label>{POST_CREATE.DEADLINE_LABEL}</Label>
 						<Calendar
-							value={createPost.deadline}
-							onChange={(date) => setCreatePost({ deadline: date })}
+							value={createPost.endDate}
+							onChange={(date) => setCreatePost({ endDate: date })}
 						/>
 					</div>
 				</div>
