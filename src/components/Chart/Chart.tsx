@@ -27,7 +27,9 @@ export default function Chart() {
             angle={0}
             fontSize={12}
           />
-          <YAxis />
+          <YAxis
+            allowDecimals={false}
+          />
           <Tooltip />
           <Legend />
           <Bar dataKey="demandCount" name="공급" fill="#5932EA" barSize={12} activeBar={<Rectangle fill="pink" stroke="blue" />} />
