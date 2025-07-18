@@ -1,4 +1,3 @@
-
 import {useLocation} from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import { useModalStore } from "../../store/modalStore";
@@ -12,6 +11,7 @@ const Header = () => {
   // const nav =useNavigate()
   const location = useLocation();
   const { user } = useUserStore();
+
   const { openModal } = useModalStore();
   const { saveUser } = useProfile();
   const { logout } = useKakaoLogin();

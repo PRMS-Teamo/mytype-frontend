@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useUserStore} from "../store/userStore.ts";
 import useTeammate from "./useTeammate.ts";
+import {useSetUserTemp, useUserTemp} from "../store/userTempStore.ts";
 
 export default function useProfile() {
-  const { user,setUser } = useUserStore();
-
+  const originalSetUser = useUserStore((state) => state.setUser);
+  const user = useUserTemp();
+  const setUser = useSetUserTemp();
   const { getTeammates } = useTeammate();
 
   const getUser = async () => {
@@ -39,7 +41,7 @@ export default function useProfile() {
         positionId: user.positionId,
         proceedType: user.proceedType,
         beginner: user.beginner,
-        userStacks: user.userStacks?.map((stack) => stack.id) ?? [],
+        userStacks: user.userStacks?.map((stack) => stack.stackId) ?? [],
         description: user.description,
         isPublic: user.isPublic,
       };
@@ -58,10 +60,9 @@ export default function useProfile() {
 
       console.log("보낼 user 객체:", user);
       console.log("수정되었습니다", res.data);
+      originalSetUser(res.data);
       setUser(res.data);
       await getTeammates();
-
-
     } catch (e) {
       console.log("보낼 user 객체:", user);
       console.log("유저 수정 실패", e);
