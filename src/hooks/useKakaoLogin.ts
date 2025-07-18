@@ -19,41 +19,6 @@ export default function useKakaoLogin() {
       return
     }
   }
-  // useEffect(() => {
-  //   function handleMessage(e: MessageEvent) {
-  //     if (e.origin !== import.meta.env.VITE_BACKEND_URL) {
-  //       console.warn("origin 다름", e.origin);
-  //     }
-  //     console.log('e.data', e.data);
-  //     const receivedData = e.data;
-  //
-  //     if (receivedData.status === "NEW") {
-  //       nav('/mypage');
-  //       return;
-  //     } else if (receivedData.status === "EXISTING") {
-  //       console.log("기존유저");
-  //     }
-  //     console.log('받은 데이터', receivedData);
-  //     const userData = {
-  //       id: receivedData.user.userId,
-  //       nickname: receivedData.user.nickname,
-  //       address: receivedData.user.address,
-  //       github: receivedData.github_url, //BE: 추후 수정
-  //       beginner: receivedData.beginner, //BE: 항목 생성
-  //       proceedMethod: receivedData.proceedMethod, // BE: 항목 생성
-  //       position: receivedData.position_id,
-  //       techStack: receivedData.user_stacks,
-  //       updatedAt: receivedData.updatedAt, //BE: 항목 생성
-  //       introduction: receivedData.introduction, // BE: 항목 생성
-  //       public: receivedData.public, // BE: 항목 생성
-  //     }
-  //
-  //     console.log('userData',userData);;
-  //     localStorage.setItem('accessToken', receivedData.accessToken);
-  //     setUser(userData);
-  //     closeModal();
-  //   }
-
   useEffect(() => {
     function handleMessage(e: MessageEvent) {
       if (e.origin !== import.meta.env.VITE_BACKEND_URL) {

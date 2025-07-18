@@ -23,7 +23,6 @@ const MyPage = () => {
 	useEffect(() => {
 		if (!user)
 			getUser();
-
 	}, []);
 
 	const handleTechStackChange = (updatedIds: string[]) => {
@@ -37,6 +36,7 @@ const MyPage = () => {
 			userStacks: updatedTechStack, // ✅ TechStackType[]으로 변환한 후 저장
 		});
 	};
+	console.log(user);
 	const handlePositionChange = (name: string) => {
 		if (!user) return;
 		const selected = positions.find((p) => p.name === name);
@@ -129,7 +129,6 @@ const MyPage = () => {
 					/>
 				</div>
 			</div>
-
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-2">
 					<Label>기술 스택</Label>
