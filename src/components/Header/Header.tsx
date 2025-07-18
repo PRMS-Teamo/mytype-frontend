@@ -6,6 +6,7 @@ import Button from "../Button/Button.tsx";
 import useKakaoLogin from "../../hooks/useKakaoLogin.ts";
 import useProfile from "../../hooks/useProfile.ts";
 import SearchInput from "../SearchInput/SearchInput.tsx";
+import useUserValid from "../../hooks/useUserValid.ts";
 
 const Header = () => {
   // const nav =useNavigate()
@@ -24,6 +25,7 @@ const Header = () => {
       openModal();
     }
   };
+  const checkValid = useUserValid();
 
   return (
     <header className="w-full flex justify-end items-center px-8 pt-4 bg-white mt-2">
@@ -36,6 +38,9 @@ const Header = () => {
         )}
         <button onClick={handleAuth} className="text-base text-[#3E3E3E]">
           {user ? "로그아웃" : "로그인"}
+        </button>
+        <button onClick={() => console.log(checkValid)}>
+          유저 정보 유효성 테스트
         </button>
       </div>
     </header>
