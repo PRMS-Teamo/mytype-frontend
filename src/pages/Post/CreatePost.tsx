@@ -58,10 +58,11 @@ const CreatePost = () => {
 				positionId: p.position?.id ?? "",
 				count: p.count,
 				recruitStatus: p.recruitStatus,
-				positionStacks: p.positionStacks.map((s) => s.id),
+				positionStacks: p.positionStacks.map((s) => ({ "stackId" : s.id })),
+				// positionStacks : {stackId: id}[] 형태로 보내야합니다.
 			})),
 		};
-		console.log(finalPost);
+		console.log("finalPost", finalPost);
 
 		createTeam(finalPost);
 	};
