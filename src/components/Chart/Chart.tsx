@@ -1,27 +1,8 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
 import {Bar, BarChart, Legend, Rectangle, Tooltip, XAxis, YAxis} from "recharts";
+import useAnalysis from "../../hooks/useAnalysis.ts";
 
 export default function Chart() {
-  const [chartData, setChartData] = useState([]);
-  const getChartData = async () => {
-    try {
-      const accessToken = localStorage.getItem("accessToken");
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/analysis`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log("analysis data", res.data);
-      setChartData(res.data.analysis)
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  useEffect(() => {
-    getChartData();
-  }, [])
-
+  const { chartData } = useAnalysis();
   const barWidth = 80;
   const chartWidth = chartData.length * barWidth;
 
