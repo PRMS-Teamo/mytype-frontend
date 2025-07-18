@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import Label from "./Label.tsx";
 import type { LabelType } from "./Label.tsx";
-import type {TechStackType} from "../../model/TeckStack.ts";
+import type { TechStackType } from "../../model/TeckStack.ts";
 
 interface PostCardLayoutProps {
   date: string;
   isOnline?: string;
   content: string;
   labels: LabelType[];
-  techStack: TechStackType[];
+  techStack: TechStackType[] | string[];
+  type?: "team" | "teammate";
 }
 
 export default function PostCardLayout({
@@ -17,36 +18,41 @@ export default function PostCardLayout({
   isOnline,
   content,
   labels,
-  techStack=[]
+  techStack = [],
+  type = "team",
 }: PostCardLayoutProps) {
   const [showOverflow, setShowOverflow] = useState(false);
-  const maxVisible = 5;
+  const maxVisible = 7;
 
-  const visibleStacks = techStack.slice(0, maxVisible);
-  const overflowStacks = techStack.slice(maxVisible);
 
-  // 오버플로우가 사라질 경우 팝업 닫기
+  const imageUrls =
+  type === "teammate"
+    ? (techStack as TechStackType[])
+        .map((stack) => stack.stackImg)
+        .filter(Boolean)
+    : (techStack as string[]).filter(Boolean);
+
+  const visibleStacks = imageUrls.slice(0, maxVisible);
+  const overflowStacks = imageUrls.slice(maxVisible);
+
   useEffect(() => {
-    const overflowLength = techStack.length - maxVisible;
+    const overflowLength = imageUrls.length - maxVisible;
     if (overflowLength <= 0) {
       setShowOverflow(false);
     }
-  }, [techStack]);
+  }, [imageUrls]);
 
   return (
     <div className="w-[350px] h-[370px] rounded-[20px] bg-white border border-gray-200 flex flex-col p-4">
-      {/* 날짜 + 온오프라인 */}
       <div className="flex justify-between mx-4 mt-3 text-sm text-gray-600">
         <div className="text-sm font-semibold text-[#5932EA]">{date}</div>
         <div>{isOnline ? "온라인" : "오프라인"}</div>
       </div>
 
-      {/* 내용 */}
       <div className="w-[310px] h-[200px] rounded-[18px] bg-white border border-gray-200 flex flex-col p-7 justify-between mt-2 text-sm font-semibold">
         {content}
       </div>
 
-      {/* 라벨 */}
       <div className="mt-6 mx-4 flex gap-2">
         {labels.map((label) => (
           <Label key={String(label)} type={label}>
@@ -55,17 +61,14 @@ export default function PostCardLayout({
         ))}
       </div>
 
-      {/* 기술 스택 아이콘 */}
       <div className="mt-6 mx-4 flex gap-2 flex-wrap text-xs relative">
-        {visibleStacks.map((url) => (
+        
+        {visibleStacks.map((url, index) => (
           <img
-            key={url}
+            key={index}
             src={url}
             alt="기술 스택"
             className="w-6 h-6 rounded-full"
-            onError={(e) => {
-              e.currentTarget.src = "/default-tech-icon.png"; // 대체 이미지 경로
-            }}
           />
         ))}
 
