@@ -8,6 +8,7 @@ export const COMMON_POST={
 export const POST_TEAM={
 ...COMMON_POST,
 	MEMBER_COUNT: '프로젝트 인원',
+	DEADLINE:"마감기한"
 
 }
 
