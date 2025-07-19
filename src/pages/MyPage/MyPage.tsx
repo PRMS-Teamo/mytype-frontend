@@ -12,7 +12,7 @@ import {BEGINNER} from "../../constants/beginner/beginner.ts";
 import useMyPage from "../../hooks/useMyPage.ts";
 
 const MyPage = () => {
-	const { user, setUser, handlePositionChange, handleTechStackChange, positions } = useMyPage();
+	const { user, setUser, handlePositionChange, positions } = useMyPage();
 
 	return (
 		<>
@@ -102,7 +102,7 @@ const MyPage = () => {
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-2">
 					<Label>기술 스택</Label>
-					<TechStack value={user?.userStacks?.map((stack) => stack.stackId) ?? []} onChange={handleTechStackChange} />
+					<TechStack />
 				</div>
 			</div>
 			<div className="flex flex-row gap-12 justify-center mt-5">
