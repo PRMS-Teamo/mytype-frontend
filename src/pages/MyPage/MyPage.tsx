@@ -12,9 +12,7 @@ import {BEGINNER} from "../../constants/beginner/beginner.ts";
 import useMyPage from "../../hooks/useMyPage.ts";
 
 const MyPage = () => {
-	const {
-		user, setUser, positions, handlePositionChange, handleTechStackChange
-	} = useMyPage();
+	const { user, setUser, handlePositionChange, handleTechStackChange, positions } = useMyPage();
 
 	return (
 		<>

@@ -2,8 +2,10 @@ import {useUserStore} from "../store/userStore.ts";
 import {useEffect} from "react";
 import {useModalStore} from "../store/modalStore.ts";
 import {useNavigate} from "react-router-dom";
+import {useSetUserTemp} from "../store/userTempStore.ts";
 export default function useKakaoLogin() {
   const setUser = useUserStore((s) => s.setUser);
+  const setUserTemp = useSetUserTemp();
   const nav=useNavigate();
   const logout = useUserStore((s) => s.clearUser);
   const { closeModal } = useModalStore();
@@ -53,6 +55,7 @@ export default function useKakaoLogin() {
       localStorage.setItem("accessToken", tokens.accessToken);
       localStorage.setItem("refreshToken", tokens.refreshToken);
       setUser(userData);
+      setUserTemp(userData);
       closeModal();
     }
 
