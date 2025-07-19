@@ -9,6 +9,8 @@ export interface TeamResponse {
   title: string;
   content: string;
   userId: string;
+  createdAt: string;
+  endTime:string;
   isPublic: boolean;
   location:string;
   recruitStatus: "OPEN" | "CLOSED";

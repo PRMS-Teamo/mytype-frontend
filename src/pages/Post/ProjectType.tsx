@@ -38,9 +38,7 @@ const ProjectType = ({ post, type }: PostCardProps) => {
                 <span className="text-gray-400">기술 스택 없음</span>
               )}
             </div>
-
             <div>{"location" in post ? post.location : "?"}</div>
-
             <div className="flex gap-4 flex-wrap">
               {"positionCount" in post
                 ? Object.entries(post.positionCount).map(
@@ -53,6 +51,7 @@ const ProjectType = ({ post, type }: PostCardProps) => {
                   )
                 : null}
             </div>
+            <div>{"endTime" in post ? post.endTime : "마감기한 안뜸"}</div>
           </>
         ) : (
           <>
@@ -64,7 +63,7 @@ const ProjectType = ({ post, type }: PostCardProps) => {
                   <div key={index} className="flex items-center gap-1">
                     <img
                       src={stack.stackImg}
-                      alt={stack.name}
+                      alt={stack.stackName}
                       className="w-6 h-6"
                     />
                   </div>

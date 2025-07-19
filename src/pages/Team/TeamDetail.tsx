@@ -29,7 +29,7 @@ import useTeam from "../../hooks/useTeamDetail";
 
 const TeamDetail = () => {
   const { team } = useTeam();
-
+  // const isAuthor=team?.userId!=user.userId
   if (!team) {
     return <div className="p-12">팀 정보를 불러오는 중입니다...</div>;
   }
@@ -39,8 +39,8 @@ console.log(team);
       <div className="m-12">
         <Content post={team} />
         <ProjectType post={team} type="team" />
-        {/* 여기에 조건 추가할 수도 있음 */}
-        {/* {isAuthor ? <Comments /> : <WriteComment />} */}
+
+         {/*{isAuthor ? <Comments /> : <WriteComment />}*/}
       </div>
     </div>
   );

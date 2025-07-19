@@ -7,7 +7,6 @@ export interface Team {
 	location?: string;
 	recruitStatus: "OPEN" | "CLOSE";
 	proceedType: "ONLINE" | "OFFLINE" | "BOTH";
-	endDate: string;
 	imgUrl?: string;
 	positions: {
 		positionId: string;
