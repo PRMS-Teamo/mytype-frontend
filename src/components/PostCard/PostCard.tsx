@@ -45,7 +45,7 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
             ? new Date(post.createdAt).toISOString().slice(0, 10)
             : new Date(post.updatedAt).toISOString().slice(0, 10)
         }
-        isOnline={type === "team" ? post.proceedType : post.proceedType}
+        isOnline={type === "team" ? post.proceedType : user?.proceedType}
         content={type === "team" ? post.title : post.description|| ""}
         labels={labels}
         techStack={

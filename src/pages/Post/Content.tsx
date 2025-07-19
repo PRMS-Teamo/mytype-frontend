@@ -69,7 +69,7 @@ const Content = ({ post }: { post: TeamResponse | User }) => {
     <>
       <div className="flex justify-between">
         <div className="text-main text-[0.9375rem]">
-          {formatDate(new Date(createdAt))}
+          {createdAt ? formatDate(new Date(createdAt)) : ""}
         </div>
         {isAuthor ? (
           <div className="flex gap-3">
