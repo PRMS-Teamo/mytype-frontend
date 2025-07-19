@@ -14,15 +14,27 @@ const Content = ({ post }: { post: TeamResponse | User }) => {
   const { inviteUser } = useInviteUser();
   const { positions } = usePosition();
 
+  const isTeamPost = "userId" in post;
+  const isTeammatePost = "id" in post;
+
   const isAuthor =
     user?.id &&
     (("userId" in post && user.id === post.userId) ||
       ("id" in post && user.id === post.id));
 
-			const createdAt = "createdAt" in post ? post.createdAt : "updatedAt" in post ? post.updatedAt : "";
+  const createdAt =
+    "createdAt" in post
+      ? post.createdAt
+      : "updatedAt" in post
+      ? post.updatedAt
+      : "";
 
   const handleEditClick = () => {
-    navigate("/mypage");
+    if (isTeammatePost) {
+      navigate("/mypage");
+    } else if (isTeamPost) {
+      navigate("/post");
+    }
   };
 
   const handleInvite = () => {
@@ -66,15 +78,15 @@ const Content = ({ post }: { post: TeamResponse | User }) => {
               className="cursor-pointer hover:bg-gray"
             />
           </div>
-        ) : (
+        ) : isTeammatePost ? (
           <Button variant="square" onClick={handleInvite}>
             초대하기
           </Button>
-        )}
+        ) : null}
       </div>
 
       <div className="text-2xl font-bold text-black mt-4">
-        {"title" in post ? post.title : `${post.nickname}`}
+        {"title" in post ? post.title : post.nickname}
       </div>
 
       <div className="text-[0.9375rem] text-gray mt-7">
