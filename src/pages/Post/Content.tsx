@@ -1,5 +1,4 @@
 import { formatDate } from "../../util/formatDate";
-import type { Post } from "../../model/Post";
 import type { User } from "../../store/userStore";
 import Edit from "../../assets/icons/Edit.svg?react";
 import Trash from "../../assets/icons/trash.svg?react";
@@ -11,13 +10,13 @@ const Content = ({ post }: { post: TeamResponse | User }) => {
 	const { user } = useUserStore();
 
 	const isAuthor = user?.id && "userId" in post && user.id === post.userId;
-	const createdAt = "createdAt" in post ? post.createdAt : post.updatedAt;
+	const createdAt = "createdAt" in post ? post.createdAt : "updatedAt" in post ? post.updatedAt : "";
 
 	return (
 		<>
 			<div className="flex justify-between">
 				<div className="text-main text-[0.9375rem]">
-					{formatDate(new Date(createdAt))}
+					{createdAt ? formatDate(new Date(createdAt)) : ""}
 				</div>
 				{isAuthor ? (
 					<div className="flex gap-3">

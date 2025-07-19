@@ -22,6 +22,7 @@ export default function ListItem({
  buttonContent,
  onClick,
 }: Props) {
+
   return (
     <div className="flex flex-col w-full relative my-4">
       <div className="h-16 text-lg rounded-xl border border-gray-300 bg-white px-6 py-2" />
