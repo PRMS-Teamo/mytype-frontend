@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         path: 'findteam',
         children: [
           { index: true, element: <TeamList /> },
-          { path: ':id', element: <TeamDetail /> },
+          { path: ':teamId', element: <TeamDetail /> },
 
         ],
       },

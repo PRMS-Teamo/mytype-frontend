@@ -1,13 +1,14 @@
 import { useUserStore } from "../../store/userStore";
 import { getMatchingLabel } from "../../util/getMatchingLabel";
 import PostCardLayout from "./PostCardLayout";
-import type { Post } from "../../model/Post";
+// import type { Post } from "../../model/Post";
 import type { User } from "../../store/userStore";
 import type { LabelType } from "./Label";
+import type {TeamResponse} from "../../types/api.ts";
 
 export interface TeamPostCardProps {
   type: "team";
-  post: Post;
+  post: TeamResponse;
   onClick?: () => void;
 }
 
@@ -49,7 +50,7 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
         labels={labels}
         techStack={
           type === "team"
-            ? post.techStacks
+            ? post.teamStacks
             : (post as User).userStacks || []
         }
         type={type}
