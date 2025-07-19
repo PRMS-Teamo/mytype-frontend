@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import 'aos/dist/aos.css'
 import AOS from 'aos'
 

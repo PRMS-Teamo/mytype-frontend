@@ -1,49 +1,21 @@
-import { useEffect } from "react";
 import InputText from "../../components/InputText";
 import Label from "../../components/Label";
 import DropDown from "../../components/DropDown";
 import Profile from "../../components/Profile";
 import TechStack from "../../components/TechStack";
-import { useUserStore } from "../../store/userStore.ts";
 import Introduction from "../../components/Introduction";
 import Information from "../../assets/icons/information.svg?react"
 import {MYPAGE} from "../../constants/mypage/mypage.ts";
 import Button from "../../components/Button";
-import useProfile from "../../hooks/useProfile.ts";
-import usePosition from '../../hooks/usePositions.ts'
 import {PROCEED_TYPE} from "../../constants/proceedType/proceedType.ts";
 import {BEGINNER} from "../../constants/beginner/beginner.ts";
-import useTechStack from "../../hooks/useTechStack.ts";
+import useMyPage from "../../hooks/useMyPage.ts";
 
 const MyPage = () => {
-	const { user, setUser } = useUserStore();
-	const {getUser}=useProfile()
-	const { techStack } = useTechStack();
-	const {positions}=usePosition()
-	useEffect(() => {
-		if (!user)
-			getUser();
-	}, []);
+	const {
+		user, setUser, positions, handlePositionChange, handleTechStackChange
+	} = useMyPage();
 
-	const handleTechStackChange = (updatedIds: string[]) => {
-		if (!user) return;
-		const updatedTechStack = techStack.filter((stack) =>
-			updatedIds.includes(stack.id)
-		);
-
-		setUser({
-			...user,
-			userStacks: updatedTechStack, // ✅ TechStackType[]으로 변환한 후 저장
-		});
-	};
-	console.log(user);
-	const handlePositionChange = (name: string) => {
-		if (!user) return;
-		const selected = positions.find((p) => p.name === name);
-		if (selected) {
-			setUser({ ...user, positionId: selected.id });
-		}
-	};
 	return (
 		<>
 			<Profile />
@@ -132,7 +104,7 @@ const MyPage = () => {
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-2">
 					<Label>기술 스택</Label>
-					<TechStack value={user?.userStacks?.map((stack) => stack.id) ?? []} onChange={handleTechStackChange} />
+					<TechStack value={user?.userStacks?.map((stack) => stack.stackId) ?? []} onChange={handleTechStackChange} />
 				</div>
 			</div>
 			<div className="flex flex-row gap-12 justify-center mt-5">

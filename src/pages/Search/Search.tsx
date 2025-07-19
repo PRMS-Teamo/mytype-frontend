@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import InputText from "../../components/InputText";
 import PostCard from "../../components/PostCard/PostCard";
-import { postMock } from "../../mock/data/postMock";
 import { userMock } from "../../mock/data/userMock";
-import type { Post } from "../../model/Post";
-import { useNavigate } from "react-router-dom";
+import useSearch from "../../hooks/useSearch.ts";
 
 type UserWithCardInfo = {
   userId: string;
@@ -24,18 +21,10 @@ type UserWithCardInfo = {
 };
 
 function Search() {
-  const [search, setSearch] = useState("");
-  const [tab, setTab] = useState<"팀 구해요" | "팀원 구해요">("팀 구해요");
-  const navigate = useNavigate();
-
-  const keyword = search.toLowerCase();
-
-  const filteredPosts: Post[] = postMock.filter((post) => {
-    return (
-      post.title.toLowerCase().includes(keyword) ||
-      post.content.toLowerCase().includes(keyword)
-    );
-  });
+  const {
+    keyword, search, setSearch,
+    tab, setTab, filteredPosts, navigate
+  } = useSearch();
 
   const filteredUsers: UserWithCardInfo[] = userMock.list
     .filter(
