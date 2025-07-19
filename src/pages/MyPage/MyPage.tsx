@@ -32,7 +32,7 @@ const MyPage = () => {
         onImageChange={handleImageChange}
       />
       <div className="flex flex-row w-full gap-12 mt-6 justify-center">
-        <div className="flex flex-col w-1/3  gap-2">
+        <div className="flex flex-col w-1/3 gap-2">
           <Label>이름</Label>
           <InputText
             placeholder="이름 입력"
@@ -134,8 +134,8 @@ const MyPage = () => {
           />
         </div>
       </div>
-      <div className="flex flex-row gap-12 items-center  mt-5">
-        <div className="flex w-full gap-2 align-middle items-center ">
+      <div className="flex flex-row gap-12 items-center mt-5">
+        <div className="flex w-full gap-2 align-middle items-center">
           <Information />
           {MYPAGE.PUBLIC_OPTIONS}
           {user?.isPublic ? (
@@ -145,7 +145,7 @@ const MyPage = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-row gap-12 items-center  justify-center mt-5">
+      <div className="flex flex-row gap-12 items-center justify-center mt-5">
         <div className="flex w-full gap-2">
           <Button
             variant="primary"
