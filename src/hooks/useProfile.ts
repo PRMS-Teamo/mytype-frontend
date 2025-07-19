@@ -50,6 +50,7 @@ export default function useProfile() {
         userStacks: user.userStacks?.map((stack) => stack.stackId) ?? [],
         description: user.description,
         isPublic: user.isPublic,
+        profileImage: user.profileImage,
       };
 
       const res = await axios.patch(
@@ -66,8 +67,15 @@ export default function useProfile() {
 
       console.log("보낼 user 객체:", user);
       console.log("수정되었습니다", res.data);
-      originalSetUser(res.data);
-      setUser(res.data);
+
+      // 서버 응답에서 profileImage가 다르면 클라이언트에서 강제로 유지
+      const updatedUser = {
+        ...res.data,
+        profileImage: user.profileImage, // 클라이언트에서 선택한 이미지 유지
+      };
+
+      originalSetUser(updatedUser);
+      setUser(updatedUser);
       await getTeammates();
 
       // 성공 토스트 표시

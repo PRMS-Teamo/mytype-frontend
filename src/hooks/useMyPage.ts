@@ -1,9 +1,9 @@
-import {type User, useUserInfo} from "../store/userStore.ts";
+import { type User, useUserInfo } from "../store/userStore.ts";
 import useProfile from "./useProfile.ts";
 import useTechStack from "./useTechStack.ts";
 import usePosition from "./usePositions.ts";
-import {useEffect} from "react";
-import {useSetUserTemp, useUserTemp} from "../store/userTempStore.ts";
+import { useEffect } from "react";
+import { useSetUserTemp, useUserTemp } from "../store/userTempStore.ts";
 
 export default function useMyPage() {
   const { techStack } = useTechStack();
@@ -21,11 +21,16 @@ export default function useMyPage() {
   const originalUser = useUserInfo();
   const user = useUserTemp();
   const setUser = useSetUserTemp();
-  const {getUser}=useProfile()
-  const {positions}=usePosition()
+  const { getUser } = useProfile();
+  const { positions } = usePosition();
   useEffect(() => {
     if (!user) {
-      getUser();
+      // 1500ms 지연 후 API 호출
+      const timer = setTimeout(() => {
+        getUser();
+      }, 1500);
+
+      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -34,9 +39,9 @@ export default function useMyPage() {
     if (originalUser !== user) {
       return () => {
         setUser(originalUser as User);
-      }
+      };
     }
-  }, [])
+  }, []);
 
   const handlePositionChange = (name: string) => {
     if (!user) return;
@@ -46,8 +51,10 @@ export default function useMyPage() {
     }
   };
   return {
-    user, setUser, positions,
+    user,
+    setUser,
+    positions,
     handlePositionChange,
     handleTechStackChange,
-  }
+  };
 }
