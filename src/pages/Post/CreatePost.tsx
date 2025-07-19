@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import { usePostStore } from "../../store/postStore";
 import Button from "../../components/Button/Button";
 import InputText from "../../components/InputText";
@@ -14,14 +12,14 @@ import { PLACEHOLDER } from "../../constants/placeholder/placeholders";
 import { formatNumber } from "../../util/formatNumber";
 import type { Position } from "../../hooks/usePositions";
 import type { TechStackType } from "../../model/TeckStack";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import { useUserStore } from "../../store/userStore";
 import { TeamsApi } from "../../api/teamsApi";
 import type {Post, PositionDetail, PostPayload} from "../../model/Post";
 import useTechStack from "../../hooks/useTechStack.ts";
 
 const CreatePost = () => {
-	const { myPost,setMyPost } = usePostStore();
+	const { myPost } = usePostStore();
 	const { user } = useUserStore();
 	const isEditMode = myPost !== null;
 	const { techStack } = useTechStack();
@@ -141,7 +139,7 @@ const CreatePost = () => {
 
 				<div>
 					<Label>{POST_CREATE.RECRUITMENT_FIELD_LABEL}</Label>
-					<PositionBtn value={position?.id} onChange={handleSelectPosition} />
+					<PositionBtn value={position?.id as unknown as Position} onChange={handleSelectPosition} />
 				</div>
 
 				{position && (
