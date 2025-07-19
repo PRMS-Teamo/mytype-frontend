@@ -34,35 +34,63 @@ export default function useInvitations() {
       );
 
       const rawData: RawInvitation[] = res.data;
-
       const inviteOnly = rawData.filter((item) => item.action === "INVITE");
 
-      // teamPositionId -> teamId -> 팀 상세 정보 가져오기
       const enrichedInvites = await Promise.all(
         inviteOnly.map(async (item) => {
-          try {
-            if (!item.teamPositionId) return item;
+          if (!item.teamPositionId) return item;
 
-            const teamRes = await axios.get(
-              `${import.meta.env.VITE_BACKEND_URL}/teams/${item.teamPositionId}`,
+          try {
+            // 1. 팀 전체 목록 가져오기
+            const teamListRes = await axios.get(
+              `${import.meta.env.VITE_BACKEND_URL}/teams`,
+              {
+                headers: { Authorization: `Bearer ${accessToken}` },
+              }
+            );
+            const allTeams = teamListRes.data;
+
+            // 2. teamPositionId 포함한 팀 찾기
+            const matchedTeam = allTeams.find((team: any) =>
+              team.positions.some(
+                (pos: any) => pos.positionId === item.teamPositionId
+              )
+            );
+
+            if (!matchedTeam) return item;
+
+            // 3. 팀 상세 정보 조회
+            const teamDetailRes = await axios.get(
+              `${import.meta.env.VITE_BACKEND_URL}/teams/${matchedTeam.teamId}`,
               {
                 headers: { Authorization: `Bearer ${accessToken}` },
               }
             );
 
-            const team = teamRes.data;
+            const teamDetail = teamDetailRes.data;
+
+            // 4. 유저 정보 조회
+            const userRes = await axios.get(
+              `${import.meta.env.VITE_BACKEND_URL}/users/${teamDetail.userId}`,
+              {
+                headers: { Authorization: `Bearer ${accessToken}` },
+              }
+            );
+
+            const user = userRes.data;
+
             return {
               ...item,
-              postTitle: team.title,
-              authorName: team.leader?.nickname ?? "알 수 없음",
+              postTitle: teamDetail.title,
+              authorName: user.nickname ?? "알 수 없음",
             };
-          } catch (e) {
-            console.error("팀 정보 불러오기 실패", e);
+          } catch (err) {
+            console.error("초대 enrich 실패:", err);
             return item;
           }
         })
       );
-      console.log("초대 데이터", res.data);
+
       setInvitations(enrichedInvites);
     } catch (e) {
       console.error(e);
