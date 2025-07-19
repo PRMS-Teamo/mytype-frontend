@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import type{TechStackType} from "../model/TeckStack.ts";
 
-
 const useTechStack = () => {
 	const [techStack, setTechStack] = useState<TechStackType[]>([]);
 	const getTeckStack=async ()=>{
@@ -13,12 +12,11 @@ const useTechStack = () => {
 					Authorization: `Bearer ${accessToken}`,
 				},
 			});
-			console.log("기술스택 응답", res.data);
 			const stackArray = res.data.stacks;
 			const parsed = stackArray.map((stc: { stackId: string; stackName: string; imgUrl:string }) => ({
-				id: stc.stackId,
-				name: stc.stackName,
-				img:stc.imgUrl,
+				stackId: stc.stackId,
+				stackName: stc.stackName,
+				stackImg: stc.imgUrl,
 			}));
 			setTechStack(parsed);
 		} catch (e) {
