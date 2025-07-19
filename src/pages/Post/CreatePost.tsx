@@ -1,4 +1,6 @@
-;import { usePostStore } from "../../store/postStore";
+import axios from "axios";
+
+import { usePostStore } from "../../store/postStore";
 import Button from "../../components/Button/Button";
 import InputText from "../../components/InputText";
 import TextArea from "../../components/TextArea";
@@ -12,7 +14,7 @@ import { PLACEHOLDER } from "../../constants/placeholder/placeholders";
 import { formatNumber } from "../../util/formatNumber";
 import type { Position } from "../../hooks/usePositions";
 import type { TechStackType } from "../../model/TeckStack";
-import {  useState } from "react";
+import {useEffect, useState} from "react";
 import { useUserStore } from "../../store/userStore";
 import { TeamsApi } from "../../api/teamsApi";
 import type {Post, PositionDetail, PostPayload} from "../../model/Post";
@@ -58,8 +60,7 @@ const CreatePost = () => {
 				positionId: p.position?.id ?? "",
 				count: p.count,
 				recruitStatus: p.recruitStatus,
-				positionStacks: p.positionStacks.map((s) => ({ "stackId" : s.id })),
-				// positionStacks : {stackId: id}[] 형태로 보내야합니다.
+				positionStacks: p.positionStacks.map((s) => ({ "stackId" : s.stackId })),
 			})),
 		};
 		console.log("finalPost", finalPost);
@@ -195,7 +196,7 @@ const CreatePost = () => {
 						<Label>{POST_CREATE.DEADLINE_LABEL}</Label>
 						<Calendar
 							value={post.endDate}
-							onChange={(date) => handleChange("endDate", date)}
+							onChange={(date) => handleChange("endTime", date)}
 						/>
 					</div>
 				</div>

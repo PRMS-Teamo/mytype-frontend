@@ -1,26 +1,40 @@
 import axios from "axios";
 import { usePostStore } from "../store/postStore";
 import type {Team} from "../model/Team";
+import {useUserStore} from "../store/userStore.ts";
 
 export const TeamsApi = () => {
   const { setMyPost } = usePostStore();
-
+  const { user } = useUserStore();
+  const isJoined = user.isJoined;
   const createTeam = async (post: Team) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/teams`,
-        post,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log("팀 생성 성공", res.data);
-      setMyPost(res.data);
+      if (isJoined) {
+        const res = await axios.patch(
+          `${import.meta.env.VITE_BACKEND_URL}/teams/me`,
+          post,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setMyPost(res.data);
+      } else {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/teams`,
+          post,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setMyPost(res.data);
+      }
     } catch (e) {
-      console.error("팀 생성 실패", e);
+      console.error("팀 생성/수정 실패", e);
     }
   };
 
