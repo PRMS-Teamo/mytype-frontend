@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 
 const useTeamInfo = () => {
   const userInfo = useUserInfo();
-  const [teamInfo, setTeamInfo] = useState(null);
+  const [teamInfo, setTeamInfo] = useState<any>(null);
+  const [teamMemberInfo, setTeamMemberInfo] = useState<Set<any>>(new Set());
 
   useEffect(() => {
-    // userInfo가 로딩되지 않았다면 아무 것도 안 함
     if (userInfo === null) {
       return;
     }
@@ -15,27 +15,46 @@ const useTeamInfo = () => {
       return;
     }
     const getTeamInfo = async () => {
+      console.log('getTimeInfo', userInfo);
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/teams/me/${userInfo?.positionId}`,
+        const teamInfoResponse = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/teams/me`,
           {
             headers: {
               authorization: `Bearer ${accessToken}`,
             },
           }
         );
-        setTeamInfo(res.data);
-        console.log("팀 정보를 가져오자", res.data);
+        const teamMemberInfoResponse = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/teams/me/members`,
+          {
+            headers: {
+              authorization: `Bearer ${accessToken}`
+            }
+          }
+        )
+        setTeamInfo(teamInfoResponse.data);
+        const teamId = teamInfoResponse.data.teamId;
+        const teamMemberData = teamMemberInfoResponse.data[teamId];
+        const teamSet = new Set();
+        for (const member of teamMemberData) {
+          for (const user of member.users) {
+            teamSet.add(user);
+          }
+        }
+        setTeamMemberInfo(teamSet); // 이 때 React가 상태 업데이트 감지
       } catch (error) {
         console.error(error);
       }
     };
-
     getTeamInfo();
-  }, [userInfo]);
-
-  return teamInfo;
+    console.log(teamMemberInfo);
+  }, []);
+  return {
+    teamInfo,
+    teamMemberInfo,
+  };
 };
 
 export default useTeamInfo;

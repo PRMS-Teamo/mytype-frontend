@@ -1,36 +1,63 @@
 import Label from "../../components/Label";
 import ListItem from "../../components/ListItem/ListItem.tsx";
 import useTeamInfo from "../../hooks/useTeamInfo.ts";
+import axios from "axios";
+import {useUserStore} from "../../store/userStore.ts";
 
 const MyTeamInfo = () => {
-  const myTeamData = useTeamInfo();
-  console.log("my team data", myTeamData);
-  const teamMateList = [
-    "김희영",
-    "신혜민",
-    "김종현",
-    "한지웅",
-    "조민우",
-  ]; // TODO : 팀원 정보를 받아오는 API 로직 추가가 필요함. 정보가 온다면 하단처럼 옴.
+  const { teamInfo, teamMemberInfo } = useTeamInfo();
+  const teamTitle = teamInfo?.title;
+  const teamId = teamInfo?.teamId;
+  const { user } = useUserStore();
+  const alone = teamMemberInfo.size === 1;
+  const url = !alone ? `${import.meta.env.VITE_BACKEND_URL}/teams/members/${user?.id}/off-board/${teamId}` : `${import.meta.env.VITE_BACKEND_URL}/teams/complete`
+  const handleTeamOut = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (alone) {
+      const res = await axios.patch(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      return res;
+    } else {
+      const res = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      return res
+    }
+  }
   return (
     <div className="w-full">
       {
-        myTeamData === null ?
+        teamInfo === null ?
           <div>소속된 팀이 없습니다.</div> :
-          <><Label children="팀명"/>
-            <ListItem content="마이타입" buttonContent="팀 나가기" onClick={() => console.log('team out')}/></>
+          <>
+            <Label children="팀명"/>
+            <ListItem content={`${teamTitle}`} buttonContent="팀 나가기" onClick={handleTeamOut}/>
+          </>
       }
       <br/>
       <hr/>
       <br/>
       {
-        myTeamData === null || teamMateList.length === 0 ?
+        teamInfo === null ?
           <div>정보가 없습니다.</div> :
           <>
             <Label>팀원 정보</Label>
-            {teamMateList.map((item) => {
+            {Array.from(teamMemberInfo).map((item) => {
               return (
-                <ListItem content={item} buttonContent="메시지 보내기" onClick={() => console.log('test')}/>
+                <ListItem key={item.userId} content={item.userName} buttonContent="메시지 보내기" onClick={() => console.log('test')}/>
               )
             })}
           </>
