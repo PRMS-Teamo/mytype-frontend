@@ -1,27 +1,33 @@
 import axios from "axios";
-import { useUserStore} from "../store/userStore.ts";
+import { useUserStore } from "../store/userStore.ts";
 import useTeammate from "./useTeammate.ts";
-import {useSetUserTemp, useUserTemp} from "../store/userTempStore.ts";
+import { useSetUserTemp, useUserTemp } from "../store/userTempStore.ts";
+import { useState } from "react";
 
 export default function useProfile() {
   const originalSetUser = useUserStore((state) => state.setUser);
   const user = useUserTemp();
   const setUser = useSetUserTemp();
   const { getTeammates } = useTeammate();
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<"success" | "error">("success");
 
   const getUser = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/me`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/users/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       console.log("조회되었습니다.", res.data);
       setUser(res.data);
     } catch (e) {
-
       console.error("유저 조회 실패", e);
     }
   };
@@ -44,6 +50,7 @@ export default function useProfile() {
         userStacks: user.userStacks?.map((stack) => stack.stackId) ?? [],
         description: user.description,
         isPublic: user.isPublic,
+        profileImage: user.profileImage,
       };
 
       const res = await axios.patch(
@@ -56,20 +63,41 @@ export default function useProfile() {
         }
       );
       // 저장 후 응답
-      console.log("payload값",payload);
+      console.log("payload값", payload);
 
       console.log("보낼 user 객체:", user);
       console.log("수정되었습니다", res.data);
-      originalSetUser(res.data);
-      setUser(res.data);
+
+      // 서버 응답에서 profileImage가 다르면 클라이언트에서 강제로 유지
+      const updatedUser = {
+        ...res.data,
+        profileImage: user.profileImage, // 클라이언트에서 선택한 이미지 유지
+      };
+
+      originalSetUser(updatedUser);
+      setUser(updatedUser);
       await getTeammates();
+
+      // 성공 토스트 표시
+      setToastMessage("저장되었습니다!");
+      setToastType("success");
+      setShowToast(true);
     } catch (e) {
       console.log("보낼 user 객체:", user);
       console.log("유저 수정 실패", e);
+
+      // 실패 토스트 표시
+      setToastMessage("저장에 실패했습니다.");
+      setToastType("error");
+      setShowToast(true);
     }
-  }
+  };
   return {
     getUser,
     saveUser,
+    showToast,
+    setShowToast,
+    toastMessage,
+    toastType,
   };
 }
