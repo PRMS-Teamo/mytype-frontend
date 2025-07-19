@@ -7,7 +7,7 @@ import type {PostPayload} from "../model/Post.ts";
 export const TeamsApi = () => {
   const { setMyPost } = usePostStore();
   const { user } = useUserStore();
-  const isJoined = user.isJoined;
+  const isJoined = user?.isJoined;
   const createTeam = async (post: PostPayload) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
