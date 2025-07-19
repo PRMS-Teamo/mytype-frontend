@@ -20,6 +20,8 @@ const useTeam = () => {
           },
         }
       );
+      console.log("내팀정보",res.data);
+
       setTeam(res.data);
     } catch (error) {
       console.error("팀 개별 조회 실패", error);
