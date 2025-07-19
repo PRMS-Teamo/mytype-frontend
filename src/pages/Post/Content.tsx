@@ -26,8 +26,8 @@ const Content = ({ post }: { post: TeamResponse | User }) => {
     "createdAt" in post
       ? post.createdAt
       : "updatedAt" in post
-      ? post.updatedAt
-      : "";
+        ? post.updatedAt
+        : "";
 
   const handleEditClick = () => {
     if (isTeammatePost) {
