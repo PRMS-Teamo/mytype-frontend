@@ -12,7 +12,6 @@ const MyTeamInfo = () => {
     "한지웅",
     "조민우",
   ]; // TODO : 팀원 정보를 받아오는 API 로직 추가가 필요함. 정보가 온다면 하단처럼 옴.
-  // const teamMateList = myTeamData.teamPositions.teamUsers;
   return (
     <div className="w-full">
       {

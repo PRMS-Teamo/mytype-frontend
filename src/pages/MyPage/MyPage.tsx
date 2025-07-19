@@ -1,48 +1,19 @@
-import { useEffect } from "react";
 import InputText from "../../components/InputText";
 import Label from "../../components/Label";
 import DropDown from "../../components/DropDown";
 import Profile from "../../components/Profile";
 import TechStack from "../../components/TechStack";
-import {type User, useUserInfo} from "../../store/userStore.ts";
 import Introduction from "../../components/Introduction";
 import Information from "../../assets/icons/information.svg?react"
 import {MYPAGE} from "../../constants/mypage/mypage.ts";
 import Button from "../../components/Button";
-import useProfile from "../../hooks/useProfile.ts";
-import usePosition from '../../hooks/usePositions.ts'
 import {PROCEED_TYPE} from "../../constants/proceedType/proceedType.ts";
 import {BEGINNER} from "../../constants/beginner/beginner.ts";
-import {useSetUserTemp, useUserTemp} from "../../store/userTempStore.ts";
+import useMyPage from "../../hooks/useMyPage.ts";
 
 const MyPage = () => {
-	const originalUser = useUserInfo();
-	const user = useUserTemp();
-	const setUser = useSetUserTemp();
-	const {getUser}=useProfile()
-	const {positions}=usePosition()
-	useEffect(() => {
-		if (!user) {
-			getUser();
-		}
-	}, []);
+	const { user, setUser, handlePositionChange, handleTechStackChange, positions } = useMyPage();
 
-	// 해당 페이지를 벗어나면, 원래 데이터로 변환
-	useEffect(() => {
-		if (originalUser !== user) {
-			return () => {
-				setUser(originalUser as User);
-			}
-		}
-	}, [])
-
-	const handlePositionChange = (name: string) => {
-		if (!user) return;
-		const selected = positions.find((p) => p.name === name);
-		if (selected) {
-			setUser({ ...user, positionId: selected.id });
-		}
-	};
 	return (
 		<>
 			<Profile />
@@ -131,7 +102,7 @@ const MyPage = () => {
 			<div className="flex flex-row gap-12 justify-center mt-5">
 				<div className="flex w-full flex-col gap-2">
 					<Label>기술 스택</Label>
-					<TechStack />
+					<TechStack value={user?.userStacks?.map((stack) => stack.stackId) ?? []} onChange={handleTechStackChange} />
 				</div>
 			</div>
 			<div className="flex flex-row gap-12 justify-center mt-5">
@@ -160,7 +131,7 @@ const MyPage = () => {
 				}}>공개</Button>
 					<Button variant="primaryGray" onClick={()=>{
 						if(!user) return;
-						// console.log(user);
+						console.log(user);
 						setUser({ ...user, isPublic: false });
 					}}>비공개</Button>
 				</div>

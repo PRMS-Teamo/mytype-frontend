@@ -1,26 +1,13 @@
-import { useState, useEffect } from 'react';
 import SpeechBubble from "../../components/SpeechBubble";
 import character from "../../assets/icons/png.png";
 import characters from "../../assets/icons/27.png";
 import mainCharacter from "../../assets/icons/image23.png"
 import logoText from "../../assets/icons/logoText.png"
-import {useNavigate} from "react-router-dom";
 import Button from "../../components/Button/Button.tsx";
+import useIntro from '../../hooks/useIntro.ts';
+
 const Intro = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-const nav=useNavigate();
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-
-      const step = Math.floor(scrollY / (windowHeight * 0.8));
-      setCurrentStep(Math.min(step, 4));
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const { nav, currentStep } = useIntro();
 
   return (
     <div className="min-h-[400vh] bg-white">

@@ -30,7 +30,7 @@ const ProjectType = ({ post, type }: PostCardProps) => {
             <div>{getProceedTypeLabel((post as Post).proceedType)}</div>
 
             <div className="flex gap-2 flex-wrap">
-              {"techStack" in post && post.techStacks.length > 0 ? (
+              {"techStack" in post && post.positions.length > 0 ? (
                 post.techStacks.map((tech, index) => (
                   <span key={index}>{tech.name}</span>
                 ))
