@@ -3,18 +3,9 @@ import type {TechStackType} from "./TeckStack.ts";
 
 export type PositionDetail = {
   position:Position
-  //export type Position = {
-  //   id: string
-  //   name: string
-  // }
   count: number;
   recruitStatus: "OPEN" | "CLOSE";
   positionStacks: TechStackType[];
-  //export type TechStackType = {
-  //   id: string
-  //   name: string
-  //   stackImg: string
-  // }
 };
 
 export interface Post {
@@ -25,8 +16,8 @@ export interface Post {
   isPublic: boolean;
   location: string;
   recruitStatus: "OPEN" | "CLOSE";
-  proceedType: string;
-  endDate: string;
+  proceedType: "BOTH" | "ONLINE" | "OFFLINE";
+  endTime: string;
   positions: PositionDetail[];
 }
 
@@ -39,8 +30,8 @@ export interface PostPayload {
   isPublic: boolean;
   location: string;
   recruitStatus: "OPEN" | "CLOSE";
-  proceedType: string;
-  endDate: string;
+  proceedType: "BOTH" | "ONLINE" | "OFFLINE";
+  endTime: string;
   positions: {
     positionId: string;
     count: number;
