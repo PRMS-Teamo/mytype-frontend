@@ -3,6 +3,7 @@ import { PROCEED_TYPE } from "../../constants/proceedType/proceedType";
 import type { Post } from "../../model/Post";
 import type { PostCardProps } from "../../components/PostCard/PostCard";
 import { BEGINNER } from "../../constants/beginner/beginner";
+import {formatDate} from "../../util/formatDate.ts";
 
 const ProjectType = ({ post, type }: PostCardProps) => {
   if (!post) return null;
@@ -51,7 +52,7 @@ const ProjectType = ({ post, type }: PostCardProps) => {
                   )
                 : null}
             </div>
-            <div>{"endTime" in post ? post.endTime : "마감기한 안뜸"}</div>
+            <div>{"endTime" in post ? formatDate(new Date(post.endTime)) : "마감기한 안뜸"}</div>
           </>
         ) : (
           <>

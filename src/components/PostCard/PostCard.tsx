@@ -5,6 +5,7 @@ import PostCardLayout from "./PostCardLayout";
 import type { User } from "../../store/userStore";
 import type { LabelType } from "./Label";
 import type {TeamResponse} from "../../types/api.ts";
+import {formatDate} from "../../util/formatDate.ts";
 
 export interface TeamPostCardProps {
   type: "team";
@@ -42,8 +43,8 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
       <PostCardLayout
         date={
           type === "team"
-            ? new Date(post.createdAt).toISOString().slice(0, 10)
-            : new Date(post.updatedAt).toISOString().slice(0, 10)
+            ? formatDate(new Date(post.createdAt))
+            : formatDate(new Date(post.updatedAt))
         }
         isOnline={type === "team" ? post.proceedType : user?.proceedType}
         content={type === "team" ? post.title : post.description|| ""}

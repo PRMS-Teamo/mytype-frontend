@@ -10,6 +10,7 @@ export interface TeamResponse {
   content: string;
   userId: string;
   createdAt: string;
+  updatedAt: string;
   endTime:string;
   isPublic: boolean;
   location:string;
