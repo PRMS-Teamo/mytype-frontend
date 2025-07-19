@@ -41,6 +41,7 @@ const CreatePost = () => {
 	);
 	const [position, setPosition] = useState<Position | null>(null);
 
+	// TODO : any 타입을 수정해야합니다.
 	const handleChange = (field: keyof Post, value: any) => {
 		setPost((prev) => ({ ...prev, [field]: value }));
 	};
