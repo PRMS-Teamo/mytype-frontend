@@ -4,23 +4,23 @@
 //   imgUrl: string;
 // }
 //
-// export interface TeamResponse {
-//   teamId: string;
-//   title: string;
-//   content: string;
-//   userId: string;
-//   isPublic: boolean;
-//   location:string;
-//   recruitStatus: "OPEN" | "CLOSED";
-//   proceedType: "ONLINE" | "OFFLINE" | "BOTH";
-//   imgUrl: string;
-//   teamStacks: {
-//     id: string;
-//     name: string;
-//     img: string;
-//   }[];
-// }
-//
+export interface TeamResponse {
+  teamId: string;
+  title: string;
+  content: string;
+  userId: string;
+  isPublic: boolean;
+  location:string;
+  recruitStatus: "OPEN" | "CLOSED";
+  proceedType: "ONLINE" | "OFFLINE" | "BOTH";
+  imgUrl: string;
+  teamStacks: {
+    id: string;
+    name: string;
+    img: string;
+  }[];
+}
+
 // export interface Stack {
 //   stackId: string;
 //   stackName: string;

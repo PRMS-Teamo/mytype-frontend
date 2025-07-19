@@ -5,8 +5,9 @@ import Edit from "../../assets/icons/Edit.svg?react";
 import Trash from "../../assets/icons/trash.svg?react";
 import { useUserStore } from "../../store/userStore.ts";
 import Button from "../../components/Button";
+import type {TeamResponse} from "../../types/api.ts";
 
-const Content = ({ post }: { post: Post | User }) => {
+const Content = ({ post }: { post: TeamResponse | User }) => {
 	const { user } = useUserStore();
 
 	const isAuthor = user?.id && "userId" in post && user.id === post.userId;

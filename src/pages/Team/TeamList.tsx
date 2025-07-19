@@ -9,8 +9,8 @@ export default function TeamList() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<TeamResponse[]>([]);
 
-  const handleClick = (id: string) => {
-    navigate(`/findteam/${id}`);
+  const handleClick = (teamId: string) => {
+    navigate(`/findteam/${teamId}`);
   };
 
   useEffect(() => {

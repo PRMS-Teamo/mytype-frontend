@@ -1,24 +1,38 @@
-import {useParams} from "react-router-dom";
-import {useUserStore} from "../store/userStore.ts";
-import {useEffect, useState} from "react";
-import type {Post as PostType} from "../model/Post.ts";
-import axios from "axios";
 
-export default function useTeamDetail() {
-  const { id } = useParams();
-  const { user } = useUserStore();
-  const [post, setPost] = useState<PostType | null>(null);
-  const isAuthor = user?.id && post?.userId&& user.id === post.userId;
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import type { TeamResponse } from "../types/api.ts";
+
+const useTeam = () => {
+  const [team, setTeam] = useState<TeamResponse | null>(null);
+  const { teamId } = useParams<{ teamId: string }>();
+
+  const getTeamById = async () => {
+    if (!teamId) return;
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/teams/${teamId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setTeam(res.data);
+    } catch (error) {
+      console.error("팀 개별 조회 실패", error);
+    }
+  };
 
   useEffect(() => {
-    if (!id) return;
-    axios.get(`/api/posts/${id}`).then((res) => {
-      setPost(res.data);
-    }).catch(() => {
-      alert("게시글을 불러올 수 없습니다.");
-    });
-  }, [id]);
+    getTeamById();
+  }, [teamId]);
+
   return {
-    user, post, isAuthor,
-  }
-}
+    team,
+  };
+};
+
+export default useTeam;
