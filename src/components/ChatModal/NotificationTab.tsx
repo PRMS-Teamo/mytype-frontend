@@ -1,40 +1,21 @@
 import { useReadStateStore } from "../../store/readStore";
-
-interface Notification {
-  id: number;
-  postTitle: string;
-  authorName: string;
-  content: string;
-}
-
-const mockNotifications: Notification[] = [
-  {
-    id: 1,
-    postTitle: "프론트 고수 구합니다.",
-    authorName: "신혜민",
-    content: "잘 못하지만 열심히 할게요ㅠㅠ",
-  },
-  {
-    id: 2,
-    postTitle: "프론트 고수 구합니다.",
-    authorName: "김희영",
-    content: "저 완전 고수임. 혼자 100인분 개발 가능입니다.",
-  },
-];
+import useAppliesHistory from "../../hooks/useInvitations";
 
 export default function NotificationTab() {
   const { isRead, markAsRead } = useReadStateStore();
+  const { invitations } = useAppliesHistory(); 
 
+  
   return (
     <div className="p-1">
       <div className="space-y-2">
-        {mockNotifications.map((item) => {
-          const key = `notification-${item.id}`;
+        {invitations.map((item, index) => {
+          const key = `notification-${index}`;
           const isItemRead = isRead(key);
 
           return (
             <div
-              key={item.id}
+              key={index}
               onClick={() => markAsRead(key)}
               className="flex items-center gap-3 cursor-pointer hover:bg-gray rounded-lg p-1.5"
             >
@@ -46,10 +27,10 @@ export default function NotificationTab() {
                       isItemRead ? "text-[#A7A7A7]" : "text-black"
                     }`}
                   >
-                    {item.postTitle}
+                    {item.postTitle ?? "게시글 제목 없음"}
                   </span>
                   <span className="font-semibold text-[11px] text-[#B3B3B3]">
-                    {item.authorName}
+                    {item.authorName ?? "작성자 없음"}
                   </span>
                 </div>
                 <div
@@ -57,7 +38,7 @@ export default function NotificationTab() {
                     isItemRead ? "text-[#A7A7A7]" : "text-gray-500"
                   }`}
                 >
-                  {item.content}
+                  {item.message ?? "내용 없음"}
                 </div>
               </div>
             </div>
