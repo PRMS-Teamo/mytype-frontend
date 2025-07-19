@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import { usePostStore } from "../../store/postStore";
 import Button from "../../components/Button/Button";
 import InputText from "../../components/InputText";
@@ -13,18 +11,18 @@ import { POST_CREATE } from "../../constants/post/post";
 import { PLACEHOLDER } from "../../constants/placeholder/placeholders";
 import { formatNumber } from "../../util/formatNumber";
 import type { Position } from "../../hooks/usePositions";
-import type { TechStackType } from "../../model/TeckStack";
-import {useEffect, useState} from "react";
+// import type { TechStackType } from "../../model/TeckStack";
+import {useState} from "react";
 import { useUserStore } from "../../store/userStore";
 import { TeamsApi } from "../../api/teamsApi";
 import type {Post, PositionDetail, PostPayload} from "../../model/Post";
-import useTechStack from "../../hooks/useTechStack.ts";
+// import useTechStack from "../../hooks/useTechStack.ts";
 
 const CreatePost = () => {
-	const { myPost,setMyPost } = usePostStore();
+	const { myPost } = usePostStore();
 	const { user } = useUserStore();
 	const isEditMode = myPost !== null;
-	const { techStack } = useTechStack();
+	// const { techStack } = useTechStack();
 	const { createTeam } = TeamsApi();
 
 	const [post, setPost] = useState<Post>(() =>
@@ -37,12 +35,13 @@ const CreatePost = () => {
 				isPublic: true,
 				recruitStatus: "OPEN",
 				proceedType: "ONLINE",
-				endDate: "",
+				endTime: "",
 				positions: [],
 			}
 	);
 	const [position, setPosition] = useState<Position | null>(null);
 
+	// TODO : any 타입을 수정해야합니다.
 	const handleChange = (field: keyof Post, value: any) => {
 		setPost((prev) => ({ ...prev, [field]: value }));
 	};
@@ -78,13 +77,13 @@ const CreatePost = () => {
 		handleChange("positions", updated);
 	};
 
-	const handleTechStackChange = (stacks: TechStackType[]) => {
-		if (!position) return;
-		const updated = post.positions.map((p) =>
-			p.position.id === position.id ? { ...p, positionStacks: stacks } : p
-		);
-		handleChange("positions", updated);
-	};
+	// const handleTechStackChange = (stacks: TechStackType[]) => {
+	// 	if (!position) return;
+	// 	const updated = post.positions.map((p) =>
+	// 		p.position.id === position.id ? { ...p, positionStacks: stacks } : p
+	// 	);
+	// 	handleChange("positions", updated);
+	// };
 	const handleSelectPosition = (newPosition: Position) => {
 		setPosition(newPosition);
 
@@ -109,7 +108,7 @@ const CreatePost = () => {
 	};
 	const currentDetail = post.positions.find((p) => p.position?.id === position?.id);
 	const currentCount = currentDetail?.count?.toString() ?? "0";
-	const currentTechStack = currentDetail?.positionStacks ?? [];
+	// const currentTechStack = currentDetail?.positionStacks ?? [];
 
 	return (
 		<div className="border border-gray-300 rounded-lg mt-6 mb-10 py-2 px-8 h-auto">
@@ -141,7 +140,7 @@ const CreatePost = () => {
 
 				<div>
 					<Label>{POST_CREATE.RECRUITMENT_FIELD_LABEL}</Label>
-					<PositionBtn value={position?.id} onChange={handleSelectPosition} />
+					<PositionBtn value={position?.id as unknown as Position} onChange={handleSelectPosition} />
 				</div>
 
 				{position && (
@@ -162,15 +161,7 @@ const CreatePost = () => {
 
 						<div className="flex flex-col gap-2 w-full">
 							<Label>{position.name} 기술 스택</Label>
-							<TechStack
-								value={currentTechStack.map((stack) => stack.id)}
-								onChange={(stackIds) => {
-									const selectedStacks = stackIds
-										.map((id) => techStack.find((s) => s.id === id))
-										.filter((s): s is TechStackType => !!s);
-									handleTechStackChange(selectedStacks);
-								}}
-							/>
+							<TechStack />
 						</div>
 					</>
 				)}
@@ -195,7 +186,7 @@ const CreatePost = () => {
 					<div className="flex flex-col gap-2">
 						<Label>{POST_CREATE.DEADLINE_LABEL}</Label>
 						<Calendar
-							value={post.endDate}
+							value={post.endTime}
 							onChange={(date) => handleChange("endTime", date)}
 						/>
 					</div>
