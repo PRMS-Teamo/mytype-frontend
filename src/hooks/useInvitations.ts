@@ -9,6 +9,7 @@ interface RawInvitation {
   createdAt: string;
   updatedAt: string;
   teamPositionId?: string;
+  teamId?: string;
 }
 
 interface Invitation extends RawInvitation {
@@ -38,45 +39,23 @@ export default function useInvitations() {
 
       const enrichedInvites = await Promise.all(
         inviteOnly.map(async (item) => {
-          if (!item.teamPositionId) return item;
+          if (!item.teamId) return item;
 
           try {
-            // 1. 팀 전체 목록 가져오기
-            const teamListRes = await axios.get(
-              `${import.meta.env.VITE_BACKEND_URL}/teams`,
-              {
-                headers: { Authorization: `Bearer ${accessToken}` },
-              }
-            );
-            const allTeams = teamListRes.data;
-
-            // 2. teamPositionId 포함한 팀 찾기
-            const matchedTeam = allTeams.find((team: any) =>
-              team.positions.some(
-                (pos: any) => pos.positionId === item.teamPositionId
-              )
-            );
-
-            if (!matchedTeam) return item;
-
-            // 3. 팀 상세 정보 조회
             const teamDetailRes = await axios.get(
-              `${import.meta.env.VITE_BACKEND_URL}/teams/${matchedTeam.teamId}`,
+              `${import.meta.env.VITE_BACKEND_URL}/teams/${item.teamId}`,
               {
                 headers: { Authorization: `Bearer ${accessToken}` },
               }
             );
-
             const teamDetail = teamDetailRes.data;
 
-            // 4. 유저 정보 조회
             const userRes = await axios.get(
               `${import.meta.env.VITE_BACKEND_URL}/users/${teamDetail.userId}`,
               {
                 headers: { Authorization: `Bearer ${accessToken}` },
               }
             );
-
             const user = userRes.data;
 
             return {

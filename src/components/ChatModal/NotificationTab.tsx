@@ -48,7 +48,7 @@ export default function NotificationTab() {
         })}
         {invitations.length === 0 && (
           <div className="text-center text-sm text-gray-400 mt-6">
-            받은 초대가 없습니다.
+            표시할 알림이 없습니다.
           </div>
         )}
       </div>
