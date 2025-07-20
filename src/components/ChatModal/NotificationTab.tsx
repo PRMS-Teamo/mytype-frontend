@@ -1,0 +1,73 @@
+import { useReadStateStore } from "../../store/readStore";
+import useAppliesHistory from "../../hooks/useInvitations";
+import { useNavigate } from "react-router-dom";
+
+export default function NotificationTab() {
+  const { isRead, markAsRead } = useReadStateStore();
+  const { invitations, loading, error } = useAppliesHistory();
+  const navigate = useNavigate();
+
+  if (loading)
+    return <div className="text-center text-sm text-gray-400">불러오는 중...</div>;
+  if (error)
+    return <div className="text-center text-sm text-red-500">{error}</div>;
+
+  const handleClick = (item: typeof invitations[number], key: string) => {
+    markAsRead(key);
+
+    if (item.action === "INVITE" && item.teamId) {
+      navigate(`/findteam/${item.teamId}`);
+    } else if (item.action === "APPLY") {
+      navigate(`/profile/${item.userId}`);
+    }
+  };
+
+  return (
+    <div className="p-1">
+      <div className="space-y-2">
+        {invitations.map((item, index) => {
+          const key = `notification-${index}`;
+          const isItemRead = isRead(key);
+
+          const textColor = isItemRead ? "text-[#A7A7A7]" : "text-black";
+          const messageColor = isItemRead ? "text-[#A7A7A7]" : "text-gray-500";
+
+          const messagePrefix =
+            item.action === "INVITE"
+              ? "초대 메시지:"
+              : item.action === "APPLY"
+              ? "지원자 메시지:"
+              : "메시지:";
+
+          return (
+            <div
+              key={index}
+              onClick={() => handleClick(item, key)}
+              className="flex items-center gap-3 cursor-pointer hover:bg-gray-100 rounded-lg p-1.5 transition-colors"
+            >
+              <div className="w-12 h-12 rounded-full bg-gray-200 flex-shrink-0" />
+              <div>
+                <div className="flex items-center gap-3">
+                  <span className={`font-bold text-sm ${textColor}`}>
+                    {item.postTitle || "게시글 제목 없음"}
+                  </span>
+                  <span className="font-semibold text-[11px] text-[#B3B3B3]">
+                    {item.authorName || "작성자 없음"}
+                  </span>
+                </div>
+                <div className={`mt-2 text-xs truncate max-w-[180px] ${messageColor}`}>
+                  {messagePrefix} {item.message || "내용 없음"}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        {invitations.length === 0 && (
+          <div className="text-center text-sm text-gray-400 mt-6">
+            표시할 알림이 없습니다.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
