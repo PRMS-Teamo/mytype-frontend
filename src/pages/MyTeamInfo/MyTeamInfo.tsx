@@ -9,7 +9,7 @@ const MyTeamInfo = () => {
   const teamTitle = teamInfo?.title;
   const teamId = teamInfo?.teamId;
   const { user } = useUserStore();
-  const alone = teamMemberInfo.size === 1;
+  const alone = teamMemberInfo.size <= 1;
   const url = !alone ? `${import.meta.env.VITE_BACKEND_URL}/teams/members/${user?.id}/off-board/${teamId}` : `${import.meta.env.VITE_BACKEND_URL}/teams/complete`
   const handleTeamOut = async () => {
     const accessToken = localStorage.getItem("accessToken");
