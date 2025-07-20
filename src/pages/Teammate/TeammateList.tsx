@@ -5,7 +5,7 @@ const TeammateList = () => {
   const { handleRepost, teammates, handleClick } = useTeammateList();
   return (
     <>
-      <div className="w-[1140px] flex justify-end mt-10">
+      <div className="flex justify-end mt-10">
         <button
           onClick={handleRepost}
           className="w-[140px] h-[30px] border border-main text-main rounded-full hover:bg-main hover:text-white transition-colors"

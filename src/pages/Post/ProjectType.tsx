@@ -1,16 +1,13 @@
 import { POST_TEAM, POST_TEAMMATE } from "../../constants/post/post";
 import { PROCEED_TYPE } from "../../constants/proceedType/proceedType";
-import type { Post } from "../../model/Post";
 import type { PostCardProps } from "../../components/PostCard/PostCard";
 import { BEGINNER } from "../../constants/beginner/beginner";
 import {formatDate} from "../../util/formatDate.ts";
 
 const ProjectType = ({ post, type }: PostCardProps) => {
   if (!post) return null;
-
   const isTeamPost = type === "team";
   const postInfo = isTeamPost ? POST_TEAM : POST_TEAMMATE;
-
   const getProceedTypeLabel = (value: string | undefined) => {
     return (
       PROCEED_TYPE.find((item) => item.id === value)?.label || "진행방식 미지정"
@@ -28,29 +25,41 @@ const ProjectType = ({ post, type }: PostCardProps) => {
       <div className="text-black gap-3 flex flex-col">
         {isTeamPost ? (
           <>
-            <div>{getProceedTypeLabel((post as Post).proceedType)}</div>
-
+            <div>{getProceedTypeLabel(post.proceedType)}</div>
             <div className="flex gap-2 flex-wrap">
-              {"techStack" in post && post.positions.length > 0 ? (
-                post.techStacks.map((tech, index) => (
-                  <span key={index}>{tech.name}</span>
+              {post.positions && post.positions.length > 0 ? (
+                post.positions.map((position, index) => (
+                  <div key={index} className="flex items-center gap-1">
+                    {position.positionStacks.map((stack) => (
+                      <img
+                        key={stack.stackId}
+                        src={stack.imgUrl}
+                        alt={stack.stackName}
+                        className="w-6 h-6"
+                      />
+                    ))}
+                  </div>
                 ))
               ) : (
-                <span className="text-gray-400">기술 스택 없음</span>
+                <div>스택 정보 없음</div>
               )}
             </div>
             <div>{"location" in post ? post.location : "?"}</div>
             <div className="flex gap-4 flex-wrap">
-              {"positionCount" in post
-                ? Object.entries(post.positionCount).map(
-                    ([position, detail]) => (
-                      <div key={position} className="flex gap-2">
-                        <span>{position}</span>
-                        <span>{detail.count}</span>
-                      </div>
-                    )
-                  )
-                : null}
+              {post.positions
+                ?.filter((position) => position.positionName !== "팀 생성자")
+                .map((position) => (
+                  <div key={position.positionId}>
+                    <div>
+                      {position.positionName} ({position.count})
+                    </div>
+                    <div className="ml-4">
+                      {position.positionStacks.map((stack) => (
+                        <div key={stack.stackId}>- {stack.stackName}</div>
+                      ))}
+                    </div>
+                  </div>
+              ))}
             </div>
             <div>{"endTime" in post ? formatDate(new Date(post.endTime)) : "마감기한 안뜸"}</div>
           </>

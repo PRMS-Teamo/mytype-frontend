@@ -32,12 +32,14 @@ export default function TeamList() {
 
   return (
     <div className="overflow-x-auto">
-      <button
-        onClick={handleRepost}
-        className="w-[140px] h-[30px] border border-main text-main rounded-full hover:bg-main hover:text-white transition-colors"
-      >
+      <div className=" flex justify-end mt-10">
+        <button
+          onClick={handleRepost}
+          className="w-[140px] h-[30px] border border-main text-main rounded-full hover:bg-main hover:text-white transition-colors"
+        >
         팀 재게시
-      </button>
+        </button>
+      </div>
       <div className="w-[1140px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-10 mt-8">
         {posts.map((post) => (
           <div

@@ -51,7 +51,7 @@ export default function PostCard({ type, post, onClick }: PostCardProps) {
         labels={labels}
         techStack={
           type === "team"
-            ? post.teamStacks
+            ? post.positions
             : (post as User).userStacks || []
         }
         type={type}
