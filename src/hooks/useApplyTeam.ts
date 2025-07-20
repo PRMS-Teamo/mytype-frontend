@@ -9,15 +9,22 @@ const useApplyTeam = () => {
       const accessToken = localStorage.getItem("accessToken");
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/applies/teams/${teamId}/apply/${positionId}`,
-        {comment},
+        {
+          message: comment,
+          apply_status: "SUBMITTED",
+          action: "APPLY",
+        },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
+      console.log(comment);
       console.log("지원 성공:", response.data);
       alert("지원 완료!");
+return response.data;
+
     } catch (err: unknown) {
       let message = "알 수 없는 오류가 발생했습니다.";
 
