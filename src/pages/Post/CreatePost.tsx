@@ -16,6 +16,7 @@ import {useState} from "react";
 import { useUserStore } from "../../store/userStore";
 import { TeamsApi } from "../../api/teamsApi";
 import type {Post, PositionDetail, PostPayload} from "../../model/Post";
+import type {TeamResponse} from "../../types/api.ts";
 // import useTechStack from "../../hooks/useTechStack.ts";
 
 const CreatePost = () => {
@@ -52,7 +53,7 @@ const CreatePost = () => {
 			return;
 		}
 
-		const finalPost: PostPayload = {
+		const finalPost: TeamResponse = {
 			...post,
 			userId: user.id,
 			positions: post.positions.map((p) => ({

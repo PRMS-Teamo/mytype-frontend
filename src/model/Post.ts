@@ -35,8 +35,11 @@ export interface PostPayload {
   positions: {
     positionId: string;
     count: number;
+    positionName:string;
     recruitStatus: "OPEN" | "CLOSE";
     positionStacks: {
       stackId: string;
+      stackName:string;
+      imgUrl:string;
     }[];
   }[];}

@@ -1,13 +1,13 @@
 import axios from "axios";
 import { usePostStore } from "../store/postStore";
 import {useUserStore} from "../store/userStore.ts";
-import type {PostPayload} from "../model/Post.ts";
+import type {TeamResponse} from "../types/api.ts";
 
 export const TeamsApi = () => {
   const { setMyPost } = usePostStore();
   const { user } = useUserStore();
   const isJoined = user?.isJoined;
-  const createTeam = async (post: PostPayload) => {
+  const createTeam = async (post: TeamResponse) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
       if (isJoined) {
