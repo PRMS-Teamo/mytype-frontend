@@ -11,13 +11,13 @@ import { POST_CREATE } from "../../constants/post/post";
 import { PLACEHOLDER } from "../../constants/placeholder/placeholders";
 import { formatNumber } from "../../util/formatNumber";
 import type { Position } from "../../hooks/usePositions";
-// import type { TechStackType } from "../../model/TeckStack";
 import {useState} from "react";
 import { useUserStore } from "../../store/userStore";
 import { TeamsApi } from "../../api/teamsApi";
 import type {Post, PositionDetail, PostPayload} from "../../model/Post";
 import type {TeamResponse} from "../../types/api.ts";
 // import useTechStack from "../../hooks/useTechStack.ts";
+
 
 const CreatePost = () => {
 	const { myPost } = usePostStore();
