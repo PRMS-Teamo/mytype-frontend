@@ -25,6 +25,7 @@ interface UserStore {
   setUser: (user: User) => void;
   clearUser: () => void;
   isLoggedIn: boolean;
+  updateJoin: (value: boolean) => void;
 }
 
 
@@ -45,6 +46,16 @@ export const useUserStore = create(
         localStorage.removeItem('refreshToken'); // 토큰 지우는 로직 추가
         localStorage.removeItem('accessToken');
       },
+      updateJoin: (value: boolean) =>
+        set((state) => {
+          if (!state.user) return {};
+          return {
+            user: {
+              ...state.user,
+              isJoined: value,
+            },
+          };
+        }),
     }),
     {
       name: 'user-storage',
