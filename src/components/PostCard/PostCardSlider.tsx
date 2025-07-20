@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PostCard from "./PostCard";
-
 import { useTeammateStore } from "../../store/teammateStore";
 import useTeammate from "../../hooks/useTeammate";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import useTeamList from "../../hooks/useTeamList.ts";
-import type {TeamResponse} from "../../types/api.ts";
-import useTeam from "../../hooks/useTeamDetail.ts";
 
 interface PostCardSliderProps {
   type: "team" | "teammate";

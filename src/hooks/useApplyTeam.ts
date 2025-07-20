@@ -1,20 +1,21 @@
 import axios from "axios";
-
+import { useUserStore } from "../store/userStore";
 const useApplyTeam = () => {
-  const applyToTeam = async (teamId: string) => {
+
+  const { user } = useUserStore();
+  const applyToTeam = async (teamId: string,comment: string) => {
+    const positionId = user?.positionId;
     try {
       const accessToken = localStorage.getItem("accessToken");
-
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/applies/teams/${teamId}/apply`,
-        {},
+        `${import.meta.env.VITE_BACKEND_URL}/applies/teams/${teamId}/apply/${positionId}`,
+        {comment},
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
-
       console.log("지원 성공:", response.data);
       alert("지원 완료!");
     } catch (err: unknown) {

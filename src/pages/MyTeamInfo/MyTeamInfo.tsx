@@ -56,8 +56,11 @@ const MyTeamInfo = () => {
           <>
             <Label>팀원 정보</Label>
             {Array.from(teamMemberInfo).map((item) => {
+              const isMe = item.userId === user?.id;
               return (
-                <ListItem key={item.userId} content={item.userName} buttonContent="메시지 보내기" onClick={() => console.log('test')}/>
+                <ListItem key={item.userId} content={item.userName} buttonContent={!isMe ? "메시지 보내기" : ''}
+                          onClick={!isMe ? () => console.log("test") : ()=>console.log("나다")
+                          }/>
               )
             })}
           </>
