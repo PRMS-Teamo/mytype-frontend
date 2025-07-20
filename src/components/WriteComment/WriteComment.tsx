@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useApplyTeam from "../../hooks/useApplyTeam";
 
-export default function WriteComment() {
+export default function WriteComment({ onSuccess }: { onSuccess: () => void }) {
   const { user, isLoggedIn } = useUserStore();
   const [comment, setComment] = useState("");
   const { teamId } = useParams<{ teamId: string }>();
@@ -19,9 +19,13 @@ export default function WriteComment() {
   }
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!teamId) return;
-    applyToTeam(teamId, comment);
+    const res = await applyToTeam(teamId, comment);
+    if (res) {
+      setComment("");
+      onSuccess();
+    }
   };
   return (
     <div className="w-full max-w-[1300px] border rounded-lg bg-white p-6 flex flex-col gap-4 mt-12">
