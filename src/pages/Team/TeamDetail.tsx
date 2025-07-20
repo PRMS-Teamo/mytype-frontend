@@ -64,7 +64,15 @@ const TeamDetail = () => {
               onDelete={(c) => console.log("Delete", c)}
             />
           ) : (
+            <>
+              <Comments
+                comments={applyList}
+                currentUserId={user?.id}
+
+              />
             <WriteComment onSuccess={() => fetchApplyList(team)} />
+
+            </>
           )}
         </div>
 

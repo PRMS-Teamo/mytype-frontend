@@ -101,11 +101,11 @@ export type CommentData = {
 
 type Props = {
   comments: CommentData[];
-  currentUserId: string;
-  teamOwnerId: string;
-  onAccept: (comment: CommentData) => void;
-  onReject: (comment: CommentData) => void;
-  onDelete: (comment: CommentData) => void;
+  currentUserId?: string;
+  teamOwnerId?: string;
+  onAccept?: (comment: CommentData) => void;
+  onReject?: (comment: CommentData) => void;
+  onDelete?: (comment: CommentData) => void;
 };
 
 export default function Comments({
@@ -121,7 +121,7 @@ export default function Comments({
       {comments.map((comment, index) => {
         const isOwner = currentUserId === teamOwnerId;
         const isMe = currentUserId === comment.userId;
-        const isThirdUser = !isOwner && !isMe;
+        const isThirdUser = !isOwner
 
         return (
           <div
@@ -129,27 +129,25 @@ export default function Comments({
             className="border p-4 rounded-lg shadow-sm bg-white space-y-2"
           >
             <div className="text-sm text-gray-600">
-              [{comment.action === "APPLY" ? "지원" : "초대"}]{" "}
-              {comment.teamPosition.position.positionName} -{" "}
+              {comment.teamPosition.position.positionName}
 
             </div>
             <div className="text-base text-gray-900">{comment.message}</div>
-            <div className="text-sm text-gray-500">
-              상태: {comment.applyStatus}
-            </div>
+
 
             {!isThirdUser && (
               <div className="flex gap-2 mt-2">
+                상태: {comment.applyStatus}
                 {isOwner && (
                   <>
                     <button
-                      onClick={() => onAccept(comment)}
+                      onClick={() => (onAccept ??comment )}
                       className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
                     >
                       수락
                     </button>
                     <button
-                      onClick={() => onReject(comment)}
+                      onClick={() => (onAccept ??comment )}
                       className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                     >
                       거절
@@ -158,7 +156,7 @@ export default function Comments({
                 )}
                 {isMe && (
                   <button
-                    onClick={() => onDelete(comment)}
+                    onClick={() => (onAccept ??comment )}
                     className="px-3 py-1 bg-gray-400 text-white rounded hover:bg-gray-500"
                   >
                     삭제
