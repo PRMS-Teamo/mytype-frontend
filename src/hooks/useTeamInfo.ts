@@ -15,7 +15,6 @@ const useTeamInfo = () => {
       return;
     }
     const getTeamInfo = async () => {
-      console.log('getTimeInfo', userInfo);
       try {
         const accessToken = localStorage.getItem("accessToken");
         const teamInfoResponse = await axios.get(
@@ -37,6 +36,9 @@ const useTeamInfo = () => {
         setTeamInfo(teamInfoResponse.data);
         const teamId = teamInfoResponse.data.teamId;
         const teamMemberData = teamMemberInfoResponse.data[teamId];
+        console.log("#####TeamInfo#####")
+        console.log(teamMemberData, teamInfoResponse)
+        console.log("################")
         const teamSet = new Set();
         for (const member of teamMemberData) {
           for (const user of member.users) {
