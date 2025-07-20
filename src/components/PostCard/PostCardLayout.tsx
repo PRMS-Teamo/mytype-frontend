@@ -3,13 +3,14 @@ import { BsThreeDots } from "react-icons/bs";
 import Label from "./Label.tsx";
 import type { LabelType } from "./Label.tsx";
 import type { TechStackType } from "../../model/TeckStack.ts";
+import type {TeamResponse} from "../../types/api.ts";
 
 interface PostCardLayoutProps {
   date: string;
   isOnline?: string;
   content: string;
   labels: LabelType[];
-  techStack: TechStackType[] | string[];
+  techStack: TechStackType[] | TeamResponse["positions"];
   type?: "team" | "teammate";
 }
 
@@ -24,14 +25,16 @@ export default function PostCardLayout({
   const [showOverflow, setShowOverflow] = useState(false);
   const maxVisible = 7;
 
-
   const imageUrls =
-  type === "teammate"
-    ? (techStack as TechStackType[])
+    type === "teammate"
+      ? (techStack as TechStackType[])
         .map((stack) => stack.stackImg)
         .filter(Boolean)
-    : (techStack as string[]).filter(Boolean);
-
+      : (techStack as TeamResponse["positions"])
+        .flatMap((position) =>
+          position.positionStacks.map((stack) => stack.imgUrl)
+        )
+        .filter(Boolean);
   const visibleStacks = imageUrls.slice(0, maxVisible);
   const overflowStacks = imageUrls.slice(maxVisible);
 
@@ -41,6 +44,7 @@ export default function PostCardLayout({
       setShowOverflow(false);
     }
   }, [imageUrls]);
+  console.log(imageUrls);
 
   return (
     <div className="w-[350px] h-[370px] rounded-[20px] bg-white border border-gray-200 flex flex-col p-4">
@@ -62,15 +66,18 @@ export default function PostCardLayout({
       </div>
 
       <div className="mt-6 mx-4 flex gap-2 flex-wrap text-xs relative">
-        
-        {visibleStacks.map((url, index) => (
-          <img
-            key={index}
-            src={url}
-            alt="기술 스택"
-            className="w-6 h-6 rounded-full"
-          />
-        ))}
+
+        {visibleStacks.map((url, index) => {
+          console.log("기술 스택 URL:", url);
+          return (
+            <img
+              key={index}
+              src={url}
+              alt="기술 스택"
+              className="w-6 h-6 rounded-full"
+            />
+          );
+        })}
 
         {overflowStacks.length > 0 && (
           <div className="relative">

@@ -71,11 +71,7 @@ const ProjectType = ({ post, type }: PostCardProps) => {
               {"userStacks" in post && post.userStacks?.length ? (
                 post.userStacks.map((stack, index) => (
                   <div key={index} className="flex items-center gap-1">
-                    <img
-                      src={stack.stackImg}
-                      alt={stack.stackName}
-                      className="w-6 h-6"
-                    />
+                    {stack.stackName}
                   </div>
                 ))
               ) : (

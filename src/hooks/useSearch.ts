@@ -5,7 +5,7 @@ import {postMock} from "../mock/data/postMock.ts";
 
 export default function useSearch() {
   const [search, setSearch] = useState("");
-  const [tab, setTab] = useState<"팀 구해요" | "팀원 구해요">("팀 구해요");
+  const [tab, setTab] = useState<"팀 찾기" | "팀원 찾기">("팀 찾기");
   const navigate = useNavigate();
 
   const keyword = search.toLowerCase();
