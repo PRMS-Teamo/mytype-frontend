@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostCard from "../../components/PostCard/PostCard";
-import type { TeamResponse } from "../../types/api";
-import axios from "axios";
 import useRepostTeam from "../../hooks/useRepostTeam.ts";
 import { usePostStore } from "../../store/postStore.ts";
-import {useUserStore} from "../../store/userStore.ts";
+import { useUserStore } from "../../store/userStore.ts";
+import useTeamList from "../../hooks/useTeamList.ts";
 
 export default function TeamList() {
   const navigate = useNavigate();
   const { myPost } = usePostStore();
-  const [posts, setPosts] = useState<TeamResponse[]>([]);
   const { repostTeam } = useRepostTeam();
-const {user}=useUserStore()
+  const { user } = useUserStore();
+  const posts = useTeamList();
+
   const handleClick = (teamId: string) => {
     navigate(`/findteam/${teamId}`);
   };
@@ -30,20 +29,6 @@ const {user}=useUserStore()
 
     repostTeam(myPost.teamId);
   };
-
-  useEffect(() => {
-    const getTeamData = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/teams`);
-        const data: TeamResponse[] = res.data;
-        setPosts(data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    getTeamData();
-  }, []);
 
   return (
     <div className="overflow-x-auto">

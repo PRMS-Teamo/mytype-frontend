@@ -1,24 +1,24 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import type { TeamResponse } from "../types/api.ts";
 
 export default function useTeamList() {
-  const [teamList, setTeamList] = useState([]);
+  const [posts, setPosts] = useState<TeamResponse[]>([]);
+
   useEffect(() => {
-    const getTeamList = async () => {
+    const getTeamData = async () => {
       try {
-        const accessToken = localStorage.getItem("accessToken");
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/teams`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        const teamListResponse = res.data;
-        setTeamList(teamListResponse);
-      } catch (error) {
-        console.error("팀원 불러오기 실패", error);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/teams`);
+        const data: TeamResponse[] = res.data;
+        console.log("팀정보", data);
+        setPosts(data);
+      } catch (e) {
+        console.error(e);
       }
-    }
-    getTeamList();
-  }, [])
-  return teamList;
+    };
+
+    getTeamData();
+  }, []);
+
+  return posts;
 }
