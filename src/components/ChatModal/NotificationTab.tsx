@@ -1,11 +1,54 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { useReadStateStore } from "../../store/readStore";
-import useAppliesHistory from "../../hooks/useInvitations";
+import useInvitations from "../../hooks/useInvitations";
 import { useNavigate } from "react-router-dom";
 
 export default function NotificationTab() {
   const { isRead, markAsRead } = useReadStateStore();
-  const { invitations, loading, error } = useAppliesHistory();
   const navigate = useNavigate();
+  const [teamId, setTeamId] = useState<string | undefined>(undefined);
+  const [_, setIsTeamOwner] = useState(false);
+
+  useEffect(() => {
+    const fetchTeamId = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        const headers = {
+          Authorization: `Bearer ${accessToken}`,
+        };
+
+
+        const meRes = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/users/me`,
+          { headers }
+        );
+        const myId = meRes.data.id;
+
+
+        const teamsRes = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/teams`,
+          { headers }
+        );
+        const teams = teamsRes.data;
+
+
+        const ownedTeam = teams.find((team: any) => team.userId === myId);
+        if (ownedTeam) {
+          setTeamId(ownedTeam.teamId);
+          setIsTeamOwner(true);
+        } else {
+          setIsTeamOwner(false);
+        }
+      } catch (error) {
+        console.error("팀 정보 조회 실패:", error);
+      }
+    };
+
+    fetchTeamId();
+  }, []);
+
+  const { invitations, loading, error } = useInvitations({ teamId });
 
   if (loading)
     return <div className="text-center text-sm text-gray-400">불러오는 중...</div>;
@@ -14,7 +57,6 @@ export default function NotificationTab() {
 
   const handleClick = (item: typeof invitations[number], key: string) => {
     markAsRead(key);
-
     if (item.action === "INVITE" && item.teamId) {
       navigate(`/findteam/${item.teamId}`);
     } else if (item.action === "APPLY") {
