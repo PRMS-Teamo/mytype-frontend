@@ -1,15 +1,14 @@
 import { useUserStore } from "../../store/userStore";
-import { useCommentStore } from "../../store/CommentStore";
 import Button from "../Button";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import useApplyTeam from "../../hooks/useApplyTeam";
 
 export default function WriteComment() {
   const { user, isLoggedIn } = useUserStore();
-  const { addComment } = useCommentStore();
   const [comment, setComment] = useState("");
-  const { id } = useParams();
-  const postId = Number(id);
+  const { teamId } = useParams<{ teamId: string }>(); // ✅ 올바른 파라미터 이름 사용
+  const { applyToTeam } = useApplyTeam();
 
   if (!isLoggedIn || !user) {
     return (
@@ -19,18 +18,22 @@ export default function WriteComment() {
     );
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!comment.trim()) return;
-  
-    addComment({
-      postId,
-      authorName: user?.nickname ?? "익명",
-      position: user?.position ?? "",
-      content: comment,
-    });
-  
-    setComment("");
-    alert("지원에 성공했습니다!");
+
+    if (!teamId) {
+      alert("팀 ID가 유효하지 않습니다.");
+      return;
+    }
+
+    try {
+      await applyToTeam(teamId); // ✅ teamId 전달
+      setComment("");
+      alert("지원에 성공했습니다!");
+    } catch (error) {
+      console.error("지원 실패", error);
+      alert("지원 중 오류가 발생했습니다.");
+    }
   };
 
   return (
