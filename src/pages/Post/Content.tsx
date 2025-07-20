@@ -60,7 +60,7 @@ const Content = ({ post }: { post: TeamResponse | User }) => {
     inviteUser(targetId, positionId, {
       message: "우리 팀에 오실래요?",
       apply_status: "SUBMITTED",
-      teamPositionId: positionId,
+      positionId: positionId,
       action: "INVITE",
     });
   };

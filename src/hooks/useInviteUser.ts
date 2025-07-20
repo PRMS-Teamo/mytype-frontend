@@ -3,7 +3,7 @@ import axios from "axios";
 interface InvitePayload {
   message: string;
   apply_status: "SUBMITTED";
-  teamPositionId: string;
+  positionId: string;
   action: "INVITE";
 }
 
