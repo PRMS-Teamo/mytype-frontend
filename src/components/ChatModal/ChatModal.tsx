@@ -3,8 +3,8 @@ import NotificationTab from "./NotificationTab";
 import ChatTab, { type UserInfo } from "./ChatTab";
 import QnaTab from "./QnaTab";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { PiChatCircleDots } from "react-icons/pi";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
+// import { PiChatCircleDots } from "react-icons/pi";
+// import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useState } from "react";
 
 export default function ChatModal() {
@@ -69,7 +69,7 @@ export default function ChatModal() {
           <IoNotificationsOutline size={24} />
           알림
         </button>
-        <button
+        {/* <button
           onClick={() => setTab("chat")}
           className={`text-sm font-medium ${
             currentTab === "chat" ? "text-[#838485]" : "text-[#D6D6D6]"
@@ -86,7 +86,7 @@ export default function ChatModal() {
         >
           <AiOutlineQuestionCircle size={24} />
           Q&A
-        </button>
+        </button> */}
       </div>
     </div>
   );
